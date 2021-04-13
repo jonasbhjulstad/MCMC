@@ -6,11 +6,11 @@ from pymc3 import *
 import theano.tensor as tt
 import sys
 from scipy.integrate import odeint
-sys.path.append(r'/home/deb/MCMC/SMC/models/')
+sys.path.append(r'/home/deb/Documents/MCMC/SMC/models')
 import pandas as pd
 from Epidemiological import SIR_y, simulate
+import pickle as pck
 az.style.use("arviz-darkgrid")
-
 alpha = 1./9
 R0 = 1.2
 beta = R0*alpha
@@ -42,14 +42,16 @@ if __name__ == '__main__':
     sir_out = pd.DataFrame(simulate(param))
     data = sir_out['I']
 
-    S_noise = np.random.normal(sir_out['I'], 100)
-    I_noise = np.random.normal(sir_out['I'], 100)
-    R_noise = np.random.normal(sir_out['I'], 100)
-    Y_noise = np.random.normal(sir_out['I'], 100)
+    S_noise = np.random.normal(sir_out['I'], 1)
+    I_noise = np.random.normal(sir_out['I'], 1)
+    R_noise = np.random.normal(sir_out['I'], 1)
+    Y_noise = np.random.normal(sir_out['I'], 1)
     # y = np.concatenate(np.nan())
 
     na = np.empty(I_noise.shape)
     na[:] = 0
+
+    a = 1
 
     obs = np.vstack([na, I_noise, na, na]).T
 
@@ -58,18 +60,22 @@ if __name__ == '__main__':
 
     with pm.Model() as model:
         # Specify prior distributions for soem of our model parameters
-        alpha_pm = pm.Lognormal("alpha", alpha, .2*alpha)
-        beta_pm = pm.Lognormal("beta", beta, .2*beta)
+        alpha_pm = pm.Normal("alpha", mu=alpha, sigma=.2*alpha)
+        beta_pm = pm.Normal("beta", mu=beta, sigma=.2*beta)
 
         # If we know one of the parameter values, we can simply pass the value.
         ode_solution = ode_model(y0=[N_pop, 0, 0, 0], theta=[alpha_pm, beta_pm])
         # The ode_solution has a shape of (n_times, n_states)
 
-        Y = pm.Normal("Y", mu=ode_solution, sigma=100, observed=obs)
+        Y = pm.Normal("Y", mu=ode_solution, sigma=1, observed=obs)
 
         prior = pm.sample_prior_predictive()
-        trace = pm.sample(200, tune=1000, cores=4, init='adapt_diag')
+        trace = pm.sample(2000, tune=1000, cores=4, init='adapt_diag')
         posterior_predictive = pm.sample_posterior_predictive(trace)
 
         data = az.from_pymc3(trace=trace, prior=prior, posterior_predictive=posterior_predictive)
+        with open('data.pck', 'wb') as f:
+            pck.dump(data,f)
+
+        az.plot_trace(data)
         plt.show()
