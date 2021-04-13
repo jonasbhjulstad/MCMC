@@ -1,6 +1,6 @@
 from scipy.stats import nbinom
 import numpy as np
-from numpy.random import binomial
+from numpy.random import binomial, poisson
 
 N_pop = 1000
 
@@ -34,19 +34,29 @@ def reed_frost(x, p):
     I = binomial(x[0], 1-(1-p)**x[1])
     S = x[0] - I
     return np.array([S, I])
-def SIR_stochastic(u,param,t):
-    bet = param['beta']
-    gamm = param['alpha']
-    dt = param['dt']
-    N_pop = param['N_pop']
 
-    S,I,R,Y=u
-    lambd = bet*(I)/N_pop
-    ifrac = 1.0 - np.exp(-lambd*dt)
-    rfrac = 1.0 - np.exp(-gamm*dt)
-    infection = np.random.binomial(S,ifrac)
-    recovery = np.random.binomial(I,rfrac)
-    return [S-infection,I+infection-recovery,R+recovery,Y+infection]
+def SIR_stochastic(x, param):
+    alpha = param['alpha']
+    beta = param['beta']
+    N_pop = param['N_pop']
+    dt = param['dt']
+
+    S = x[0]
+    I = x[1]
+    R = x[2]
+
+    p_I = 1-np.exp(-beta*I/N_pop*dt)
+    p_R = 1-np.exp(-alpha*dt)
+
+    k_SI = poisson(S*p_I, 1)
+    k_IR = binomial(I, p_R)
+
+    delta_S = -k_SI
+    delta_I = k_SI - k_IR
+    delta_R = k_IR
+
+    return [S + delta_S, I + delta_I, R + delta_R]
+
 
 
 def simulate(param):
