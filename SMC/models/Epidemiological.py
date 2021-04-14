@@ -1,6 +1,12 @@
 from scipy.stats import nbinom
 import numpy as np
 from numpy.random import binomial, poisson
+from scipy.stats import betabinom, nbinom
+import sys
+from os.path import dirname, abspath
+parent = dirname(dirname(abspath(__file__)))
+sys.path.append(parent)
+from Inference.distributions import coeffs_BetaBin
 
 N_pop = 1000
 
@@ -50,6 +56,34 @@ def SIR_stochastic(x, param):
 
     k_SI = poisson(S*p_I, 1)
     k_IR = binomial(I, p_R)
+
+    delta_S = -k_SI
+    delta_I = k_SI - k_IR
+    delta_R = k_IR
+
+    return [S + delta_S, I + delta_I, R + delta_R]
+
+def SIR_stochastic_dispersed(x, param):
+    alpha = param['alpha']
+    beta = param['beta']
+    N_pop = param['N_pop']
+    dt = param['dt']
+    r_p_I = param['r_p_I']
+    gamma_p_R = param['gamma_p_R']
+
+
+
+    S = x[0]
+    I = x[1]
+    R = x[2]
+
+    p_I = 1-np.exp(-beta*I/N_pop*dt)
+    p_R = 1-np.exp(-alpha*dt)
+
+    k_SI = nbinom.rvs(r_p_I, S*p_I, size=1)
+
+    a, b = coeffs_BetaBin(I, gamma_p_R, size=1)
+    k_IR = betabinom.rvs(I*p_R, a, b)
 
     delta_S = -k_SI
     delta_I = k_SI - k_IR

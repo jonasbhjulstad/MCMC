@@ -14,5 +14,5 @@ def RK4(f, X, DT, arg=[]):
 def RK4_M(f, X, DT, M, arg=[]):
     xk = X
     for i in range(M):
-        xk =  RK4(f, X, DT/M, arg=arg)
+        xk =  RK4(f, xk, DT/M, arg=arg)
     return xk
