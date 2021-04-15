@@ -6,7 +6,7 @@ import sys
 from os.path import dirname, abspath
 parent = dirname(dirname(abspath(__file__)))
 sys.path.append(parent)
-from Inference.distributions import negBin, betaBin
+from Inference.distributions import negBin, betaBin, negBin_sampler, betaBin_sampler
 import matplotlib.pyplot as plt
 
 def SIR_y(x, param):
@@ -89,6 +89,15 @@ def SIR_stochastic_dispersed(x, param):
 
     # print(max([nbinom.pmf(xk, S*p_I, 1-p) for xk in x]))
     # k_SI = negBin(S*p_I, nu_I)
+    bB = betaBin_sampler(p_I, nu_I, S)
+    nB = negBin_sampler(S*p_I, nu_I)
+
+    # x = np.linspace(0,2*S*p_I, 10000, dtype=int)
+    # ax = plt.subplot()
+    # ax.plot(x, [nB.pmf(xk) for xk in x])
+    # ax.plot(x, [bB.pmf(xk) for xk in x])
+    # plt.show()
+
     k_SI = betaBin(p_I, nu_I, S)
 
     # a, b = coeffs_BetaBin(p_R, nu_R, I)
