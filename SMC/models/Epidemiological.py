@@ -1,21 +1,21 @@
 from scipy.stats import nbinom
 import numpy as np
-from numpy.random import binomial, poisson
-from scipy.stats import betabinom, nbinom
+from numpy.random import binomial
+from scipy.stats import betabinom, nbinom, poisson
 import sys
 from os.path import dirname, abspath
 parent = dirname(dirname(abspath(__file__)))
 sys.path.append(parent)
-from Inference.distributions import coeffs_BetaBin
+from Inference.distributions import negBin, betaBin
+import matplotlib.pyplot as plt
 
-N_pop = 1000
-
-def SIR_y(x, theta):
+def SIR_y(x, param):
     S = x[0]
     I = x[1]
     R = x[2]
-    alpha = theta[0]
-    beta = theta[1]
+    alpha = param['alpha']
+    beta = param['beta']
+    N_pop = param['N_pop']
     return np.array([-beta * S * I/N_pop, beta * S * I/N_pop - alpha * I, alpha * I, beta/N_pop * S * I])
 def grad_SIR_y(x, theta):
     S = x[0]
@@ -54,8 +54,8 @@ def SIR_stochastic(x, param):
     p_I = 1-np.exp(-beta*I/N_pop*dt)
     p_R = 1-np.exp(-alpha*dt)
 
-    k_SI = poisson(S*p_I, 1)
-    k_IR = binomial(I, p_R)
+    k_SI = poisson.rvs(S*p_I)
+    k_IR = binomial(int(I), p_R)
 
     delta_S = -k_SI
     delta_I = k_SI - k_IR
@@ -68,9 +68,8 @@ def SIR_stochastic_dispersed(x, param):
     beta = param['beta']
     N_pop = param['N_pop']
     dt = param['dt']
-    r_p_I = param['r_p_I']
-    gamma_p_R = param['gamma_p_R']
-
+    nu_R = param['nu_R']
+    nu_I = param['nu_I']
 
 
     S = x[0]
@@ -80,10 +79,22 @@ def SIR_stochastic_dispersed(x, param):
     p_I = 1-np.exp(-beta*I/N_pop*dt)
     p_R = 1-np.exp(-alpha*dt)
 
-    k_SI = nbinom.rvs(r_p_I, S*p_I, size=1)
+    # p, r_p_I = coeff_NegBin(S*p_I, nu_I)
 
-    a, b = coeffs_BetaBin(I, gamma_p_R, size=1)
-    k_IR = betabinom.rvs(I*p_R, a, b)
+    # x = np.linspace(0,2*S*p_I, 10000, dtype=int)
+    # ax = plt.subplot()
+    # ax.plot(x, [nbinom.pmf(xk, S*p_I, p) for xk in x])
+    # ax.plot(x, [poisson.pmf(xk, S*p_I) for xk in x])
+    # plt.show()
+
+    # print(max([nbinom.pmf(xk, S*p_I, 1-p) for xk in x]))
+    # k_SI = negBin(S*p_I, nu_I)
+    k_SI = betaBin(p_I, nu_I, S)
+
+    # a, b = coeffs_BetaBin(p_R, nu_R, I)
+    # k_IR = betabinom.rvs(int(I*p_R), a, b
+    # )
+    k_IR = betaBin(p_R, nu_R, I)
 
     delta_S = -k_SI
     delta_I = k_SI - k_IR
