@@ -89,8 +89,8 @@ def SIR_stochastic_dispersed(x, param):
 
     # print(max([nbinom.pmf(xk, S*p_I, 1-p) for xk in x]))
     # k_SI = negBin(S*p_I, nu_I)
-    bB = betaBin_sampler(p_I, nu_I, S)
-    nB = negBin_sampler(S*p_I, nu_I)
+    # bB = betaBin_sampler(p_I, nu_I, S)
+    # nB = negBin_sampler(S*p_I, nu_I)
 
     # x = np.linspace(0,2*S*p_I, 10000, dtype=int)
     # ax = plt.subplot()
