@@ -19,10 +19,18 @@ def betaBin(mu, nu, n):
 
 def negBin_sampler(lbd, nu):
     r = lbd/nu
-    return nbinom(r, lbd/(r+lbd)) 
+    if lbd < 1.0:
+        return lbd
+    else:
+        return nbinom(r, lbd/(r+lbd)) 
 
 def betaBin_sampler(mu, nu, n):
-    gamma = nu/(n-1)
-    a = (1/gamma - 1)*mu,
-    b = (gamma-1)*(mu-1)/gamma
-    return  betabinom(n, a, b)
+    if n < 5.0:
+        return n
+    elif mu == 0.0:
+        return mu
+    else:
+        gamma = nu/(n-1)
+        a = (1/gamma - 1)*mu,
+        b = (gamma-1)*(mu-1)/gamma
+        return  betabinom(n, a, b)

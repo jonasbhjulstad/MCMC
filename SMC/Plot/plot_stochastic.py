@@ -21,6 +21,19 @@ def disperse_sim(par):
         X_list.append(X)
     return np.array(X_list)
 
+def disperse_sim_CI(par):
+    X_list = []
+    f = par['f_sim']
+    for k in range(par['N_sim']):
+        X = [x0]
+        for i in range(par['N']):
+            Xk, CI_k = f(X[-1], par)
+            X.append(Xk)
+            CI.append(CI_k)
+        X_list.append(X)
+        CI_list.append(CI)
+    return np.array(X_list), np.array(CI_list)
+
 def stochastic_simulation(parms,nu_list, N_det, tspan, Nk_disp, Nk_sto, x0, f_det):
 
     N = param['N']
@@ -38,15 +51,25 @@ def stochastic_simulation(parms,nu_list, N_det, tspan, Nk_disp, Nk_sto, x0, f_de
 
     Np = len(parms)
     parallel = False
+    CI = False
     if parallel:
         pool = mp.Pool(mp.cpu_count())
         X_disp = pool.map(disperse_sim, parms)
         pool.close()
     else:
         X_disp = []
-        for nu in nu_list:
-            param['nu'] = nu
-            X_disp.append(disperse_sim(param))
+        CI_disp = []
+        if 'CI_alpha' in param:
+            for nu in nu_list:
+                param['nu'] = nu
+                Xk, CI_k = disperse_sim_CI(param)
+                X_disp.append(Xk)
+                CI_disp.append(CI_k)
+        else:
+            for nu in nu_list:
+                param['nu'] = nu
+                Xk = disperse_sim(param)
+                X_disp.append(Xk)
 
     for i in range(N):
         param['nu'] = np.ones((param['nu'].shape))*1e-6
@@ -119,11 +142,11 @@ if __name__ == '__main__':
     I0 = 1e7
     x0 = [N_pop-I0, 0, I0, 0]
     Nx = len(x0)
-    param = {'alpha': 1./9, 'beta': beta, 'gamma': 1./3, 'N_pop': N_pop, 'dt': dt_sto, 'N': N, 'x0': x0, 'N_sim': Nk_sto, 'f_sim': SEIR_stochastic}
+    param = {'alpha': 1./9, 'beta': beta, 'gamma': 1./3, 'N_pop': N_pop, 'dt': dt_sto, 'N': N, 'x0': x0, 'N_sim': Nk_sto, 'f_sim': SEIR_stochastic, 'CI_alpha': 0.05}
 
 
     nu_list = np.ones((Nk_disp, Nx-1))*1e-6
-    nu_list[:,0] = np.linspace(1e2,1e6,Nk_disp)
+    nu_list[:,0] = np.linspace(1e2,1e4,Nk_disp)
 
     stochastic_simulation(param, nu_list, N_det, [0, 360], Nk_disp, Nk_sto, x0, SEIR)
 

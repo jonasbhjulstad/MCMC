@@ -1,7 +1,6 @@
 from scipy.stats import nbinom
 import numpy as np
-from numpy.random import binomial
-from scipy.stats import betabinom, nbinom, poisson
+from scipy.stats import betabinom, nbinom, poisson, binom
 import sys
 from os.path import dirname, abspath
 parent = dirname(dirname(abspath(__file__)))
@@ -49,7 +48,7 @@ def SEIR(x, param):
 
 def reed_frost(x, p):
     print('prob:',1-(1-p)**x[1])
-    I = binomial(x[0], 1-(1-p)**x[1])
+    I = binom(x[0], 1-(1-p)**x[1])
     S = x[0] - I
     return np.array([S, I])
 
@@ -99,7 +98,7 @@ def SIR_stochastic(x, param, dispersed=True):
         k_IR = betaBin(p_R, nu_R, I)
     else:
         k_SI = poisson.rvs(S*p_I)
-        k_IR = binomial(int(I), p_R)
+        k_IR = binom.rvs(int(I), p_R)
 
     delta_S = -k_SI
     delta_I = k_SI - k_IR
@@ -132,72 +131,72 @@ def SEIR_stochastic(x, param, dispersed=True):
     p_R = 1-np.exp(-alpha*dt)
 
 
-    # a, b = coeffs_BetaBin(p_R, nu_R, I)
-    # k_IR = betabinom.rvs(int(I*p_R), a, b
-    # )
     if dispersed:
-        k_SE = betaBin(p_E, nu_E, S)
-        k_EI = betaBin(p_I, nu_I, E)
-        k_IR = betaBin(p_R, nu_R, I)
-
+        samplers = [betaBin_sampler(p_E, nu_E, S), betaBin_sampler(p_I, nu_I, E), betaBin_sampler(p_R, nu_R, I)]
     else:
-        k_SE = poisson.rvs(S*p_E)
-        k_EI = binomial(int(E), p_I)
-        k_IR = binomial(int(I), p_R)
+        samplers = [poisson(S*p_E), binom.rvs(int(E), p_I), binom.rvs(int(I), p_R)]
+
+    k_SE, k_EI, k_IR = [S.rvs() if hasattr(S, 'rvs') else S for S in samplers]
 
     delta_S = -k_SE
     delta_E = k_SE - k_EI
     delta_I = k_EI - k_IR
     delta_R = k_IR
 
-        
+    xk_1 = [S + delta_S, E + delta_E,  I + delta_I, R + delta_R]
 
-    return [S + delta_S, E + delta_E,  I + delta_I, R + delta_R]
-
-def SEIR_stochastic(x, param, dispersed=True):
-    alpha = param['alpha']
-    beta = param['beta']
-    gamma = param['gamma']
-    N_pop = param['N_pop']
-    q = param['q']
-    mu = param['mu']
-    dt = param['dt']
-    nu = param['nu']
-    nu_E, nu_I, nu_A, nu_R = nu[0], nu[1], nu[2], nu[3]
+    if 'CI_alpha' in param:
+        CI = [S.interval(param['CI_alpha']) if hasattr(S, 'interval') else S for S in samplers]
+        return xk_1, CI
+    else:
+        return xk_1
 
 
 
-    S = x[0]
+# def SEIR_stochastic(x, param, dispersed=True):
+#     alpha = param['alpha']
+#     beta = param['beta']
+#     gamma = param['gamma']
+#     N_pop = param['N_pop']
+#     dt = param['dt']
+#     nu_E, nu_I, nu_R = param['nu']
+
+
+
+#     S = x[0]
     
-    E = x[1]
-    I = x[2]
-    R = x[3]
+#     E = x[1]
+#     I = x[2]
+#     R = x[3]
 
-    p_E = 1-np.exp(-beta*I/N_pop*dt)
-    p_I = 1-np.exp(-gamma*dt)
-    p_R = 1-np.exp(-alpha*dt)
+#     p_E = 1-np.exp(-beta*I/N_pop*dt)
+#     p_I = 1-np.exp(-gamma*dt)
+#     p_R = 1-np.exp(-alpha*dt)
 
-    # a, b = coeffs_BetaBin(p_R, nu_R, I)
-    # k_IR = betabinom.rvs(int(I*p_R), a, b
-    # )
-    if dispersed:
-        k_SE = betaBin(p_E, nu_E, S)
-        k_EI = betaBin(p_I, nu_I, E)
-        k_IR = betaBin(p_R, nu_R, I)
+#     # a, b = coeffs_BetaBin(p_R, nu_R, I)
+#     # k_IR = betabinom.rvs(int(I*p_R), a, b
+#     # )
 
-    else:
-        k_SE = poisson.rvs(S*p_E)
-        k_EI = binomial(int(E), p_I)
-        k_IR = binomial(int(I), p_R)
+#     if dispersed:
+#         samplers = [betaBin_sampler(p_E, nu_E, S), betaBin_sampler(p_I, nu_I, E), betaBin_sampler(p_R, nu_R, I)]
+#     else:
+#         samplers = [poisson(S*p_E), binom.rvs(int(E), p_I), binom.rvs(int(I), p_R)]
 
-    delta_S = -k_SE
-    delta_E = k_SE - k_EI
-    delta_I = k_EI - k_IR
-    delta_R = k_IR
+#     k_SE, k_EI, k_IR = [S.rvs() for S in samplers]
 
-        
+#     delta_S = -k_SE
+#     delta_E = k_SE - k_EI
+#     delta_I = k_EI - k_IR
+#     delta_R = k_IR
 
-    return [S + delta_S, E + delta_E,  I + delta_I, R + delta_R]
+#     xk_1 = [S + delta_S, E + delta_E,  I + delta_I, R + delta_R]
+
+#     if param.has_key('alpha'):
+#         CI = [S.interval(param['alpha']) for S in samplers]
+#         return xk_1, CI
+#     else:
+#         return xk_1
+
 
 
 
