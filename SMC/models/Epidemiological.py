@@ -54,7 +54,7 @@ def reed_frost(x, p):
 
 
 
-def SIR_stochastic(x, param, dispersed=True):
+def SIR_stochastic(x, param, dispersed=True, y=[]):
     alpha = param['alpha']
     beta = param['beta']
     N_pop = param['N_pop']
@@ -70,43 +70,24 @@ def SIR_stochastic(x, param, dispersed=True):
     p_I = 1-np.exp(-beta*I/N_pop*dt)
     p_R = 1-np.exp(-alpha*dt)
 
-    # p, r_p_I = coeff_NegBin(S*p_I, nu_I)
-
-    # x = np.linspace(0,2*S*p_I, 10000, dtype=int)
-    # ax = plt.subplot()
-    # ax.plot(x, [nbinom.pmf(xk, S*p_I, p) for xk in x])
-    # ax.plot(x, [poisson.pmf(xk, S*p_I) for xk in x])
-    # plt.show()
-
-    # print(max([nbinom.pmf(xk, S*p_I, 1-p) for xk in x]))
-    # k_SI = negBin(S*p_I, nu_I)
-    # bB = betaBin_sampler(p_I, nu_I, S)
-    # nB = negBin_sampler(S*p_I, nu_I)
-
-    # x = np.linspace(0,2*S*p_I, 10000, dtype=int)
-    # ax = plt.subplot()
-    # ax.plot(x, [nB.pmf(xk) for xk in x])
-    # ax.plot(x, [bB.pmf(xk) for xk in x])
-    # plt.show()
-
     if dispersed:
-        k_SI = betaBin(p_I, nu_I, S)
-
-        # a, b = coeffs_BetaBin(p_R, nu_R, I)
-        # k_IR = betabinom.rvs(int(I*p_R), a, b
-        # )
-        k_IR = betaBin(p_R, nu_R, I)
+        samplers = [betaBin_sampler(p_I, nu_I, S), betaBin_sampler(p_R, nu_R, I)]
     else:
-        k_SI = poisson.rvs(S*p_I)
-        k_IR = binom.rvs(int(I), p_R)
+        samplers = [poisson(S*p_I), binom.rvs(int(I), p_R)]
+
+    k_SI, k_IR = [S.rvs() if hasattr(S, 'rvs') else S for S in samplers]
+
 
     delta_S = -k_SI
     delta_I = k_SI - k_IR
     delta_R = k_IR
 
-        
-
-    return [S + delta_S, I + delta_I, R + delta_R]
+    Xk_1 = [S + delta_S, I + delta_I, R + delta_R]
+    ll_kSI = []
+    if np.any(y):
+        ll_kSI = binom.logpmf(Xk_1[1], y, 1-np.exp(-beta*I/N_pop*dt))
+        print(ll_kSI)
+    return Xk_1, ll_kSI
 
 
 def SEIR_stochastic(x, param, dispersed=True):

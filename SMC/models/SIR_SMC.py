@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm, nbinom
 from numpy.random import poisson
 import sys
-sys.path.append(r"C:\Users\Jonas\OneDrive - NTNU\Kybernetikk og Robotikk\Epidemiske modeller\SMC")
+from os.path import dirname, abspath
+parent = dirname(dirname(abspath(__file__)))
+sys.path.append(parent)
 from Integrator.ERK import RK4_M
 from Epidemiological import SIR_y
 alpha = .1/9
@@ -25,7 +27,7 @@ def BF_sim(f, param, theta):
     avg_wt = np.zeros(tlen)
     avg_wt[0] = 1
     for t in range(1, tlen):
-        xt_prop[t, :] = RK4_M(f,xt[t-1,:],param['DT'],param['M'],arg=theta)
+        xt_prop[t, :] = RK4_M(f,xt[t-1,:],param['DT'],param['M'],arg=param)
         weight = norm.logpdf(y[t], xt_prop[t,1], scale=scale)
         avg_wt[t] = sum(weights)/size
         if sum(weights) == 0:
@@ -34,6 +36,7 @@ def BF_sim(f, param, theta):
         ind = np.random.choice(size, p=weights/sum(weights), size = size)
         xt[0:t+1, :] = np.concatenate([xt[0:t, ind], xt_prop[t:t+1, ind]], axis=0)
     return xt, xt_prop, avg_wt
+
 
 def BF_multisim(f, param):
     res = [BF_sim(f, param, theta) for theta in param['thetas']]
@@ -55,9 +58,10 @@ if __name__ == '__main__':
     y = []
     xk = x0
     scale = 100
+    param = {'alpha': alpha, 'beta': beta, 'N_pop': N_pop}
     for i in range(N):
         for j in range(M):
-            xk = RK4_M(SIR_y, xk, DT, M,arg=[alpha, beta])
+            xk = RK4_M(SIR_y, xk, DT, M,arg=param)
             x_plot.append(xk)
         yk = norm.rvs(loc=xk[1], scale=scale)
         X.append(xk)
@@ -77,7 +81,7 @@ if __name__ == '__main__':
     ax0[1].plot(xt_posterior, label='posterior')
     _ = [x.grid for x in ax0]
 
-    plt.show()the 
+    plt.show() 
 
     #PMCMC
 

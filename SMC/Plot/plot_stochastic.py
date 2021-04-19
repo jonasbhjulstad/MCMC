@@ -10,6 +10,7 @@ from scipy.integrate import odeint
 from matplotlib import cm
 import multiprocessing as mp
 from itertools import repeat
+import pymc3 as pm
 
 def disperse_sim(par):
     X_list = []
@@ -48,7 +49,7 @@ def stochastic_simulation(parms,nu_list, N_det, tspan, Nk_disp, Nk_sto, x0, f_de
     X_sto_disp = [[x0] for i in range(Nk_disp*Nk_sto)]
 
 
-
+    pm.DifferentialEquation()
     Np = len(parms)
     parallel = False
     CI = False
