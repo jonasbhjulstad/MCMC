@@ -1,6 +1,6 @@
 from scipy.stats import nbinom
 import numpy as np
-from scipy.stats import betabinom, nbinom, poisson, binom
+from scipy.stats import betabinom, nbinom, poisson, binom, norm
 import sys
 from os.path import dirname, abspath
 parent = dirname(dirname(abspath(__file__)))
@@ -85,8 +85,8 @@ def SIR_stochastic(x, param, dispersed=True, y=[]):
     Xk_1 = [S + delta_S, I + delta_I, R + delta_R]
     ll_kSI = []
     if np.any(y):
-        ll_kSI = binom.logpmf(Xk_1[1], y, 1-np.exp(-beta*I/N_pop*dt))
-        print(ll_kSI)
+        #ll_kSI = binom.logpmf(Xk_1[1], y, 1-np.exp(-beta*y/N_pop*dt))
+        ll_kSI = norm.logpdf(Xk_1[1], y, 10000)
     return Xk_1, ll_kSI
 
 

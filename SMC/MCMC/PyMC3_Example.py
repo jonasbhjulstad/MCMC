@@ -67,8 +67,12 @@ if __name__ == '__main__':
         ode_solution = ode_model(y0=[N_pop, 0, 0, 0], theta=[alpha_pm, beta_pm])
         # The ode_solution has a shape of (n_times, n_states)
 
+        pm.Binomial(observed)
+        pm.DensityDist('exp_surv', logp, observed={'failure':failure, 'value':t})
         Y = pm.Normal("Y", mu=ode_solution, sigma=1, observed=obs)
-
+        binom.logpmf(Xk_1[1], y, 1-np.exp(-beta*y/N_pop*dt))
+        def logp(failure, value):
+            return 
         prior = pm.sample_prior_predictive()
         trace = pm.sample(2000, tune=1000, cores=4, init='adapt_diag')
         posterior_predictive = pm.sample_posterior_predictive(trace)
