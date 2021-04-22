@@ -1,0 +1,12 @@
+digraph "smc::sampler::IterateEss"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="smc::sampler::IterateEss",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Perform one iteration of the simulation algorithm and return the resulting ess."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="smc::moveset::DoMCMC",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1moveset.html#a2bef5e7529dd8c0defbf49d68c73f14c",tooltip="Perform an MCMC move on a particle."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="smc::history::Push",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html#a9aa512bddff270eb5fed8f5d9447d1f9",tooltip="Append the supplied particle generation to the end of the list."];
+}

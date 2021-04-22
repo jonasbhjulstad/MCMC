@@ -1,0 +1,449 @@
+\hypertarget{classsmc_1_1particle}{}\doxysection{smc\+::particle$<$ Space $>$ Class Template Reference}
+\label{classsmc_1_1particle}\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+
+
+A template class for the particles of an S\+MC algorithm.  
+
+
+
+
+{\ttfamily \#include $<$particle.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::particle$<$ Space $>$\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1particle_a965b33b394a7a68c4085fa388d6b95ec}{particle}} ()
+\begin{DoxyCompactList}\small\item\em Create a particle with undefined value and weight N\+AN. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle_a3c7dfa9fa30a7b5e32299a4b47424ae3}{particle}} (Space s\+Init, double d\+Log\+Weight)
+\begin{DoxyCompactList}\small\item\em Constructor which initialises the particles value and weight. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle_a5a455cac447d81cc63f04da211f621eb}{particle}} (const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&p\+From)
+\begin{DoxyCompactList}\small\item\em The copy constructor performs a shallow copy. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \& \mbox{\hyperlink{classsmc_1_1particle_a1203739ec2cf4940c6ac1a767d34e26e}{operator=}} (const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&p\+From)
+\begin{DoxyCompactList}\small\item\em The assignment operator performs a shallow copy. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle_aa9c2288d3a062a6877b9b45d32158b1a}{$\sim$particle}} ()
+\begin{DoxyCompactList}\small\item\em Dispose of a particle which is no longer required. \end{DoxyCompactList}\item 
+const Space \& \mbox{\hyperlink{classsmc_1_1particle_a55bd1fbbe5e0dd15d34c4c8bb5cd0222}{Get\+Value}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the particle\textquotesingle{}s value. \end{DoxyCompactList}\item 
+Space $\ast$ \mbox{\hyperlink{classsmc_1_1particle_a183d59475bf86823773a98007b909eda}{Get\+Value\+Pointer}} (void)
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the value to allow for more efficient changes. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1particle_a0c8e4d5f168f5446d4f0e00b8e0fa22e}{Get\+Log\+Weight}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the particle\textquotesingle{}s log weight. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1particle_a500d7f2921bbb082db00eaef2ff22964}{Get\+Weight}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the particle\textquotesingle{}s unnormalised weight. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_a7b71900c1e4a5ecbb3a8a6d6d334fcfb}{Set}} (Space s\+Value, double d\+Log\+Weight)
+\begin{DoxyCompactList}\small\item\em Sets the particle\textquotesingle{}s value and weight explicitly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_a7ba7438e0cac79d7b5daf2b3b98eb9a9}{Set\+Value}} (const Space \&s\+Value)
+\begin{DoxyCompactList}\small\item\em Sets the particle\textquotesingle{}s value explicitly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_ae06a539b1f3293910d27cd5a0a21b6b9}{Set\+Log\+Weight}} (const double \&d\+Log\+Weight)
+\begin{DoxyCompactList}\small\item\em Sets the particle\textquotesingle{}s log weight explicitly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_a18fcabd70c3a9cae531c40e4a5662acf}{Set\+Weight}} (const double \&d\+Weight)
+\begin{DoxyCompactList}\small\item\em Sets the particles weight explicitly. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_aa9709bd869594efccad4dae254c41b42}{Add\+To\+Log\+Weight}} (double d\+Increment)
+\begin{DoxyCompactList}\small\item\em Increase the log weight by a specified amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1particle_afe5c5eebeb01206648629d9005f41c57}{Multiply\+Weight\+By}} (double d\+Multiplier)
+\begin{DoxyCompactList}\small\item\em Multiply the weight by a specified factor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Space \mbox{\hyperlink{classsmc_1_1particle_a6a9a402d9bc8d906a9fad585c68ed37e}{value}}
+\begin{DoxyCompactList}\small\item\em Value of this particle. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1particle_a308fb1b069a6b5a8c2c98a7a4a0e6673}{logweight}}
+\begin{DoxyCompactList}\small\item\em Natural logarithm of this particle\textquotesingle{}s weight. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Space$>$\newline
+class smc\+::particle$<$ Space $>$}
+
+A template class for the particles of an S\+MC algorithm. 
+
+Definition at line 35 of file particle.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1particle_a965b33b394a7a68c4085fa388d6b95ec}\label{classsmc_1_1particle_a965b33b394a7a68c4085fa388d6b95ec}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!particle@{particle}}
+\index{particle@{particle}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{particle()}{particle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1particle}{particle}}}
+
+
+
+Create a particle with undefined value and weight N\+AN. 
+
+
+
+Definition at line 94 of file particle.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a3c7dfa9fa30a7b5e32299a4b47424ae3}\label{classsmc_1_1particle_a3c7dfa9fa30a7b5e32299a4b47424ae3}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!particle@{particle}}
+\index{particle@{particle}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{particle()}{particle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1particle}{particle}} (\begin{DoxyParamCaption}\item[{Space}]{s\+Init,  }\item[{double}]{d\+Log\+Weight }\end{DoxyParamCaption})}
+
+
+
+Constructor which initialises the particles value and weight. 
+
+Create a particle with value s\+Init and log weight d\+Log\+Weight 
+\begin{DoxyParams}{Parameters}
+{\em s\+Init} & The initial value of the particle \\
+\hline
+{\em d\+Log\+Weight} & The initial value of the natural logarithm of the particle weight \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 111 of file particle.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a5a455cac447d81cc63f04da211f621eb}\label{classsmc_1_1particle_a5a455cac447d81cc63f04da211f621eb}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!particle@{particle}}
+\index{particle@{particle}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{particle()}{particle()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1particle}{particle}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&}]{p\+From }\end{DoxyParamCaption})}
+
+
+
+The copy constructor performs a shallow copy. 
+
+Copy constructor. 
+
+Definition at line 101 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight, and smc\+::particle$<$ Space $>$\+::value.
+
+\mbox{\Hypertarget{classsmc_1_1particle_aa9c2288d3a062a6877b9b45d32158b1a}\label{classsmc_1_1particle_aa9c2288d3a062a6877b9b45d32158b1a}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!````~particle@{$\sim$particle}}
+\index{````~particle@{$\sim$particle}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$particle()}{~particle()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::$\sim$\mbox{\hyperlink{classsmc_1_1particle}{particle}}}
+
+
+
+Dispose of a particle which is no longer required. 
+
+
+
+Definition at line 119 of file particle.\+hh.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1particle_aa9709bd869594efccad4dae254c41b42}\label{classsmc_1_1particle_aa9709bd869594efccad4dae254c41b42}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!AddToLogWeight@{AddToLogWeight}}
+\index{AddToLogWeight@{AddToLogWeight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{AddToLogWeight()}{AddToLogWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Add\+To\+Log\+Weight (\begin{DoxyParamCaption}\item[{double}]{d\+Increment }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Increase the log weight by a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d\+Increment} & The amount to add to the log weight. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 84 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a0c8e4d5f168f5446d4f0e00b8e0fa22e}\label{classsmc_1_1particle_a0c8e4d5f168f5446d4f0e00b8e0fa22e}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!GetLogWeight@{GetLogWeight}}
+\index{GetLogWeight@{GetLogWeight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetLogWeight()}{GetLogWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Get\+Log\+Weight (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the particle\textquotesingle{}s log weight. 
+
+
+
+Definition at line 59 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+
+
+Referenced by std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1particle_a55bd1fbbe5e0dd15d34c4c8bb5cd0222}\label{classsmc_1_1particle_a55bd1fbbe5e0dd15d34c4c8bb5cd0222}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!GetValue@{GetValue}}
+\index{GetValue@{GetValue}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetValue()}{GetValue()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+const Space\& \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Get\+Value (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the particle\textquotesingle{}s value. 
+
+
+
+Definition at line 55 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::value.
+
+
+
+Referenced by std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1particle_a183d59475bf86823773a98007b909eda}\label{classsmc_1_1particle_a183d59475bf86823773a98007b909eda}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!GetValuePointer@{GetValuePointer}}
+\index{GetValuePointer@{GetValuePointer}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetValuePointer()}{GetValuePointer()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+Space$\ast$ \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Get\+Value\+Pointer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns a pointer to the value to allow for more efficient changes. 
+
+
+
+Definition at line 57 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::value.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a500d7f2921bbb082db00eaef2ff22964}\label{classsmc_1_1particle_a500d7f2921bbb082db00eaef2ff22964}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!GetWeight@{GetWeight}}
+\index{GetWeight@{GetWeight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetWeight()}{GetWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Get\+Weight (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the particle\textquotesingle{}s unnormalised weight. 
+
+
+
+Definition at line 61 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Resample().
+
+\mbox{\Hypertarget{classsmc_1_1particle_afe5c5eebeb01206648629d9005f41c57}\label{classsmc_1_1particle_afe5c5eebeb01206648629d9005f41c57}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!MultiplyWeightBy@{MultiplyWeightBy}}
+\index{MultiplyWeightBy@{MultiplyWeightBy}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{MultiplyWeightBy()}{MultiplyWeightBy()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Multiply\+Weight\+By (\begin{DoxyParamCaption}\item[{double}]{d\+Multiplier }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Multiply the weight by a specified factor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d\+Multiplier} & The factor to multiply the weight by. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 88 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a1203739ec2cf4940c6ac1a767d34e26e}\label{classsmc_1_1particle_a1203739ec2cf4940c6ac1a767d34e26e}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \& \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&}]{p\+From }\end{DoxyParamCaption})}
+
+
+
+The assignment operator performs a shallow copy. 
+
+Copy the values of p\+From to the values of this to set this particle identical to p\+From in a deep copy sense. 
+
+Definition at line 126 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight, and smc\+::particle$<$ Space $>$\+::value.
+
+\mbox{\Hypertarget{classsmc_1_1particle_a7b71900c1e4a5ecbb3a8a6d6d334fcfb}\label{classsmc_1_1particle_a7b71900c1e4a5ecbb3a8a6d6d334fcfb}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!Set@{Set}}
+\index{Set@{Set}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Set (\begin{DoxyParamCaption}\item[{Space}]{s\+Value,  }\item[{double}]{d\+Log\+Weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the particle\textquotesingle{}s value and weight explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Value} & The particle value to use \\
+\hline
+{\em d\+Log\+Weight} & The natural logarithm of the new particle weight \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 67 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight, and smc\+::particle$<$ Space $>$\+::value.
+
+\mbox{\Hypertarget{classsmc_1_1particle_ae06a539b1f3293910d27cd5a0a21b6b9}\label{classsmc_1_1particle_ae06a539b1f3293910d27cd5a0a21b6b9}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!SetLogWeight@{SetLogWeight}}
+\index{SetLogWeight@{SetLogWeight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetLogWeight()}{SetLogWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Set\+Log\+Weight (\begin{DoxyParamCaption}\item[{const double \&}]{d\+Log\+Weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the particle\textquotesingle{}s log weight explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d\+Log\+Weight} & The natural logarithm of the new particle weight \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 75 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Resample().
+
+\mbox{\Hypertarget{classsmc_1_1particle_a7ba7438e0cac79d7b5daf2b3b98eb9a9}\label{classsmc_1_1particle_a7ba7438e0cac79d7b5daf2b3b98eb9a9}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!SetValue@{SetValue}}
+\index{SetValue@{SetValue}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetValue()}{SetValue()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Set\+Value (\begin{DoxyParamCaption}\item[{const Space \&}]{s\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the particle\textquotesingle{}s value explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Value} & The particle value to use \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 71 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::value.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Resample().
+
+\mbox{\Hypertarget{classsmc_1_1particle_a18fcabd70c3a9cae531c40e4a5662acf}\label{classsmc_1_1particle_a18fcabd70c3a9cae531c40e4a5662acf}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!SetWeight@{SetWeight}}
+\index{SetWeight@{SetWeight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetWeight()}{SetWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::Set\+Weight (\begin{DoxyParamCaption}\item[{const double \&}]{d\+Weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the particles weight explicitly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em d\+Weight} & The new particle weight \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 79 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::logweight.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1particle_a308fb1b069a6b5a8c2c98a7a4a0e6673}\label{classsmc_1_1particle_a308fb1b069a6b5a8c2c98a7a4a0e6673}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!logweight@{logweight}}
+\index{logweight@{logweight}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{logweight}{logweight}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::logweight\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Natural logarithm of this particle\textquotesingle{}s weight. 
+
+
+
+Definition at line 41 of file particle.\+hh.
+
+
+
+Referenced by smc\+::particle$<$ Space $>$\+::\+Add\+To\+Log\+Weight(), smc\+::particle$<$ Space $>$\+::\+Get\+Log\+Weight(), smc\+::particle$<$ Space $>$\+::\+Get\+Weight(), smc\+::particle$<$ Space $>$\+::\+Multiply\+Weight\+By(), smc\+::particle$<$ Space $>$\+::operator=(), smc\+::particle$<$ Space $>$\+::particle(), smc\+::particle$<$ Space $>$\+::\+Set(), smc\+::particle$<$ Space $>$\+::\+Set\+Log\+Weight(), and smc\+::particle$<$ Space $>$\+::\+Set\+Weight().
+
+\mbox{\Hypertarget{classsmc_1_1particle_a6a9a402d9bc8d906a9fad585c68ed37e}\label{classsmc_1_1particle_a6a9a402d9bc8d906a9fad585c68ed37e}} 
+\index{smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}!value@{value}}
+\index{value@{value}!smc::particle$<$ Space $>$@{smc::particle$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+Space \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$\+::value\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Value of this particle. 
+
+
+
+Definition at line 39 of file particle.\+hh.
+
+
+
+Referenced by smc\+::particle$<$ Space $>$\+::\+Get\+Value(), smc\+::particle$<$ Space $>$\+::\+Get\+Value\+Pointer(), smc\+::particle$<$ Space $>$\+::operator=(), smc\+::particle$<$ Space $>$\+::particle(), smc\+::particle$<$ Space $>$\+::\+Set(), and smc\+::particle$<$ Space $>$\+::\+Set\+Value().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{particle_8hh}{particle.\+hh}}\end{DoxyCompactItemize}

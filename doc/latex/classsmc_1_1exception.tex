@@ -1,0 +1,157 @@
+\hypertarget{classsmc_1_1exception}{}\doxysection{smc\+::exception Class Reference}
+\label{classsmc_1_1exception}\index{smc::exception@{smc::exception}}
+
+
+S\+MC Exception class.  
+
+
+
+
+{\ttfamily \#include $<$smc-\/exception.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::exception\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1exception_a26b8c41384bd1c36330bd43cdebf3cf4}{exception}} (char const $\ast$, long, long, char const $\ast$)
+\begin{DoxyCompactList}\small\item\em Generate an S\+M\+C\+TC Exception class with the specified initialisation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{classsmc_1_1exception_ae7eaaf46a8fbf4fcebc469afec4fa6de}{sz\+File}}
+\begin{DoxyCompactList}\small\item\em The source file from which the code generating the exception was generated. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1exception_a52fa917d7e89cd6532d300549f4f858b}{l\+Line}}
+\begin{DoxyCompactList}\small\item\em The line of that source file which generates the exception. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1exception_ad620f37d0bc39955fb2596d4fb892dfa}{l\+Code}}
+\begin{DoxyCompactList}\small\item\em A numerical code indicating the nature of the exception generated. \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{classsmc_1_1exception_aca7310cf55883c51a5fbd0665ab9c729}{sz\+Message}}
+\begin{DoxyCompactList}\small\item\em A human-\/readable explanation of the cause of the exception. ~\newline
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+S\+MC Exception class. 
+
+This class holds details of unrecoverable errors which occur within the S\+M\+C\+TC library. An instance of it is thrown whenever such an error occurs. 
+
+Definition at line 45 of file smc-\/exception.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1exception_a26b8c41384bd1c36330bd43cdebf3cf4}\label{classsmc_1_1exception_a26b8c41384bd1c36330bd43cdebf3cf4}} 
+\index{smc::exception@{smc::exception}!exception@{exception}}
+\index{exception@{exception}!smc::exception@{smc::exception}}
+\doxysubsubsection{\texorpdfstring{exception()}{exception()}}
+{\footnotesize\ttfamily smc\+::exception\+::exception (\begin{DoxyParamCaption}\item[{char const $\ast$}]{szN,  }\item[{long}]{lL,  }\item[{long}]{lC,  }\item[{char const $\ast$}]{szM }\end{DoxyParamCaption})}
+
+
+
+Generate an S\+M\+C\+TC Exception class with the specified initialisation. 
+
+This constructor fills the four elements of the class with their specified values. It is used to allow a single-\/line command to create and throw an exception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em szN} & The name of the source file generating the exception. \\
+\hline
+{\em lL} & The line in that file responsible for the exception. \\
+\hline
+{\em lC} & The numerical code identifying the exception. \\
+\hline
+{\em szM} & An textual explanation of the problem. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 17 of file smc-\/exception.\+cc.
+
+
+
+References l\+Code, l\+Line, sz\+File, and sz\+Message.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1exception_ad620f37d0bc39955fb2596d4fb892dfa}\label{classsmc_1_1exception_ad620f37d0bc39955fb2596d4fb892dfa}} 
+\index{smc::exception@{smc::exception}!lCode@{lCode}}
+\index{lCode@{lCode}!smc::exception@{smc::exception}}
+\doxysubsubsection{\texorpdfstring{lCode}{lCode}}
+{\footnotesize\ttfamily long smc\+::exception\+::l\+Code}
+
+
+
+A numerical code indicating the nature of the exception generated. 
+
+
+
+Definition at line 49 of file smc-\/exception.\+hh.
+
+
+
+Referenced by exception(), and std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1exception_a52fa917d7e89cd6532d300549f4f858b}\label{classsmc_1_1exception_a52fa917d7e89cd6532d300549f4f858b}} 
+\index{smc::exception@{smc::exception}!lLine@{lLine}}
+\index{lLine@{lLine}!smc::exception@{smc::exception}}
+\doxysubsubsection{\texorpdfstring{lLine}{lLine}}
+{\footnotesize\ttfamily long smc\+::exception\+::l\+Line}
+
+
+
+The line of that source file which generates the exception. 
+
+
+
+Definition at line 48 of file smc-\/exception.\+hh.
+
+
+
+Referenced by exception(), and std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1exception_ae7eaaf46a8fbf4fcebc469afec4fa6de}\label{classsmc_1_1exception_ae7eaaf46a8fbf4fcebc469afec4fa6de}} 
+\index{smc::exception@{smc::exception}!szFile@{szFile}}
+\index{szFile@{szFile}!smc::exception@{smc::exception}}
+\doxysubsubsection{\texorpdfstring{szFile}{szFile}}
+{\footnotesize\ttfamily const char$\ast$ smc\+::exception\+::sz\+File}
+
+
+
+The source file from which the code generating the exception was generated. 
+
+
+
+Definition at line 47 of file smc-\/exception.\+hh.
+
+
+
+Referenced by exception(), and std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1exception_aca7310cf55883c51a5fbd0665ab9c729}\label{classsmc_1_1exception_aca7310cf55883c51a5fbd0665ab9c729}} 
+\index{smc::exception@{smc::exception}!szMessage@{szMessage}}
+\index{szMessage@{szMessage}!smc::exception@{smc::exception}}
+\doxysubsubsection{\texorpdfstring{szMessage}{szMessage}}
+{\footnotesize\ttfamily const char$\ast$ smc\+::exception\+::sz\+Message}
+
+
+
+A human-\/readable explanation of the cause of the exception. ~\newline
+ 
+
+
+
+Definition at line 50 of file smc-\/exception.\+hh.
+
+
+
+Referenced by exception(), and std\+::operator$<$$<$().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{smc-exception_8hh}{smc-\/exception.\+hh}}\item 
+src/\mbox{\hyperlink{smc-exception_8cc}{smc-\/exception.\+cc}}\end{DoxyCompactItemize}

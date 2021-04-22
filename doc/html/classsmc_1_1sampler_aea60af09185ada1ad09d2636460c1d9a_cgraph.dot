@@ -1,0 +1,14 @@
+digraph "smc::sampler::Initialise"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="smc::sampler::Initialise",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Initialise the sampler and its constituent particles."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="smc::moveset::DoInit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1moveset.html#ae3e91e3567598b77d5c25f054019f0c1",tooltip="Initialise a particle."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="smc::history::Pop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html#a357df9bac6932c41a97f99a68563e128",tooltip="Remove the terminal particle generation from the list and return that particle."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="smc::history::Push",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html#a9aa512bddff270eb5fed8f5d9447d1f9",tooltip="Append the supplied particle generation to the end of the list."];
+}

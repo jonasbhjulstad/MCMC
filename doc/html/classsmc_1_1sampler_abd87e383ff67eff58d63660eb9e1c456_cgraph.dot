@@ -1,0 +1,10 @@
+digraph "smc::sampler::IterateBack"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="smc::sampler::IterateBack",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Cancel one iteration of the simulation algorithm."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="smc::history::Pop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html#a357df9bac6932c41a97f99a68563e128",tooltip="Remove the terminal particle generation from the list and return that particle."];
+}

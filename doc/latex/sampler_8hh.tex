@@ -1,0 +1,131 @@
+\hypertarget{sampler_8hh}{}\doxysection{include/sampler.hh File Reference}
+\label{sampler_8hh}\index{include/sampler.hh@{include/sampler.hh}}
+
+
+Defines the overall sampler object.  
+
+
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}rng.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}history.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}moveset.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}particle.\+hh\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}smc-\/exception.\+hh\char`\"{}}\newline
+Include dependency graph for sampler.\+hh\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler$<$ Space $>$}}
+\begin{DoxyCompactList}\small\item\em A template class for an interacting particle system suitable for S\+MC sampling. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacesmc}{smc}}
+\begin{DoxyCompactList}\small\item\em The Sequential Monte Carlo namespace. \end{DoxyCompactList}\item 
+ \mbox{\hyperlink{namespacestd}{std}}
+\begin{DoxyCompactList}\small\item\em The standard namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sampler_8hh_a96556358c5d5335159eb80b6529feadf}{\+\_\+\+\_\+\+S\+M\+C\+\_\+\+S\+A\+M\+P\+L\+E\+R\+\_\+\+HH}}~1.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}} \{ \mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997aeb6c99cd9f0a91a3ff8d84001081ba01}{S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+M\+U\+L\+T\+I\+N\+O\+M\+I\+AL}} = 0, 
+\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a12b30d6524b804bcece25c39702ceb3e}{S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+R\+E\+S\+I\+D\+U\+AL}}, 
+\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a02718c7c2eff18de7ff1d30031f8fb30}{S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED}}, 
+\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a4e8d44c9d0913309478d804846e91753}{S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+Y\+S\+T\+E\+M\+A\+T\+IC}}
+ \}
+\begin{DoxyCompactList}\small\item\em Specifiers for various resampling algorithms\+: \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}} \{ \mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbada1181918d8fd702a429ec7a93617fa9d2}{S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE}} = 0, 
+\mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbadabfaabb31510f4f50e6bab601ce9e9f7f}{S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+R\+AM}}
+ \}
+\begin{DoxyCompactList}\small\item\em Storage types for the history of the particle system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Space $>$ }\\std\+::ostream \& \mbox{\hyperlink{namespacestd_a21bc13000335a11fcbd1ee4190fd1320}{std\+::operator$<$$<$}} (std\+::ostream \&os, \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} class using the stream operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines the overall sampler object. 
+
+This file defines the \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} class which is used to implement entire particle systems. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{sampler_8hh_a96556358c5d5335159eb80b6529feadf}\label{sampler_8hh_a96556358c5d5335159eb80b6529feadf}} 
+\index{sampler.hh@{sampler.hh}!\_\_SMC\_SAMPLER\_HH@{\_\_SMC\_SAMPLER\_HH}}
+\index{\_\_SMC\_SAMPLER\_HH@{\_\_SMC\_SAMPLER\_HH}!sampler.hh@{sampler.hh}}
+\doxysubsubsection{\texorpdfstring{\_\_SMC\_SAMPLER\_HH}{\_\_SMC\_SAMPLER\_HH}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+S\+M\+C\+\_\+\+S\+A\+M\+P\+L\+E\+R\+\_\+\+HH~1.\+0}
+
+
+
+Definition at line 27 of file sampler.\+hh.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}\label{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}} 
+\index{sampler.hh@{sampler.hh}!HistoryType@{HistoryType}}
+\index{HistoryType@{HistoryType}!sampler.hh@{sampler.hh}}
+\doxysubsubsection{\texorpdfstring{HistoryType}{HistoryType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}}}
+
+
+
+Storage types for the history of the particle system. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_HISTORY\_NONE@{SMC\_HISTORY\_NONE}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_HISTORY\_NONE@{SMC\_HISTORY\_NONE}}}\mbox{\Hypertarget{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbada1181918d8fd702a429ec7a93617fa9d2}\label{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbada1181918d8fd702a429ec7a93617fa9d2}} 
+S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_HISTORY\_RAM@{SMC\_HISTORY\_RAM}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_HISTORY\_RAM@{SMC\_HISTORY\_RAM}}}\mbox{\Hypertarget{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbadabfaabb31510f4f50e6bab601ce9e9f7f}\label{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbadabfaabb31510f4f50e6bab601ce9e9f7f}} 
+S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+R\+AM&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 46 of file sampler.\+hh.
+
+\mbox{\Hypertarget{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}\label{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}} 
+\index{sampler.hh@{sampler.hh}!ResampleType@{ResampleType}}
+\index{ResampleType@{ResampleType}!sampler.hh@{sampler.hh}}
+\doxysubsubsection{\texorpdfstring{ResampleType}{ResampleType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}}}
+
+
+
+Specifiers for various resampling algorithms\+: 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_RESAMPLE\_MULTINOMIAL@{SMC\_RESAMPLE\_MULTINOMIAL}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_RESAMPLE\_MULTINOMIAL@{SMC\_RESAMPLE\_MULTINOMIAL}}}\mbox{\Hypertarget{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997aeb6c99cd9f0a91a3ff8d84001081ba01}\label{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997aeb6c99cd9f0a91a3ff8d84001081ba01}} 
+S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+M\+U\+L\+T\+I\+N\+O\+M\+I\+AL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_RESAMPLE\_RESIDUAL@{SMC\_RESAMPLE\_RESIDUAL}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_RESAMPLE\_RESIDUAL@{SMC\_RESAMPLE\_RESIDUAL}}}\mbox{\Hypertarget{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a12b30d6524b804bcece25c39702ceb3e}\label{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a12b30d6524b804bcece25c39702ceb3e}} 
+S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+R\+E\+S\+I\+D\+U\+AL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_RESAMPLE\_STRATIFIED@{SMC\_RESAMPLE\_STRATIFIED}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_RESAMPLE\_STRATIFIED@{SMC\_RESAMPLE\_STRATIFIED}}}\mbox{\Hypertarget{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a02718c7c2eff18de7ff1d30031f8fb30}\label{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a02718c7c2eff18de7ff1d30031f8fb30}} 
+S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SMC\_RESAMPLE\_SYSTEMATIC@{SMC\_RESAMPLE\_SYSTEMATIC}!sampler.hh@{sampler.hh}}\index{sampler.hh@{sampler.hh}!SMC\_RESAMPLE\_SYSTEMATIC@{SMC\_RESAMPLE\_SYSTEMATIC}}}\mbox{\Hypertarget{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a4e8d44c9d0913309478d804846e91753}\label{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997a4e8d44c9d0913309478d804846e91753}} 
+S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+Y\+S\+T\+E\+M\+A\+T\+IC&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 40 of file sampler.\+hh.
+

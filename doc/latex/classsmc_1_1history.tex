@@ -1,0 +1,344 @@
+\hypertarget{classsmc_1_1history}{}\doxysection{smc\+::history$<$ Particle $>$ Class Template Reference}
+\label{classsmc_1_1history}\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+
+
+A template class for the history associated with a particle system evolving in S\+MC.  
+
+
+
+
+{\ttfamily \#include $<$history.\+hh$>$}
+
+
+
+Inheritance diagram for smc\+::history$<$ Particle $>$\+:
+% FIG 0
+
+
+Collaboration diagram for smc\+::history$<$ Particle $>$\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1history_a1478a1e278915cb137d652a8a8aaaba0}{history}} ()
+\begin{DoxyCompactList}\small\item\em The argument free constructor creates an empty list. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$ Particle $>$ $\ast$ \mbox{\hyperlink{classsmc_1_1history_a2fa2eb09b91f05c7decac497812c2d31}{Get\+Element}} (void) const
+\begin{DoxyCompactList}\small\item\em This function returns a pointer to the first element of the history. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1history_a9e74655e9d8e156d7a4948650daec379}{Get\+E\+SS}} (long l\+Generation) const
+\begin{DoxyCompactList}\small\item\em Returns the effective sample size of the specified particle generation. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1history_ae24e21a533882a2331482f7d2772c75f}{Get\+Length}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the number of generations recorded within the history. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1history_afdc447f97a14b0355e6a0790d9c8a8b7}{Integrate\+Path\+Sampling}} (double($\ast$p\+Integrand)(long, const Particle \&, void $\ast$), double($\ast$p\+Width)(long, void $\ast$), void $\ast$p\+Auxiliary)
+\begin{DoxyCompactList}\small\item\em Integrate the supplied function over the path of the particle ensemble. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1history_a82758a6a80161a0b997be9d936151773}{Integrate\+Path\+Sampling\+Final\+Step}} (double($\ast$p\+Integrand)(long, const Particle \&, void $\ast$), void $\ast$p\+Auxiliary) const
+\item 
+void \mbox{\hyperlink{classsmc_1_1history_a5aed633afe6ada480e971e626303193e}{Ostream\+M\+C\+M\+C\+Record\+To\+Stream}} (std\+::ostream \&os) const
+\begin{DoxyCompactList}\small\item\em Output a vector indicating the number of accepted M\+C\+MC moves at each time instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1history_adcbe0d38b5f6225e3843b2be66946c11}{Ostream\+Resampling\+Record\+To\+Stream}} (std\+::ostream \&os) const
+\begin{DoxyCompactList}\small\item\em Output a 0-\/1 value vector indicating the times at which resampling occured to an output stream. \end{DoxyCompactList}\item 
+Particle $\ast$ \mbox{\hyperlink{classsmc_1_1history_a357df9bac6932c41a97f99a68563e128}{Pop}} (void)
+\begin{DoxyCompactList}\small\item\em Remove the terminal particle generation from the list and return that particle. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1history_a3cb3cf697552e15c6fce7dc288f5639a}{Pop}} (long $\ast$pl\+Number, Particle $\ast$$\ast$pp\+New, int $\ast$pn\+Accept, \mbox{\hyperlink{classsmc_1_1historyflags}{historyflags}} $\ast$phf)
+\begin{DoxyCompactList}\small\item\em Remove the terminal particle generation from the list and stick it in the supplied data structures. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1history_a9aa512bddff270eb5fed8f5d9447d1f9}{Push}} (long l\+Number, Particle $\ast$p\+New, int n\+Accept, \mbox{\hyperlink{classsmc_1_1historyflags}{historyflags}} hf)
+\begin{DoxyCompactList}\small\item\em Append the supplied particle generation to the end of the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+long \mbox{\hyperlink{classsmc_1_1history_a1cadaa7fe21f3f630ce0effefc7e9661}{l\+Length}}
+\begin{DoxyCompactList}\small\item\em The length of the history in time steps. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$ Particle $>$ $\ast$ \mbox{\hyperlink{classsmc_1_1history_a52c773bbccf4fab39b009fcd6a2c9c7b}{p\+Root}}
+\begin{DoxyCompactList}\small\item\em The first time step. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$ Particle $>$ $\ast$ \mbox{\hyperlink{classsmc_1_1history_a70632f119d0b399eeeae9f980c1f4d25}{p\+Leaf}}
+\begin{DoxyCompactList}\small\item\em The most recent time step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Particle$>$\newline
+class smc\+::history$<$ Particle $>$}
+
+A template class for the history associated with a particle system evolving in S\+MC. 
+
+The history is a template class which should have an associated class type corresponding to a {\itshape particle} of the desired type, not the type itself.
+
+Essentially, this is implemented as a doubly linked list. ~\newline
+ 
+
+Definition at line 232 of file history.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1history_a1478a1e278915cb137d652a8a8aaaba0}\label{classsmc_1_1history_a1478a1e278915cb137d652a8a8aaaba0}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!history@{history}}
+\index{history@{history}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{history()}{history()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+\mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::\mbox{\hyperlink{classsmc_1_1history}{history}}}
+
+
+
+The argument free constructor creates an empty list. 
+
+This constructor simply sets the root and leaf pointers to N\+U\+LL and the list length to zero. 
+
+Definition at line 276 of file history.\+hh.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1history_a2fa2eb09b91f05c7decac497812c2d31}\label{classsmc_1_1history_a2fa2eb09b91f05c7decac497812c2d31}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!GetElement@{GetElement}}
+\index{GetElement@{GetElement}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{GetElement()}{GetElement()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+const \mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$Particle $>$$\ast$ \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Get\+Element (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This function returns a pointer to the first element of the history. 
+
+
+
+Definition at line 247 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a9e74655e9d8e156d7a4948650daec379}\label{classsmc_1_1history_a9e74655e9d8e156d7a4948650daec379}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!GetESS@{GetESS}}
+\index{GetESS@{GetESS}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{GetESS()}{GetESS()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+double \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Get\+E\+SS (\begin{DoxyParamCaption}\item[{long}]{l\+Generation }\end{DoxyParamCaption}) const}
+
+
+
+Returns the effective sample size of the specified particle generation. 
+
+
+
+Definition at line 284 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_ae24e21a533882a2331482f7d2772c75f}\label{classsmc_1_1history_ae24e21a533882a2331482f7d2772c75f}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!GetLength@{GetLength}}
+\index{GetLength@{GetLength}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{GetLength()}{GetLength()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+long \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Get\+Length (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the number of generations recorded within the history. 
+
+
+
+Definition at line 252 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_afdc447f97a14b0355e6a0790d9c8a8b7}\label{classsmc_1_1history_afdc447f97a14b0355e6a0790d9c8a8b7}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!IntegratePathSampling@{IntegratePathSampling}}
+\index{IntegratePathSampling@{IntegratePathSampling}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{IntegratePathSampling()}{IntegratePathSampling()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+double \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Integrate\+Path\+Sampling (\begin{DoxyParamCaption}\item[{double($\ast$)(long, const Particle \&, void $\ast$)}]{p\+Integrand,  }\item[{double($\ast$)(long, void $\ast$)}]{p\+Width,  }\item[{void $\ast$}]{p\+Auxiliary }\end{DoxyParamCaption})}
+
+
+
+Integrate the supplied function over the path of the particle ensemble. 
+
+This function performs a trapezoidal integration of the type which is useful when using path sampling to estimate the normalising constant of a potential function in those cases where a sequence of distributions is produced by deforming the initial distribution by a sequence of progressively more influential potential functions which are proportional to the density of some other distribution with respect to the starting distribution.
+
+The integrand is integrated at every time point in the particle system history. The results of this integration are taken to be point-\/evaluations of the path sampling integrand which are spaced on a grid of intervals given by the width function. The path sampling integral is then calculated by performing a suitable trapezoidal integration and the results of this integration is returned.
+
+p\+Auxiliary is passed to both of the user specified functions to allow the user to pass additional data to either or both of these functions in a convenient manner. It is safe to use N\+U\+LL if no such data is used by either function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Integrand} & The function to integrated. The first argument is evolution time, the second a particle at which the function is to be evaluated and the final argument is always p\+Auxiliary. \\
+\hline
+{\em p\+Width} & The function which returns the width of the path sampling grid at the specified evolution time. The final argument is always p\+Auxiliary \\
+\hline
+{\em p\+Auxiliary} & A pointer to auxiliary data to pass to both of the above functions \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 347 of file history.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Integrate\+Path\+Sampling().
+
+\mbox{\Hypertarget{classsmc_1_1history_a82758a6a80161a0b997be9d936151773}\label{classsmc_1_1history_a82758a6a80161a0b997be9d936151773}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!IntegratePathSamplingFinalStep@{IntegratePathSamplingFinalStep}}
+\index{IntegratePathSamplingFinalStep@{IntegratePathSamplingFinalStep}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{IntegratePathSamplingFinalStep()}{IntegratePathSamplingFinalStep()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+double \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Integrate\+Path\+Sampling\+Final\+Step (\begin{DoxyParamCaption}\item[{double($\ast$)(long, const Particle \&, void $\ast$)}]{p\+Integrand,  }\item[{void $\ast$}]{p\+Auxiliary }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line 366 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a5aed633afe6ada480e971e626303193e}\label{classsmc_1_1history_a5aed633afe6ada480e971e626303193e}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!OstreamMCMCRecordToStream@{OstreamMCMCRecordToStream}}
+\index{OstreamMCMCRecordToStream@{OstreamMCMCRecordToStream}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{OstreamMCMCRecordToStream()}{OstreamMCMCRecordToStream()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+void \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Ostream\+M\+C\+M\+C\+Record\+To\+Stream (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+
+
+Output a vector indicating the number of accepted M\+C\+MC moves at each time instance. 
+
+This function records the M\+C\+MC acceptance history to the specified output stream as a list of the number of moves accepted at each time instant.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream to send the data to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 299 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_adcbe0d38b5f6225e3843b2be66946c11}\label{classsmc_1_1history_adcbe0d38b5f6225e3843b2be66946c11}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!OstreamResamplingRecordToStream@{OstreamResamplingRecordToStream}}
+\index{OstreamResamplingRecordToStream@{OstreamResamplingRecordToStream}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{OstreamResamplingRecordToStream()}{OstreamResamplingRecordToStream()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+void \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Ostream\+Resampling\+Record\+To\+Stream (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+
+
+Output a 0-\/1 value vector indicating the times at which resampling occured to an output stream. 
+
+This function records the resampling history to the specified output stream as a 0-\/1 valued list which takes the value 1 for those time instances when resampling occured and 0 otherwise.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream to send the data to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 313 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a3cb3cf697552e15c6fce7dc288f5639a}\label{classsmc_1_1history_a3cb3cf697552e15c6fce7dc288f5639a}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!Pop@{Pop}}
+\index{Pop@{Pop}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{Pop()}{Pop()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+void \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Pop (\begin{DoxyParamCaption}\item[{long $\ast$}]{pl\+Number,  }\item[{Particle $\ast$$\ast$}]{pp\+New,  }\item[{int $\ast$}]{pn\+Accept,  }\item[{\mbox{\hyperlink{classsmc_1_1historyflags}{historyflags}} $\ast$}]{phf }\end{DoxyParamCaption})}
+
+
+
+Remove the terminal particle generation from the list and stick it in the supplied data structures. 
+
+Pop operates as the usual stack operation
+
+If called with four pointers of this sort, it removes the last particle generation from the history stack and places them in the reference objects. 
+
+Definition at line 400 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a357df9bac6932c41a97f99a68563e128}\label{classsmc_1_1history_a357df9bac6932c41a97f99a68563e128}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!Pop@{Pop}}
+\index{Pop@{Pop}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{Pop()}{Pop()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+Particle $\ast$ \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Pop (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Remove the terminal particle generation from the list and return that particle. 
+
+\mbox{\hyperlink{classsmc_1_1history_a357df9bac6932c41a97f99a68563e128}{Pop()}} operates just as the standard stack operation does. It removes the particle generation currently occupying the terminal position in the chain, decrements the length counter and returns the particle set as an array. 
+
+Definition at line 375 of file history.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Initialise(), smc\+::sampler$<$ Space $>$\+::\+Integrate\+Path\+Sampling(), and smc\+::sampler$<$ Space $>$\+::\+Iterate\+Back().
+
+\mbox{\Hypertarget{classsmc_1_1history_a9aa512bddff270eb5fed8f5d9447d1f9}\label{classsmc_1_1history_a9aa512bddff270eb5fed8f5d9447d1f9}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!Push@{Push}}
+\index{Push@{Push}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{Push()}{Push()}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+void \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::Push (\begin{DoxyParamCaption}\item[{long}]{l\+Number,  }\item[{Particle $\ast$}]{p\+New,  }\item[{int}]{n\+Accepts,  }\item[{\mbox{\hyperlink{classsmc_1_1historyflags}{historyflags}}}]{hf }\end{DoxyParamCaption})}
+
+
+
+Append the supplied particle generation to the end of the list. 
+
+Push operates just like the standard stack operation\+: it adds the specified particle set generation to the history of the particle set and increments the stack counter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em l\+Number} & The number of particles present in this generation of the system. \\
+\hline
+{\em p\+New} & An array containing the particles present in this generation of the system. \\
+\hline
+{\em n\+Accepts} & The number of accepted M\+C\+MC moves during this iteration of the system \\
+\hline
+{\em hf} & The historyflags associated with this generation of the system. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 439 of file history.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Initialise(), smc\+::sampler$<$ Space $>$\+::\+Integrate\+Path\+Sampling(), and smc\+::sampler$<$ Space $>$\+::\+Iterate\+Ess().
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1history_a1cadaa7fe21f3f630ce0effefc7e9661}\label{classsmc_1_1history_a1cadaa7fe21f3f630ce0effefc7e9661}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!lLength@{lLength}}
+\index{lLength@{lLength}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{lLength}{lLength}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+long \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::l\+Length\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The length of the history in time steps. 
+
+
+
+Definition at line 236 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a70632f119d0b399eeeae9f980c1f4d25}\label{classsmc_1_1history_a70632f119d0b399eeeae9f980c1f4d25}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!pLeaf@{pLeaf}}
+\index{pLeaf@{pLeaf}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{pLeaf}{pLeaf}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+\mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$Particle$>$$\ast$ \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::p\+Leaf\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The most recent time step. 
+
+
+
+Definition at line 240 of file history.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1history_a52c773bbccf4fab39b009fcd6a2c9c7b}\label{classsmc_1_1history_a52c773bbccf4fab39b009fcd6a2c9c7b}} 
+\index{smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}!pRoot@{pRoot}}
+\index{pRoot@{pRoot}!smc::history$<$ Particle $>$@{smc::history$<$ Particle $>$}}
+\doxysubsubsection{\texorpdfstring{pRoot}{pRoot}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+\mbox{\hyperlink{classsmc_1_1historyelement}{historyelement}}$<$Particle$>$$\ast$ \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$\+::p\+Root\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The first time step. 
+
+
+
+Definition at line 238 of file history.\+hh.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{history_8hh}{history.\+hh}}\end{DoxyCompactItemize}

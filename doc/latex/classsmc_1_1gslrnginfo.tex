@@ -1,0 +1,207 @@
+\hypertarget{classsmc_1_1gslrnginfo}{}\doxysection{smc\+::gslrnginfo Class Reference}
+\label{classsmc_1_1gslrnginfo}\index{smc::gslrnginfo@{smc::gslrnginfo}}
+
+
+A gsl-\/rng information handling class (not templated)  
+
+
+
+
+{\ttfamily \#include $<$rng.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::gslrnginfo\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classsmc_1_1gslrnginfo_a20c85dbd949852ffd596471a1a9e8f90}{Get\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of available random number generators. \end{DoxyCompactList}\item 
+const char $\ast$ \mbox{\hyperlink{classsmc_1_1gslrnginfo_a8e5b6d86e65f46d9a02af9e2fde5728c}{Get\+Name\+By\+Index}} (int n\+Index)
+\begin{DoxyCompactList}\small\item\em Returns the name of random number generator number n\+Index. \end{DoxyCompactList}\item 
+const gsl\+\_\+rng\+\_\+type $\ast$ \mbox{\hyperlink{classsmc_1_1gslrnginfo_a14508ed9634004b4262bfba700cd1ba5}{Get\+Pointer\+By\+Index}} (int n\+Index)
+\begin{DoxyCompactList}\small\item\em Returns a pointer to random number generator n\+Index. \end{DoxyCompactList}\item 
+const gsl\+\_\+rng\+\_\+type $\ast$ \mbox{\hyperlink{classsmc_1_1gslrnginfo_ac81ff84fa7511e0122102cba4c5950c6}{Get\+Pointer\+By\+Name}} (const char $\ast$sz\+Name)
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the random number generator with name sz\+Name (or null if it doesn\textquotesingle{}t exist). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classsmc_1_1gslrnginfo}{gslrnginfo}} $\ast$ \mbox{\hyperlink{classsmc_1_1gslrnginfo_a5fc0b8a2eba8a79a358066a2e450b58c}{Get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Returns a reference to the sole static instance of this class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1gslrnginfo_ada8c0f67c36d9090d24a389f0dc7e3e3}{gslrnginfo}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const gsl\+\_\+rng\+\_\+type $\ast$$\ast$ \mbox{\hyperlink{classsmc_1_1gslrnginfo_a860c591d82bfed025ab8a59078ef7386}{type\+Pt\+Array}}
+\begin{DoxyCompactList}\small\item\em This is a null terminated array of the available random number generators. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classsmc_1_1gslrnginfo_a9ff341c2b1eccbf705dfe1e5eb29881d}{n\+Number}}
+\begin{DoxyCompactList}\small\item\em The number of available random number generators. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A gsl-\/rng information handling class (not templated) 
+
+Definition at line 37 of file rng.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_ada8c0f67c36d9090d24a389f0dc7e3e3}\label{classsmc_1_1gslrnginfo_ada8c0f67c36d9090d24a389f0dc7e3e3}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!gslrnginfo@{gslrnginfo}}
+\index{gslrnginfo@{gslrnginfo}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{gslrnginfo()}{gslrnginfo()}}
+{\footnotesize\ttfamily smc\+::gslrnginfo\+::gslrnginfo (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+The G\+SL provides a mechanism for obtaining a list of available random number generators.
+
+This class provides a wrapper for this mechanism and makes it simple to implement software which allows the nature of the random number generator to be specified at runtime (and to allow it to be a user-\/specifiable parameter).
+
+For example, \mbox{\hyperlink{classsmc_1_1gslrnginfo_a20c85dbd949852ffd596471a1a9e8f90}{gslrnginfo\+::\+Get\+Number}} can be used to determine how many R\+N\+Gs are available and \mbox{\hyperlink{classsmc_1_1gslrnginfo_a8e5b6d86e65f46d9a02af9e2fde5728c}{gslrnginfo\+::\+Get\+Name\+By\+Index}} can then be used to populate a list box with their names. Once the user has selected on the \mbox{\hyperlink{classsmc_1_1gslrnginfo_ac81ff84fa7511e0122102cba4c5950c6}{gslrnginfo\+::\+Get\+Pointer\+By\+Name}} function can be used to obtain a pointer to the appropriate type and this can be used to produce a random number generator of the desired type.
+
+There should be exactly one instance of this class in any program, and that instance is created by the library. A singleton DP implementation ensures that any additional attempt to instatiate the class simply returns a reference to the existing instance. 
+
+Definition at line 26 of file rng.\+cc.
+
+
+
+References n\+Number, and type\+Pt\+Array.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a5fc0b8a2eba8a79a358066a2e450b58c}\label{classsmc_1_1gslrnginfo_a5fc0b8a2eba8a79a358066a2e450b58c}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!GetInstance@{GetInstance}}
+\index{GetInstance@{GetInstance}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{GetInstance()}{GetInstance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsmc_1_1gslrnginfo}{gslrnginfo}} $\ast$ smc\+::gslrnginfo\+::\+Get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Returns a reference to the sole static instance of this class. 
+
+Returns a pointer to a single instance of this class. 
+
+Definition at line 40 of file rng.\+cc.
+
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a8e5b6d86e65f46d9a02af9e2fde5728c}\label{classsmc_1_1gslrnginfo_a8e5b6d86e65f46d9a02af9e2fde5728c}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!GetNameByIndex@{GetNameByIndex}}
+\index{GetNameByIndex@{GetNameByIndex}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{GetNameByIndex()}{GetNameByIndex()}}
+{\footnotesize\ttfamily const char $\ast$ smc\+::gslrnginfo\+::\+Get\+Name\+By\+Index (\begin{DoxyParamCaption}\item[{int}]{n\+Index }\end{DoxyParamCaption})}
+
+
+
+Returns the name of random number generator number n\+Index. 
+
+This function returns the name of the specified generator. 
+
+Definition at line 54 of file rng.\+cc.
+
+
+
+References n\+Number, and type\+Pt\+Array.
+
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a20c85dbd949852ffd596471a1a9e8f90}\label{classsmc_1_1gslrnginfo_a20c85dbd949852ffd596471a1a9e8f90}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!GetNumber@{GetNumber}}
+\index{GetNumber@{GetNumber}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{GetNumber()}{GetNumber()}}
+{\footnotesize\ttfamily int smc\+::gslrnginfo\+::\+Get\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the number of available random number generators. 
+
+This function returns the number of available generators. 
+
+Definition at line 48 of file rng.\+cc.
+
+
+
+References n\+Number.
+
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a14508ed9634004b4262bfba700cd1ba5}\label{classsmc_1_1gslrnginfo_a14508ed9634004b4262bfba700cd1ba5}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!GetPointerByIndex@{GetPointerByIndex}}
+\index{GetPointerByIndex@{GetPointerByIndex}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{GetPointerByIndex()}{GetPointerByIndex()}}
+{\footnotesize\ttfamily const gsl\+\_\+rng\+\_\+type $\ast$ smc\+::gslrnginfo\+::\+Get\+Pointer\+By\+Index (\begin{DoxyParamCaption}\item[{int}]{n\+Index }\end{DoxyParamCaption})}
+
+
+
+Returns a pointer to random number generator n\+Index. 
+
+This function returns a pointer to the specified generator type. 
+
+Definition at line 62 of file rng.\+cc.
+
+
+
+References n\+Number, and type\+Pt\+Array.
+
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_ac81ff84fa7511e0122102cba4c5950c6}\label{classsmc_1_1gslrnginfo_ac81ff84fa7511e0122102cba4c5950c6}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!GetPointerByName@{GetPointerByName}}
+\index{GetPointerByName@{GetPointerByName}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{GetPointerByName()}{GetPointerByName()}}
+{\footnotesize\ttfamily const gsl\+\_\+rng\+\_\+type $\ast$ smc\+::gslrnginfo\+::\+Get\+Pointer\+By\+Name (\begin{DoxyParamCaption}\item[{const char $\ast$}]{sz\+Name }\end{DoxyParamCaption})}
+
+
+
+Returns a pointer to the random number generator with name sz\+Name (or null if it doesn\textquotesingle{}t exist). 
+
+This function returns a pointer to the specified generator type. 
+
+Definition at line 70 of file rng.\+cc.
+
+
+
+References n\+Number, and type\+Pt\+Array.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a9ff341c2b1eccbf705dfe1e5eb29881d}\label{classsmc_1_1gslrnginfo_a9ff341c2b1eccbf705dfe1e5eb29881d}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!nNumber@{nNumber}}
+\index{nNumber@{nNumber}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{nNumber}{nNumber}}
+{\footnotesize\ttfamily int smc\+::gslrnginfo\+::n\+Number\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of available random number generators. 
+
+
+
+Definition at line 42 of file rng.\+hh.
+
+
+
+Referenced by Get\+Name\+By\+Index(), Get\+Number(), Get\+Pointer\+By\+Index(), Get\+Pointer\+By\+Name(), and gslrnginfo().
+
+\mbox{\Hypertarget{classsmc_1_1gslrnginfo_a860c591d82bfed025ab8a59078ef7386}\label{classsmc_1_1gslrnginfo_a860c591d82bfed025ab8a59078ef7386}} 
+\index{smc::gslrnginfo@{smc::gslrnginfo}!typePtArray@{typePtArray}}
+\index{typePtArray@{typePtArray}!smc::gslrnginfo@{smc::gslrnginfo}}
+\doxysubsubsection{\texorpdfstring{typePtArray}{typePtArray}}
+{\footnotesize\ttfamily const gsl\+\_\+rng\+\_\+type$\ast$$\ast$ smc\+::gslrnginfo\+::type\+Pt\+Array\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This is a null terminated array of the available random number generators. 
+
+
+
+Definition at line 40 of file rng.\+hh.
+
+
+
+Referenced by Get\+Name\+By\+Index(), Get\+Pointer\+By\+Index(), Get\+Pointer\+By\+Name(), and gslrnginfo().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{rng_8hh}{rng.\+hh}}\item 
+src/\mbox{\hyperlink{rng_8cc}{rng.\+cc}}\end{DoxyCompactItemize}

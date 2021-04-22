@@ -1,0 +1,431 @@
+\hypertarget{classsmc_1_1moveset}{}\doxysection{smc\+::moveset$<$ Space $>$ Class Template Reference}
+\label{classsmc_1_1moveset}\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+
+
+A template class for a set of moves for use in an S\+MC samplers framework.  
+
+
+
+
+{\ttfamily \#include $<$moveset.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::moveset$<$ Space $>$\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1moveset_a27b84f5fc5d525788ecf778e4cf1e624}{moveset}} ()
+\begin{DoxyCompactList}\small\item\em Create a completely unspecified moveset. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1moveset_acecf43eba21158a7decc79e836a67e3e}{moveset}} (\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$pf\+Init)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$), void($\ast$pf\+New\+Moves)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$), int($\ast$pf\+New\+M\+C\+MC)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Create a reduced moveset with a single move. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1moveset_a2305b62ba06e069d991e84cc1bd05597}{moveset}} (\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$pf\+Init)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$), long($\ast$pf\+Move\+Selector)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$), long n\+Moves, void($\ast$$\ast$pf\+New\+Moves)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$), int($\ast$pf\+New\+M\+C\+MC)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Create a fully specified moveset. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \mbox{\hyperlink{classsmc_1_1moveset_ae3e91e3567598b77d5c25f054019f0c1}{Do\+Init}} (\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$p\+Rng)
+\begin{DoxyCompactList}\small\item\em Initialise a particle. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classsmc_1_1moveset_a2bef5e7529dd8c0defbf49d68c73f14c}{Do\+M\+C\+MC}} (long l\+Time, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&p\+From, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$p\+Rng)
+\begin{DoxyCompactList}\small\item\em Perform an M\+C\+MC move on a particle. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1moveset_a7e4ffb6133894e026814a2a6b906dd93}{Do\+Move}} (long l\+Time, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&p\+From, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$p\+Rng)
+\begin{DoxyCompactList}\small\item\em Select an appropriate move at time l\+Time and apply it to p\+From. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1moveset_aa2b14cca850b40844680a64e97ec2a6e}{$\sim$moveset}} ()
+\begin{DoxyCompactList}\small\item\em Free the memory used for the array of move pointers when deleting. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1moveset_a279d1fb62fe1da64edf3830728e3e731}{Set\+Initialisor}} (\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$pf\+Init)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the initialisation function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1moveset_a0db2004c76d8bcd3cac6bc1a2a620c6a}{Set\+M\+C\+M\+C\+Function}} (int($\ast$pf\+New\+M\+C\+MC)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the M\+C\+MC function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1moveset_a4650e062c0b953519f97a0af9b8eb74e}{Set\+Move\+Selection\+Function}} (long($\ast$pf\+Move\+Select\+New)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the move selection function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1moveset_a6180169542bc8c4ff140a64f5f5b6b90}{Set\+Move\+Functions}} (long n\+Moves, void($\ast$$\ast$pf\+New\+Moves)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the individual move functions to the supplied array of such functions. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \& \mbox{\hyperlink{classsmc_1_1moveset_a3f200a18bebd45b5d6297598cdc60d50}{operator=}} (\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \&p\+From)
+\begin{DoxyCompactList}\small\item\em Moveset assignment should allocate buffers and deep copy all members. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+long \mbox{\hyperlink{classsmc_1_1moveset_a23b5813c2856940ff85433bfc56b3c97}{number}}
+\begin{DoxyCompactList}\small\item\em The number of moves which are present in the set. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$ \mbox{\hyperlink{classsmc_1_1moveset_adce2e35c9b5035d5665773065dcdc6d0}{pf\+Initialise}} )(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)
+\begin{DoxyCompactList}\small\item\em The function which initialises a particle. \end{DoxyCompactList}\item 
+long($\ast$ \mbox{\hyperlink{classsmc_1_1moveset_a893f714bc540164428ff387029e76c9e}{pf\+Move\+Select}} )(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)
+\begin{DoxyCompactList}\small\item\em The function which selects a move for a given particle at a given time. \end{DoxyCompactList}\item 
+void($\ast$$\ast$ \mbox{\hyperlink{classsmc_1_1moveset_a74654f6cc0dcaa451fad7bec2bbcaaea}{pf\+Moves}} )(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)
+\begin{DoxyCompactList}\small\item\em The functions which perform actual moves. \end{DoxyCompactList}\item 
+int($\ast$ \mbox{\hyperlink{classsmc_1_1moveset_a1ee82aad402b16b048ef2a6b91d68e93}{pf\+M\+C\+MC}} )(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)
+\begin{DoxyCompactList}\small\item\em A Markov Chain Monte Carlo move. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Space$>$\newline
+class smc\+::moveset$<$ Space $>$}
+
+A template class for a set of moves for use in an S\+MC samplers framework. 
+
+Definition at line 36 of file moveset.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1moveset_a27b84f5fc5d525788ecf778e4cf1e624}\label{classsmc_1_1moveset_a27b84f5fc5d525788ecf778e4cf1e624}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!moveset@{moveset}}
+\index{moveset@{moveset}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{moveset()}{moveset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}}
+
+
+
+Create a completely unspecified moveset. 
+
+The argument free \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}} constructor simply sets the number of available moves to zero and sets all of the associated function pointers to N\+U\+LL. 
+
+Definition at line 97 of file moveset.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_acecf43eba21158a7decc79e836a67e3e}\label{classsmc_1_1moveset_acecf43eba21158a7decc79e836a67e3e}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!moveset@{moveset}}
+\index{moveset@{moveset}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{moveset()}{moveset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1moveset}{moveset}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+Init,  }\item[{void($\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+Moves,  }\item[{int($\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+M\+C\+MC }\end{DoxyParamCaption})}
+
+
+
+Create a reduced moveset with a single move. 
+
+The three argument moveset constructor creates a new set of moves and sets all of the relevant function pointers to the supplied values. Only a single move should exist if this constructor is used. 
+\begin{DoxyParams}{Parameters}
+{\em pf\+Init} & The function which should be used to initialise particles when the system is initialised \\
+\hline
+{\em pf\+New\+Moves} & An functions which moves a particle at a specified time to a new location \\
+\hline
+{\em pf\+New\+M\+C\+MC} & The function which should be called to apply an M\+C\+MC move (if any) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 113 of file moveset.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a2305b62ba06e069d991e84cc1bd05597}\label{classsmc_1_1moveset_a2305b62ba06e069d991e84cc1bd05597}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!moveset@{moveset}}
+\index{moveset@{moveset}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{moveset()}{moveset()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1moveset}{moveset}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+Init,  }\item[{long($\ast$)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+Move\+Selector,  }\item[{long}]{n\+Moves,  }\item[{void($\ast$$\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+Moves,  }\item[{int($\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+M\+C\+MC }\end{DoxyParamCaption})}
+
+
+
+Create a fully specified moveset. 
+
+The five argument moveset constructor creates a new set of moves and sets all of the relevant function pointers to the supplied values. 
+\begin{DoxyParams}{Parameters}
+{\em pf\+Init} & The function which should be used to initialise particles when the system is initialised \\
+\hline
+{\em pf\+Move\+Selector} & The function which selects a move to apply, at a specified time, to a specified particle \\
+\hline
+{\em n\+Moves} & The number of moves which are defined in general \\
+\hline
+{\em pf\+New\+Moves} & An array of functions which move a particle at a specified time to a new location \\
+\hline
+{\em pf\+New\+M\+C\+MC} & The function which should be called to apply an M\+C\+MC move (if any) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 132 of file moveset.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_aa2b14cca850b40844680a64e97ec2a6e}\label{classsmc_1_1moveset_aa2b14cca850b40844680a64e97ec2a6e}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!````~moveset@{$\sim$moveset}}
+\index{````~moveset@{$\sim$moveset}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$moveset()}{~moveset()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::$\sim$\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}}
+
+
+
+Free the memory used for the array of move pointers when deleting. 
+
+
+
+Definition at line 144 of file moveset.\+hh.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1moveset_ae3e91e3567598b77d5c25f054019f0c1}\label{classsmc_1_1moveset_ae3e91e3567598b77d5c25f054019f0c1}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!DoInit@{DoInit}}
+\index{DoInit@{DoInit}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{DoInit()}{DoInit()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$Space$>$ \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Do\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$}]{p\+Rng }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initialise a particle. 
+
+
+
+Definition at line 63 of file moveset.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::pf\+Initialise.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Initialise().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a2bef5e7529dd8c0defbf49d68c73f14c}\label{classsmc_1_1moveset_a2bef5e7529dd8c0defbf49d68c73f14c}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!DoMCMC@{DoMCMC}}
+\index{DoMCMC@{DoMCMC}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{DoMCMC()}{DoMCMC()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+int \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Do\+M\+C\+MC (\begin{DoxyParamCaption}\item[{long}]{l\+Time,  }\item[{\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&}]{p\+From,  }\item[{\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$}]{p\+Rng }\end{DoxyParamCaption})}
+
+
+
+Perform an M\+C\+MC move on a particle. 
+
+
+
+Definition at line 151 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Iterate\+Ess().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a7e4ffb6133894e026814a2a6b906dd93}\label{classsmc_1_1moveset_a7e4ffb6133894e026814a2a6b906dd93}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!DoMove@{DoMove}}
+\index{DoMove@{DoMove}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{DoMove()}{DoMove()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Do\+Move (\begin{DoxyParamCaption}\item[{long}]{l\+Time,  }\item[{\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&}]{p\+From,  }\item[{\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$}]{p\+Rng }\end{DoxyParamCaption})}
+
+
+
+Select an appropriate move at time l\+Time and apply it to p\+From. 
+
+
+
+Definition at line 162 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Move\+Particles().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a3f200a18bebd45b5d6297598cdc60d50}\label{classsmc_1_1moveset_a3f200a18bebd45b5d6297598cdc60d50}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \& \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \&}]{p\+From }\end{DoxyParamCaption})}
+
+
+
+Moveset assignment should allocate buffers and deep copy all members. 
+
+
+
+Definition at line 189 of file moveset.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::number, smc\+::moveset$<$ Space $>$\+::pf\+Initialise, smc\+::moveset$<$ Space $>$\+::pf\+M\+C\+MC, smc\+::moveset$<$ Space $>$\+::pf\+Moves, and smc\+::moveset$<$ Space $>$\+::pf\+Move\+Select.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a279d1fb62fe1da64edf3830728e3e731}\label{classsmc_1_1moveset_a279d1fb62fe1da64edf3830728e3e731}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!SetInitialisor@{SetInitialisor}}
+\index{SetInitialisor@{SetInitialisor}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetInitialisor()}{SetInitialisor()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Set\+Initialisor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$($\ast$)(\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+Init }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the initialisation function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pf\+Init} & is a function which returns a particle generated according to the initial distribution ~\newline
+ \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 74 of file moveset.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::pf\+Initialise.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a0db2004c76d8bcd3cac6bc1a2a620c6a}\label{classsmc_1_1moveset_a0db2004c76d8bcd3cac6bc1a2a620c6a}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!SetMCMCFunction@{SetMCMCFunction}}
+\index{SetMCMCFunction@{SetMCMCFunction}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetMCMCFunction()}{SetMCMCFunction()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Set\+M\+C\+M\+C\+Function (\begin{DoxyParamCaption}\item[{int($\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+M\+C\+MC }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the M\+C\+MC function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pf\+New\+M\+C\+MC} & The function which performs an M\+C\+MC move \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 79 of file moveset.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::pf\+M\+C\+MC.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a6180169542bc8c4ff140a64f5f5b6b90}\label{classsmc_1_1moveset_a6180169542bc8c4ff140a64f5f5b6b90}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!SetMoveFunctions@{SetMoveFunctions}}
+\index{SetMoveFunctions@{SetMoveFunctions}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetMoveFunctions()}{SetMoveFunctions()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Set\+Move\+Functions (\begin{DoxyParamCaption}\item[{long}]{n\+Moves,  }\item[{void($\ast$$\ast$)(long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+New\+Moves }\end{DoxyParamCaption})}
+
+
+
+Set the individual move functions to the supplied array of such functions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n\+Moves} & The number of moves which are defined in general. \\
+\hline
+{\em pf\+New\+Moves} & An array of functions which move a particle at a specified time to a new location\\
+\hline
+\end{DoxyParams}
+The move functions accept two arguments, the first of which corresponds to the system evolution time and the second to an initial particle position and the second to a weighted starting position. It returns a new weighted position corresponding to the moved particle. 
+
+Definition at line 177 of file moveset.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a4650e062c0b953519f97a0af9b8eb74e}\label{classsmc_1_1moveset_a4650e062c0b953519f97a0af9b8eb74e}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!SetMoveSelectionFunction@{SetMoveSelectionFunction}}
+\index{SetMoveSelectionFunction@{SetMoveSelectionFunction}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetMoveSelectionFunction()}{SetMoveSelectionFunction()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::Set\+Move\+Selection\+Function (\begin{DoxyParamCaption}\item[{long($\ast$)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)}]{pf\+Move\+Select\+New }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the move selection function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pf\+Move\+Select\+New} & returns the index of move to perform at the specified time given a specified particle \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 83 of file moveset.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::pf\+Move\+Select.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1moveset_a23b5813c2856940ff85433bfc56b3c97}\label{classsmc_1_1moveset_a23b5813c2856940ff85433bfc56b3c97}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!number@{number}}
+\index{number@{number}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{number}{number}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::number\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of moves which are present in the set. 
+
+
+
+Definition at line 40 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::moveset$<$ Space $>$\+::operator=().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_adce2e35c9b5035d5665773065dcdc6d0}\label{classsmc_1_1moveset_adce2e35c9b5035d5665773065dcdc6d0}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!pfInitialise@{pfInitialise}}
+\index{pfInitialise@{pfInitialise}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pfInitialise}{pfInitialise}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$Space$>$($\ast$ \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::pf\+Initialise) (\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The function which initialises a particle. 
+
+
+
+Definition at line 42 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::moveset$<$ Space $>$\+::\+Do\+Init(), smc\+::moveset$<$ Space $>$\+::operator=(), and smc\+::moveset$<$ Space $>$\+::\+Set\+Initialisor().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a1ee82aad402b16b048ef2a6b91d68e93}\label{classsmc_1_1moveset_a1ee82aad402b16b048ef2a6b91d68e93}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!pfMCMC@{pfMCMC}}
+\index{pfMCMC@{pfMCMC}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pfMCMC}{pfMCMC}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+int($\ast$ \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::pf\+M\+C\+MC) (long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A Markov Chain Monte Carlo move. 
+
+
+
+Definition at line 48 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::moveset$<$ Space $>$\+::operator=(), and smc\+::moveset$<$ Space $>$\+::\+Set\+M\+C\+M\+C\+Function().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a74654f6cc0dcaa451fad7bec2bbcaaea}\label{classsmc_1_1moveset_a74654f6cc0dcaa451fad7bec2bbcaaea}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!pfMoves@{pfMoves}}
+\index{pfMoves@{pfMoves}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pfMoves}{pfMoves}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void($\ast$$\ast$ \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::pf\+Moves) (long, \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The functions which perform actual moves. 
+
+
+
+Definition at line 46 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::moveset$<$ Space $>$\+::operator=().
+
+\mbox{\Hypertarget{classsmc_1_1moveset_a893f714bc540164428ff387029e76c9e}\label{classsmc_1_1moveset_a893f714bc540164428ff387029e76c9e}} 
+\index{smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}!pfMoveSelect@{pfMoveSelect}}
+\index{pfMoveSelect@{pfMoveSelect}!smc::moveset$<$ Space $>$@{smc::moveset$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pfMoveSelect}{pfMoveSelect}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long($\ast$ \mbox{\hyperlink{classsmc_1_1moveset}{smc\+::moveset}}$<$ Space $>$\+::pf\+Move\+Select) (long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, \mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$)\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The function which selects a move for a given particle at a given time. 
+
+
+
+Definition at line 44 of file moveset.\+hh.
+
+
+
+Referenced by smc\+::moveset$<$ Space $>$\+::operator=(), and smc\+::moveset$<$ Space $>$\+::\+Set\+Move\+Selection\+Function().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{moveset_8hh}{moveset.\+hh}}\end{DoxyCompactItemize}

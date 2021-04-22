@@ -1,0 +1,116 @@
+\hypertarget{smc-exception_8hh}{}\doxysection{include/smc-\/exception.hh File Reference}
+\label{smc-exception_8hh}\index{include/smc-\/exception.hh@{include/smc-\/exception.hh}}
+
+
+This file defines exception-\/handling facilities.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+Include dependency graph for smc-\/exception.hh\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}}
+\begin{DoxyCompactList}\small\item\em S\+MC Exception class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacesmc}{smc}}
+\begin{DoxyCompactList}\small\item\em The Sequential Monte Carlo namespace. \end{DoxyCompactList}\item 
+ \mbox{\hyperlink{namespacestd}{std}}
+\begin{DoxyCompactList}\small\item\em The standard namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{smc-exception_8hh_ac2c533be72251f8606810417886e783f}{\+\_\+\+\_\+\+S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+\_\+\+HH}}~1.\+0
+\item 
+\#define \mbox{\hyperlink{smc-exception_8hh_a3294208165bcb4936a39183596f3b1f6}{S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+I\+ON}}(code,  error)~\mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}}(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+, code, error)
+\begin{DoxyCompactList}\small\item\em A macro which autocompletes the housekeeping components of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}}. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{smc-exception_8hh_a331ca8981221cf327621afb6ddb21094}{S\+M\+C\+X\+\_\+\+F\+I\+L\+E\+\_\+\+N\+O\+T\+\_\+\+F\+O\+U\+ND}}~0x0020
+\begin{DoxyCompactList}\small\item\em Exception thrown if a file cannot be accessed. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{smc-exception_8hh_a984f7b1fde8d8091971664718d5554a3}{S\+M\+C\+X\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+H\+I\+S\+T\+O\+RY}}~0x0010
+\begin{DoxyCompactList}\small\item\em Exception thrown if the sampler attempts to access history data which wasn\textquotesingle{}t stored. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{smc-exception_8hh_ad474b50fb83c193ef0a0b233d01328f9}{S\+M\+C\+X\+\_\+\+M\+U\+L\+T\+I\+P\+L\+E\+\_\+\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+I\+ON}}~0x1000
+\begin{DoxyCompactList}\small\item\em Exception thrown if an attempt is made to instantiate a class of which a single instance is permitted more than once. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{namespacestd_a6fd444b2a863e8ab00c820d082c537c1}{std\+::operator$<$$<$}} (std\+::ostream \&, \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} \&)
+\begin{DoxyCompactList}\small\item\em Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} class using the stream operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file defines exception-\/handling facilities. 
+
+The \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} class, which is used for exception handling by S\+M\+C\+TC, is defined. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{smc-exception_8hh_ac2c533be72251f8606810417886e783f}\label{smc-exception_8hh_ac2c533be72251f8606810417886e783f}} 
+\index{smc-\/exception.hh@{smc-\/exception.hh}!\_\_SMC\_EXCEPT\_HH@{\_\_SMC\_EXCEPT\_HH}}
+\index{\_\_SMC\_EXCEPT\_HH@{\_\_SMC\_EXCEPT\_HH}!smc-\/exception.hh@{smc-\/exception.hh}}
+\doxysubsubsection{\texorpdfstring{\_\_SMC\_EXCEPT\_HH}{\_\_SMC\_EXCEPT\_HH}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+\_\+\+HH~1.\+0}
+
+
+
+Definition at line 26 of file smc-\/exception.\+hh.
+
+\mbox{\Hypertarget{smc-exception_8hh_a3294208165bcb4936a39183596f3b1f6}\label{smc-exception_8hh_a3294208165bcb4936a39183596f3b1f6}} 
+\index{smc-\/exception.hh@{smc-\/exception.hh}!SMC\_EXCEPTION@{SMC\_EXCEPTION}}
+\index{SMC\_EXCEPTION@{SMC\_EXCEPTION}!smc-\/exception.hh@{smc-\/exception.hh}}
+\doxysubsubsection{\texorpdfstring{SMC\_EXCEPTION}{SMC\_EXCEPTION}}
+{\footnotesize\ttfamily \#define S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+I\+ON(\begin{DoxyParamCaption}\item[{}]{code,  }\item[{}]{error }\end{DoxyParamCaption})~\mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}}(\+\_\+\+\_\+\+F\+I\+L\+E\+\_\+\+\_\+, \+\_\+\+\_\+\+L\+I\+N\+E\+\_\+\+\_\+, code, error)}
+
+
+
+A macro which autocompletes the housekeeping components of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}}. 
+
+
+
+Definition at line 31 of file smc-\/exception.\+hh.
+
+\mbox{\Hypertarget{smc-exception_8hh_a331ca8981221cf327621afb6ddb21094}\label{smc-exception_8hh_a331ca8981221cf327621afb6ddb21094}} 
+\index{smc-\/exception.hh@{smc-\/exception.hh}!SMCX\_FILE\_NOT\_FOUND@{SMCX\_FILE\_NOT\_FOUND}}
+\index{SMCX\_FILE\_NOT\_FOUND@{SMCX\_FILE\_NOT\_FOUND}!smc-\/exception.hh@{smc-\/exception.hh}}
+\doxysubsubsection{\texorpdfstring{SMCX\_FILE\_NOT\_FOUND}{SMCX\_FILE\_NOT\_FOUND}}
+{\footnotesize\ttfamily \#define S\+M\+C\+X\+\_\+\+F\+I\+L\+E\+\_\+\+N\+O\+T\+\_\+\+F\+O\+U\+ND~0x0020}
+
+
+
+Exception thrown if a file cannot be accessed. 
+
+
+
+Definition at line 34 of file smc-\/exception.\+hh.
+
+\mbox{\Hypertarget{smc-exception_8hh_a984f7b1fde8d8091971664718d5554a3}\label{smc-exception_8hh_a984f7b1fde8d8091971664718d5554a3}} 
+\index{smc-\/exception.hh@{smc-\/exception.hh}!SMCX\_MISSING\_HISTORY@{SMCX\_MISSING\_HISTORY}}
+\index{SMCX\_MISSING\_HISTORY@{SMCX\_MISSING\_HISTORY}!smc-\/exception.hh@{smc-\/exception.hh}}
+\doxysubsubsection{\texorpdfstring{SMCX\_MISSING\_HISTORY}{SMCX\_MISSING\_HISTORY}}
+{\footnotesize\ttfamily \#define S\+M\+C\+X\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+H\+I\+S\+T\+O\+RY~0x0010}
+
+
+
+Exception thrown if the sampler attempts to access history data which wasn\textquotesingle{}t stored. 
+
+
+
+Definition at line 36 of file smc-\/exception.\+hh.
+
+\mbox{\Hypertarget{smc-exception_8hh_ad474b50fb83c193ef0a0b233d01328f9}\label{smc-exception_8hh_ad474b50fb83c193ef0a0b233d01328f9}} 
+\index{smc-\/exception.hh@{smc-\/exception.hh}!SMCX\_MULTIPLE\_INSTANTIATION@{SMCX\_MULTIPLE\_INSTANTIATION}}
+\index{SMCX\_MULTIPLE\_INSTANTIATION@{SMCX\_MULTIPLE\_INSTANTIATION}!smc-\/exception.hh@{smc-\/exception.hh}}
+\doxysubsubsection{\texorpdfstring{SMCX\_MULTIPLE\_INSTANTIATION}{SMCX\_MULTIPLE\_INSTANTIATION}}
+{\footnotesize\ttfamily \#define S\+M\+C\+X\+\_\+\+M\+U\+L\+T\+I\+P\+L\+E\+\_\+\+I\+N\+S\+T\+A\+N\+T\+I\+A\+T\+I\+ON~0x1000}
+
+
+
+Exception thrown if an attempt is made to instantiate a class of which a single instance is permitted more than once. 
+
+
+
+Definition at line 38 of file smc-\/exception.\+hh.
+

@@ -1,0 +1,12 @@
+digraph "std::operator&lt;&lt;"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="std::operator\<\<",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Produce a human readable display of an smc::particle class using the standard stream operators."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="smc::particle::GetLogWeight",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1particle.html#a0c8e4d5f168f5446d4f0e00b8e0fa22e",tooltip="Returns the particle's log weight."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="smc::particle::GetValue",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1particle.html#a55bd1fbbe5e0dd15d34c4c8bb5cd0222",tooltip="Returns the particle's value."];
+}

@@ -1,0 +1,18 @@
+digraph "include/smc-exception.hh"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="include/smc-exception.hh",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This file defines exception-handling facilities."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="include/sampler.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sampler_8hh.html",tooltip="Defines the overall sampler object."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="include/smctc.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smctc_8hh.html",tooltip="The main header file for SMCTC."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="src/history.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$history_8cc.html",tooltip="This file contains the untemplated functions used for storing the history of the system."];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="src/rng.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rng_8cc.html",tooltip="This file contains the untemplated functions used for dealing with random number generation."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="src/smc-exception.cc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smc-exception_8cc.html",tooltip="The untemplated smc::exception class is implemented here."];
+}

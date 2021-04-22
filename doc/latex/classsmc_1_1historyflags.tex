@@ -1,0 +1,114 @@
+\hypertarget{classsmc_1_1historyflags}{}\doxysection{smc\+::historyflags Class Reference}
+\label{classsmc_1_1historyflags}\index{smc::historyflags@{smc::historyflags}}
+
+
+The historyflags class holds a set of flags which describe various properties of the particle system at a given time.  
+
+
+
+
+{\ttfamily \#include $<$history.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::historyflags\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1historyflags_a340a91c65c5f693e86b06d098e790c19}{historyflags}} (int was\+Resampled)
+\begin{DoxyCompactList}\small\item\em Create a new set of history flags corresponding to the specified properties. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classsmc_1_1historyflags_a3bb24c8a715558f8e51ed41a48e9cb70}{Was\+Resampled}} (void)
+\begin{DoxyCompactList}\small\item\em This function returns true if the flag set indicates that the ensemble was resampled during the described iteration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{classsmc_1_1historyflags_ab8e88b1774d9f2842f43b6a27d784fb2}{Resampled}}\+: 1
+\begin{DoxyCompactList}\small\item\em true if the particle system was resampled during the described iteration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The historyflags class holds a set of flags which describe various properties of the particle system at a given time. 
+
+Definition at line 32 of file history.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1historyflags_a340a91c65c5f693e86b06d098e790c19}\label{classsmc_1_1historyflags_a340a91c65c5f693e86b06d098e790c19}} 
+\index{smc::historyflags@{smc::historyflags}!historyflags@{historyflags}}
+\index{historyflags@{historyflags}!smc::historyflags@{smc::historyflags}}
+\doxysubsubsection{\texorpdfstring{historyflags()}{historyflags()}}
+{\footnotesize\ttfamily smc\+::historyflags\+::historyflags (\begin{DoxyParamCaption}\item[{int}]{was\+Resampled }\end{DoxyParamCaption})}
+
+
+
+Create a new set of history flags corresponding to the specified properties. 
+
+This constructor produces an initialised historyflags instance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em was\+Resampled} & An indicator which should be nonzero if the particle system was resampled during the iteration being described \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 12 of file history.\+cc.
+
+
+
+References Resampled.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1historyflags_a3bb24c8a715558f8e51ed41a48e9cb70}\label{classsmc_1_1historyflags_a3bb24c8a715558f8e51ed41a48e9cb70}} 
+\index{smc::historyflags@{smc::historyflags}!WasResampled@{WasResampled}}
+\index{WasResampled@{WasResampled}!smc::historyflags@{smc::historyflags}}
+\doxysubsubsection{\texorpdfstring{WasResampled()}{WasResampled()}}
+{\footnotesize\ttfamily int smc\+::historyflags\+::\+Was\+Resampled (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This function returns true if the flag set indicates that the ensemble was resampled during the described iteration. 
+
+
+
+Definition at line 42 of file history.\+hh.
+
+
+
+References Resampled.
+
+
+
+Referenced by smc\+::historyelement$<$ smc\+::particle$<$ Space $>$ $>$\+::\+Was\+Resampled().
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1historyflags_ab8e88b1774d9f2842f43b6a27d784fb2}\label{classsmc_1_1historyflags_ab8e88b1774d9f2842f43b6a27d784fb2}} 
+\index{smc::historyflags@{smc::historyflags}!Resampled@{Resampled}}
+\index{Resampled@{Resampled}!smc::historyflags@{smc::historyflags}}
+\doxysubsubsection{\texorpdfstring{Resampled}{Resampled}}
+{\footnotesize\ttfamily unsigned int smc\+::historyflags\+::\+Resampled\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+true if the particle system was resampled during the described iteration. 
+
+
+
+Definition at line 36 of file history.\+hh.
+
+
+
+Referenced by historyflags(), and Was\+Resampled().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{history_8hh}{history.\+hh}}\item 
+src/\mbox{\hyperlink{history_8cc}{history.\+cc}}\end{DoxyCompactItemize}

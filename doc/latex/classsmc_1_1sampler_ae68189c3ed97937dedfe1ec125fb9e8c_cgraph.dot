@@ -1,0 +1,18 @@
+digraph "smc::sampler::Resample"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="smc::sampler::Resample",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Resample the particle set using the specified resmpling scheme."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="smc::particle::GetWeight",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1particle.html#a500d7f2921bbb082db00eaef2ff22964",tooltip="Returns the particle's unnormalised weight."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="smc::rng::Multinomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1rng.html#a4c313f4501fd65d367511a5ae2bfaace",tooltip="Generate a multinomial random vector with parameters (n,w[1:k]) and store it in X."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="smc::particle::SetLogWeight",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1particle.html#ae06a539b1f3293910d27cd5a0a21b6b9",tooltip="Sets the particle's log weight explicitly."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="smc::particle::SetValue",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1particle.html#a7ba7438e0cac79d7b5daf2b3b98eb9a9",tooltip="Sets the particle's value explicitly."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="smc::rng::Uniform",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1rng.html#ab8bb55fa47b83252a56c102c8cd77da3",tooltip="Return a random number generated uniformly between dMin and dMax."];
+}

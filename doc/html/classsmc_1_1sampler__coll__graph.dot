@@ -1,0 +1,55 @@
+digraph "smc::sampler&lt; Space &gt;"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="smc::sampler\< Space \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="A template class for an interacting particle system suitable for SMC sampling."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" htHistoryMode" ,fontname="Helvetica"];
+  Node2 [label="HistoryType",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pParticles" ,fontname="Helvetica"];
+  Node3 [label="particle\< Space \> *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" dRSWeights\ndResampleThreshold" ,fontname="Helvetica"];
+  Node4 [label="double",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pRng" ,fontname="Helvetica"];
+  Node5 [label="smc::rng",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1rng.html",tooltip="A random number generator class."];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pWorkspace" ,fontname="Helvetica"];
+  Node6 [label="gsl_rng *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" type" ,fontname="Helvetica"];
+  Node7 [label="const gsl_rng_type *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" uRSIndices\nuRSCount" ,fontname="Helvetica"];
+  Node8 [label="unsigned int *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" History" ,fontname="Helvetica"];
+  Node9 [label="smc::history\< smc::\lparticle\< Space \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html",tooltip=" "];
+  Node10 -> Node9 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lLength" ,fontname="Helvetica"];
+  Node10 [label="long",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node11 -> Node9 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pLeaf\npRoot" ,fontname="Helvetica"];
+  Node11 [label="smc::historyelement\l\< smc::particle\< Space \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1historyelement.html",tooltip=" "];
+  Node3 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" value" ,fontname="Helvetica"];
+  Node12 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" flags" ,fontname="Helvetica"];
+  Node12 [label="smc::historyflags",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1historyflags.html",tooltip="The historyflags class holds a set of flags which describe various properties of the particle system ..."];
+  Node13 -> Node12 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" Resampled" ,fontname="Helvetica"];
+  Node13 [label="int",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node13 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" nAccepted" ,fontname="Helvetica"];
+  Node10 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" number" ,fontname="Helvetica"];
+  Node11 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pNext\npLast" ,fontname="Helvetica"];
+  Node14 -> Node11 [dir="back",color="orange",fontsize="10",style="dashed",label=" \< smc::particle\< Space \> \>" ,fontname="Helvetica"];
+  Node14 [label="smc::historyelement\l\< Particle \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1historyelement.html",tooltip="A template class for the elements of a linked list to be used for the history of the sampler."];
+  Node15 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" value" ,fontname="Helvetica"];
+  Node15 [label="Particle *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node16 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pNext\npLast" ,fontname="Helvetica"];
+  Node16 [label="historyelement\< Particle \> *",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node12 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" flags" ,fontname="Helvetica"];
+  Node13 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" nAccepted" ,fontname="Helvetica"];
+  Node10 -> Node14 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" number" ,fontname="Helvetica"];
+  Node17 -> Node9 [dir="back",color="orange",fontsize="10",style="dashed",label=" \< smc::particle\< Space \> \>" ,fontname="Helvetica"];
+  Node17 [label="smc::history\< Particle \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classsmc_1_1history.html",tooltip="A template class for the history associated with a particle system evolving in SMC."];
+  Node16 -> Node17 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" pLeaf\npRoot" ,fontname="Helvetica"];
+  Node10 -> Node17 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lLength" ,fontname="Helvetica"];
+  Node18 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" rtResampleMode" ,fontname="Helvetica"];
+  Node18 [label="ResampleType",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node13 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" nResampled\nnAccepted" ,fontname="Helvetica"];
+  Node19 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" Moves" ,fontname="Helvetica"];
+  Node19 [label="moveset\< Space \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node10 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" N\nT" ,fontname="Helvetica"];
+}

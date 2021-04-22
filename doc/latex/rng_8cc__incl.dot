@@ -1,0 +1,48 @@
+digraph "src/rng.cc"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="src/rng.cc",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This file contains the untemplated functions used for dealing with random number generation."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="iostream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="cstring",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="rng.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$rng_8hh.html",tooltip="Random number generation."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="gsl/gsl_randist.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
+  Node6 [label="gsl/gsl_rng.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 [label="smctc.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smctc_8hh.html",tooltip="The main header file for SMCTC."];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid"];
+  Node8 [label="cmath",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node9 [color="midnightblue",fontsize="10",style="solid"];
+  Node9 [label="cstdlib",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 -> Node6 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 -> Node10 [color="midnightblue",fontsize="10",style="solid"];
+  Node10 [label="smc-exception.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$smc-exception_8hh.html",tooltip="This file defines exception-handling facilities."];
+  Node10 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node7 -> Node11 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 [label="sampler.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$sampler_8hh.html",tooltip="Defines the overall sampler object."];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid"];
+  Node12 [label="algorithm",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node11 -> Node9 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node4 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node13 [color="midnightblue",fontsize="10",style="solid"];
+  Node13 [label="history.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$history_8hh.html",tooltip="Classes and function related to the history of the sampler."];
+  Node11 -> Node14 [color="midnightblue",fontsize="10",style="solid"];
+  Node14 [label="moveset.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$moveset_8hh.html",tooltip="Classes and functions which deal with collections of sampler proposal \"moves\"."];
+  Node14 -> Node15 [color="midnightblue",fontsize="10",style="solid"];
+  Node15 [label="particle.hh",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$particle_8hh.html",tooltip="Class used to store and manipulate a single particle."];
+  Node15 -> Node16 [color="midnightblue",fontsize="10",style="solid"];
+  Node16 [label="float.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node15 -> Node17 [color="midnightblue",fontsize="10",style="solid"];
+  Node17 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node15 -> Node8 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node15 [color="midnightblue",fontsize="10",style="solid"];
+  Node11 -> Node10 [color="midnightblue",fontsize="10",style="solid"];
+}

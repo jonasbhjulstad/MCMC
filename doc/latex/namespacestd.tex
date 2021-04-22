@@ -1,0 +1,131 @@
+\hypertarget{namespacestd}{}\doxysection{std Namespace Reference}
+\label{namespacestd}\index{std@{std}}
+
+
+The standard namespace.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Particle $>$ }\\ostream \& \mbox{\hyperlink{namespacestd_aa3b8582b5b9ddbde967c5f960439009c}{operator$<$$<$}} (ostream \&os, \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$ h)
+\begin{DoxyCompactList}\small\item\em This function will ultimately allow the standard stream operators to be used to display a particle history in a human readable form. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Space $>$ }\\std\+::ostream \& \mbox{\hyperlink{namespacestd_a2da48633806ecde2c29810670b9f3690}{operator$<$$<$}} (std\+::ostream \&os, \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$ \&p)
+\begin{DoxyCompactList}\small\item\em Produce a human readable display of an \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}} class using the standard stream operators. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Space $>$ }\\std\+::ostream \& \mbox{\hyperlink{namespacestd_a21bc13000335a11fcbd1ee4190fd1320}{operator$<$$<$}} (std\+::ostream \&os, \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} class using the stream operator. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{namespacestd_a6fd444b2a863e8ab00c820d082c537c1}{operator$<$$<$}} (std\+::ostream \&, \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} \&)
+\begin{DoxyCompactList}\small\item\em Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} class using the stream operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The standard namespace. 
+
+The classes provided within the standard libraries reside within this namespace and the T\+D\+S\+MC class library adds a number of additional operator overloads to some of the standard classes to allow them to deal with our structures. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacestd_aa3b8582b5b9ddbde967c5f960439009c}\label{namespacestd_aa3b8582b5b9ddbde967c5f960439009c}} 
+\index{std@{std}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!std@{std}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$class Particle $>$ \\
+ostream\& std\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{ostream \&}]{os,  }\item[{\mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$}]{h }\end{DoxyParamCaption})}
+
+
+
+This function will ultimately allow the standard stream operators to be used to display a particle history in a human readable form. 
+
+It isn\textquotesingle{}t yet fully implemented. 
+
+Definition at line 460 of file history.\+hh.
+
+\mbox{\Hypertarget{namespacestd_a6fd444b2a863e8ab00c820d082c537c1}\label{namespacestd_a6fd444b2a863e8ab00c820d082c537c1}} 
+\index{std@{std}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!std@{std}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily std\+::ostream \& std\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{\mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} \&}]{e }\end{DoxyParamCaption})}
+
+
+
+Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} class using the stream operator. 
+
+Display a human-\/readable version of an S\+MC exception.
+
+Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1exception}{smc\+::exception}} class using the stream operator. 
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream to which the display should be made. \\
+\hline
+{\em e} & The exception which is to be displayed.\\
+\hline
+{\em os} & The stream to write to. \\
+\hline
+{\em e} & The exception class to display. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+os 
+\end{DoxyReturn}
+
+
+Definition at line 32 of file smc-\/exception.\+cc.
+
+
+
+References smc\+::exception\+::l\+Code, smc\+::exception\+::l\+Line, smc\+::exception\+::sz\+File, and smc\+::exception\+::sz\+Message.
+
+\mbox{\Hypertarget{namespacestd_a2da48633806ecde2c29810670b9f3690}\label{namespacestd_a2da48633806ecde2c29810670b9f3690}} 
+\index{std@{std}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!std@{std}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+std\+::ostream\& std\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{\mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}}$<$ Space $>$ \&}]{p }\end{DoxyParamCaption})}
+
+
+
+Produce a human readable display of an \mbox{\hyperlink{classsmc_1_1particle}{smc\+::particle}} class using the standard stream operators. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream to which the display should be made. \\
+\hline
+{\em p} & The particle which is to be displayed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 141 of file particle.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::\+Get\+Log\+Weight(), and smc\+::particle$<$ Space $>$\+::\+Get\+Value().
+
+Here is the call graph for this function\+:
+% FIG 0
+\mbox{\Hypertarget{namespacestd_a21bc13000335a11fcbd1ee4190fd1320}\label{namespacestd_a21bc13000335a11fcbd1ee4190fd1320}} 
+\index{std@{std}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!std@{std}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+std\+::ostream\& std\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{\mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$ \&}]{s }\end{DoxyParamCaption})}
+
+
+
+Produce a human-\/readable display of the state of an \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} class using the stream operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream to which the display should be made. \\
+\hline
+{\em s} & The sampler which is to be displayed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 546 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::\+Get\+Number(), smc\+::sampler$<$ Space $>$\+::\+Get\+Time(), and smc\+::sampler$<$ Space $>$\+::\+Stream\+Particles().
+
+Here is the call graph for this function\+:
+% FIG 1

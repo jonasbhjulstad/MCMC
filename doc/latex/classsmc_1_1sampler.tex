@@ -1,0 +1,893 @@
+\hypertarget{classsmc_1_1sampler}{}\doxysection{smc\+::sampler$<$ Space $>$ Class Template Reference}
+\label{classsmc_1_1sampler}\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+
+
+A template class for an interacting particle system suitable for S\+MC sampling.  
+
+
+
+
+{\ttfamily \#include $<$sampler.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::sampler$<$ Space $>$\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1sampler_acba6f912ea71b2481dc9d123be52b657}{sampler}} (long l\+Size, \mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}} \mbox{\hyperlink{classsmc_1_1sampler_ab9237fb1102627db441144a5ab44eac0}{ht\+History\+Mode}})
+\begin{DoxyCompactList}\small\item\em Create an particle system containing l\+Size uninitialised particles with the specified mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1sampler_a27d9b5264110c82cec8eb866da309143}{sampler}} (long l\+Size, \mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}} \mbox{\hyperlink{classsmc_1_1sampler_ab9237fb1102627db441144a5ab44eac0}{ht\+History\+Mode}}, const gsl\+\_\+rng\+\_\+type $\ast$rng\+Type, unsigned long n\+Seed)
+\begin{DoxyCompactList}\small\item\em Create an particle system constaining l\+Size uninitialised particles with the specified mode and random number generator. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1sampler_a416ba9190610f497366a3bd6bf2ac4f4}{$\sim$sampler}} ()
+\begin{DoxyCompactList}\small\item\em Dispose of a sampler. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_a1186ebab9be58b1c9f2d19617055df4f}{Get\+E\+SS}} (void) const
+\begin{DoxyCompactList}\small\item\em Calculates and Returns the Effective Sample Size. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{classsmc_1_1history}{history}}$<$ \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ $>$ $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_a094822e6957e917cc111f5d3cf94f32e}{Get\+History}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the History of the particle system. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1sampler_ac86a0b875cc3a8a0b903cd907ea3ce8f}{Get\+Number}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the number of particles within the system. \end{DoxyCompactList}\item 
+const Space \& \mbox{\hyperlink{classsmc_1_1sampler_a55c0c72ed5eb4a5ad5b8e2882c7ef56c}{Get\+Particle\+Value}} (int n)
+\begin{DoxyCompactList}\small\item\em Return the value of particle n. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_af8907df3ab45f59abae561c48cd0ef9d}{Get\+Particle\+Log\+Weight}} (int n)
+\begin{DoxyCompactList}\small\item\em Return the logarithmic unnormalized weight of particle n. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_a3c209f4895d846b8486d6498d905b7b3}{Get\+Particle\+Weight}} (int n)
+\begin{DoxyCompactList}\small\item\em Return the unnormalized weight of particle n. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1sampler_aa8ec82cd83a80e1ba30ccb8d532b0a17}{Get\+Time}} (void) const
+\begin{DoxyCompactList}\small\item\em Returns the current evolution time of the system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_aea60af09185ada1ad09d2636460c1d9a}{Initialise}} (void)
+\begin{DoxyCompactList}\small\item\em Initialise the sampler and its constituent particles. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_a7fb5dd40ad3a43f1705e21ddc0be2cba}{Integrate}} (double($\ast$p\+Integrand)(const Space \&, void $\ast$), void $\ast$p\+Auxiliary)
+\begin{DoxyCompactList}\small\item\em Integrate the supplied function with respect to the current particle set. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_a760ce7ac6dfd846f27b1e8e241b1263c}{Integrate\+Path\+Sampling}} (double($\ast$p\+Integrand)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, void $\ast$), double($\ast$p\+Width)(long, void $\ast$), void $\ast$p\+Auxiliary)
+\begin{DoxyCompactList}\small\item\em Integrate the supplied function over the path path using the supplied width function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_afdeb22eb6fea9e8505e3ebffcd9315b2}{Iterate}} (void)
+\begin{DoxyCompactList}\small\item\em Perform one iteration of the simulation algorithm. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_abd87e383ff67eff58d63660eb9e1c456}{Iterate\+Back}} (void)
+\begin{DoxyCompactList}\small\item\em Cancel one iteration of the simulation algorithm. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_ad335a09ab2e8f4eb06ab176d0847a39f}{Iterate\+Ess}} (void)
+\begin{DoxyCompactList}\small\item\em Perform one iteration of the simulation algorithm and return the resulting ess. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_a74c32488dbdb80e53a861d04b645b35d}{Iterate\+Until}} (long l\+Terminate)
+\begin{DoxyCompactList}\small\item\em Perform iterations until the specified evolution time is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_a4954035cfe91e765cc42cec4178e3558}{Move\+Particles}} (void)
+\begin{DoxyCompactList}\small\item\em Move the particle set by proposing an applying an appropriate move to each particle. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_ae68189c3ed97937dedfe1ec125fb9e8c}{Resample}} (\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}} l\+Mode)
+\begin{DoxyCompactList}\small\item\em Resample the particle set using the specified resmpling scheme. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_a379e3e0604371ee40d79f5522e3dc721}{Set\+Move\+Set}} (\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \&p\+New\+Moveset)
+\begin{DoxyCompactList}\small\item\em Sets the entire moveset to the one which is supplied. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1sampler_a3bdfcb2f336ebd086a4524a08cd68f00}{Set\+Resample\+Params}} (\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}} rt\+Mode, double d\+Threshold)
+\begin{DoxyCompactList}\small\item\em Set Resampling Parameters. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{classsmc_1_1sampler_a26459cb9bb182dc4dcf3f9eb6db7c451}{Stream\+Particle}} (std\+::ostream \&os, long n)
+\begin{DoxyCompactList}\small\item\em Dump a specified particle to the specified output stream in a human readable form. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{classsmc_1_1sampler_ade33c0a75bec0da572634df8c6ec4f2e}{Stream\+Particles}} (std\+::ostream \&os)
+\begin{DoxyCompactList}\small\item\em Dump the entire particle set to the specified output stream in a human readable form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1sampler_ae9ea1885b570622b33b27bd24045d649}{sampler}} (const \mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$ Space $>$ \&s\+From)
+\begin{DoxyCompactList}\small\item\em Duplication of \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} is not currently permitted. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$ Space $>$ \& \mbox{\hyperlink{classsmc_1_1sampler_a9c6cec4bb0ad63e59288df32f7483074}{operator=}} (const \mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$ Space $>$ \&s\+From)
+\begin{DoxyCompactList}\small\item\em Duplication of \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} is not currently permitted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1rng}{rng}} $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_a9afabb1b27e2e01c93bcc2c106270023}{p\+Rng}}
+\begin{DoxyCompactList}\small\item\em A random number generator. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1sampler_a3a2b1f3e2ad81e06a9ed16bb8d7dd8b2}{N}}
+\begin{DoxyCompactList}\small\item\em Number of particles in the system. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1sampler_afcda772e35b5fffeeb6f6b48e307063f}{T}}
+\begin{DoxyCompactList}\small\item\em The current evolution time of the system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}} \mbox{\hyperlink{classsmc_1_1sampler_a619ddb7f79119ebc43b74fdfe358a36d}{rt\+Resample\+Mode}}
+\begin{DoxyCompactList}\small\item\em The resampling mode which is to be employed. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1sampler_af3e6a5d75a0e7ca48b126a34d32549ee}{d\+Resample\+Threshold}}
+\begin{DoxyCompactList}\small\item\em The effective sample size at which resampling should be used. \end{DoxyCompactList}\item 
+double $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_ad52ec689dbce72927a84421d068d1f6a}{d\+R\+S\+Weights}}
+\begin{DoxyCompactList}\small\item\em Structure used internally for resampling. \end{DoxyCompactList}\item 
+unsigned int $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_ab6ffd041f3db53ff1ca753e40c2d1d58}{u\+R\+S\+Count}}
+\begin{DoxyCompactList}\small\item\em Structure used internally for resampling. \end{DoxyCompactList}\item 
+unsigned int $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_a5522343cf3f0f3df52ec6f416805f873}{u\+R\+S\+Indices}}
+\begin{DoxyCompactList}\small\item\em Structure used internally for resampling. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ $\ast$ \mbox{\hyperlink{classsmc_1_1sampler_a55e20844623867a0d4d285975ce23882}{p\+Particles}}
+\begin{DoxyCompactList}\small\item\em The particles within the system. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \mbox{\hyperlink{classsmc_1_1sampler_a38d563fd1a9346907b37a0da7fd0a533}{Moves}}
+\begin{DoxyCompactList}\small\item\em The set of moves available. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classsmc_1_1sampler_ac93079033397dc574a69450af988c2ca}{n\+Accepted}}
+\begin{DoxyCompactList}\small\item\em The number of M\+C\+MC moves which have been accepted during this iteration. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classsmc_1_1sampler_af1d5f73def28b785b8f678e477550f2a}{n\+Resampled}}
+\begin{DoxyCompactList}\small\item\em A flag which tracks whether the ensemble was resampled during this iteration. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}} \mbox{\hyperlink{classsmc_1_1sampler_ab9237fb1102627db441144a5ab44eac0}{ht\+History\+Mode}}
+\begin{DoxyCompactList}\small\item\em A mode flag which indicates whether historical information is stored. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1history}{history}}$<$ \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ $>$ \mbox{\hyperlink{classsmc_1_1sampler_a2e766428268aae4e37e714690f7afe6c}{History}}
+\begin{DoxyCompactList}\small\item\em The historical process associated with the particle system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Space$>$\newline
+class smc\+::sampler$<$ Space $>$}
+
+A template class for an interacting particle system suitable for S\+MC sampling. 
+
+Definition at line 53 of file sampler.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1sampler_acba6f912ea71b2481dc9d123be52b657}\label{classsmc_1_1sampler_acba6f912ea71b2481dc9d123be52b657}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!sampler@{sampler}}
+\index{sampler@{sampler}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{sampler()}{sampler()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1sampler}{sampler}} (\begin{DoxyParamCaption}\item[{long}]{l\+Size,  }\item[{\mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}}}]{ht\+HM }\end{DoxyParamCaption})}
+
+
+
+Create an particle system containing l\+Size uninitialised particles with the specified mode. 
+
+The constructor prepares a sampler for use but does not assign any moves to the moveset, initialise the particles or otherwise perform any sampling related tasks. Its main function is to allocate a region of memory in which to store the particle set and to initialise a random number generator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em l\+Size} & The number of particles present in the ensemble (at time 0 if this is a variable quantity) \\
+\hline
+{\em ht\+HM} & The history mode to use\+: set this to S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+R\+AM to store the whole history of the system and S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE to avoid doing so. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Space} & The class used to represent a point in the sample space. \\
+\hline
+\end{DoxyTemplParams}
+Structure used internally for resampling.
+
+Structure used internally for resampling.
+
+Definition at line 156 of file sampler.\+hh.
+
+
+
+References S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a27d9b5264110c82cec8eb866da309143}\label{classsmc_1_1sampler_a27d9b5264110c82cec8eb866da309143}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!sampler@{sampler}}
+\index{sampler@{sampler}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{sampler()}{sampler()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1sampler}{sampler}} (\begin{DoxyParamCaption}\item[{long}]{l\+Size,  }\item[{\mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}}}]{ht\+HM,  }\item[{const gsl\+\_\+rng\+\_\+type $\ast$}]{rng\+Type,  }\item[{unsigned long}]{rng\+Seed }\end{DoxyParamCaption})}
+
+
+
+Create an particle system constaining l\+Size uninitialised particles with the specified mode and random number generator. 
+
+The constructor prepares a sampler for use but does not assign any moves to the moveset, initialise the particles or otherwise perform any sampling related tasks. Its main function is to allocate a region of memory in which to store the particle set and to initialise a random number generator.
+
+
+\begin{DoxyParams}{Parameters}
+{\em l\+Size} & The number of particles present in the ensemble (at time 0 if this is a variable quantity) \\
+\hline
+{\em ht\+HM} & The history mode to use\+: set this to S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+R\+AM to store the whole history of the system and S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE to avoid doing so. \\
+\hline
+{\em rng\+Type} & The type of random number generator to use \\
+\hline
+{\em rng\+Seed} & The seed to use for the random number generator \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Space} & The class used to represent a point in the sample space. \\
+\hline
+\end{DoxyTemplParams}
+Structure used internally for resampling.
+
+Structure used internally for resampling.
+
+Definition at line 185 of file sampler.\+hh.
+
+
+
+References S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+R\+AM, and S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a416ba9190610f497366a3bd6bf2ac4f4}\label{classsmc_1_1sampler_a416ba9190610f497366a3bd6bf2ac4f4}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!````~sampler@{$\sim$sampler}}
+\index{````~sampler@{$\sim$sampler}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$sampler()}{~sampler()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::$\sim$\mbox{\hyperlink{classsmc_1_1sampler}{sampler}}}
+
+
+
+Dispose of a sampler. 
+
+
+
+Definition at line 206 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ae9ea1885b570622b33b27bd24045d649}\label{classsmc_1_1sampler_ae9ea1885b570622b33b27bd24045d649}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!sampler@{sampler}}
+\index{sampler@{sampler}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{sampler()}{sampler()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::\mbox{\hyperlink{classsmc_1_1sampler}{sampler}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$ Space $>$ \&}]{s\+From }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Duplication of \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} is not currently permitted. 
+
+Allow a human readable version of the sampler configuration to be produced using the stream operator. std\+::ostream \& operator$<$$<$ (std\+::ostream\& os, sampler$<$\+Space$>$ \& s); 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1sampler_a1186ebab9be58b1c9f2d19617055df4f}\label{classsmc_1_1sampler_a1186ebab9be58b1c9f2d19617055df4f}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetESS@{GetESS}}
+\index{GetESS@{GetESS}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetESS()}{GetESS()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+E\+SS (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Calculates and Returns the Effective Sample Size. 
+
+
+
+Definition at line 219 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a094822e6957e917cc111f5d3cf94f32e}\label{classsmc_1_1sampler_a094822e6957e917cc111f5d3cf94f32e}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetHistory@{GetHistory}}
+\index{GetHistory@{GetHistory}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetHistory()}{GetHistory()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+const \mbox{\hyperlink{classsmc_1_1history}{history}}$<$\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$Space$>$ $>$$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+History (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns a pointer to the History of the particle system. 
+
+
+
+Definition at line 100 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::\+History.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ac86a0b875cc3a8a0b903cd907ea3ce8f}\label{classsmc_1_1sampler_ac86a0b875cc3a8a0b903cd907ea3ce8f}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetNumber@{GetNumber}}
+\index{GetNumber@{GetNumber}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetNumber()}{GetNumber()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+Number (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the number of particles within the system. 
+
+
+
+Definition at line 102 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::N.
+
+
+
+Referenced by std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_af8907df3ab45f59abae561c48cd0ef9d}\label{classsmc_1_1sampler_af8907df3ab45f59abae561c48cd0ef9d}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetParticleLogWeight@{GetParticleLogWeight}}
+\index{GetParticleLogWeight@{GetParticleLogWeight}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetParticleLogWeight()}{GetParticleLogWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+Particle\+Log\+Weight (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return the logarithmic unnormalized weight of particle n. 
+
+
+
+Definition at line 106 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::p\+Particles.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a55c0c72ed5eb4a5ad5b8e2882c7ef56c}\label{classsmc_1_1sampler_a55c0c72ed5eb4a5ad5b8e2882c7ef56c}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetParticleValue@{GetParticleValue}}
+\index{GetParticleValue@{GetParticleValue}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetParticleValue()}{GetParticleValue()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+const Space\& \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+Particle\+Value (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return the value of particle n. 
+
+
+
+Definition at line 104 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::p\+Particles.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a3c209f4895d846b8486d6498d905b7b3}\label{classsmc_1_1sampler_a3c209f4895d846b8486d6498d905b7b3}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetParticleWeight@{GetParticleWeight}}
+\index{GetParticleWeight@{GetParticleWeight}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetParticleWeight()}{GetParticleWeight()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+Particle\+Weight (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Return the unnormalized weight of particle n. 
+
+
+
+Definition at line 108 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::p\+Particles.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_aa8ec82cd83a80e1ba30ccb8d532b0a17}\label{classsmc_1_1sampler_aa8ec82cd83a80e1ba30ccb8d532b0a17}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!GetTime@{GetTime}}
+\index{GetTime@{GetTime}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{GetTime()}{GetTime()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Get\+Time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the current evolution time of the system. 
+
+
+
+Definition at line 110 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::T.
+
+
+
+Referenced by std\+::operator$<$$<$().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_aea60af09185ada1ad09d2636460c1d9a}\label{classsmc_1_1sampler_aea60af09185ada1ad09d2636460c1d9a}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!Initialise@{Initialise}}
+\index{Initialise@{Initialise}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Initialise()}{Initialise()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Initialise (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialise the sampler and its constituent particles. 
+
+At present this function resets the system evolution time to 0 and calls the moveset initialisor to assign each particle in the ensemble.
+
+Note that the initialisation function must be specified before calling this function. 
+
+Definition at line 238 of file sampler.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::\+Do\+Init(), smc\+::history$<$ Particle $>$\+::\+Pop(), smc\+::history$<$ Particle $>$\+::\+Push(), and S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE.
+
+Here is the call graph for this function\+:
+% FIG 1
+\mbox{\Hypertarget{classsmc_1_1sampler_a7fb5dd40ad3a43f1705e21ddc0be2cba}\label{classsmc_1_1sampler_a7fb5dd40ad3a43f1705e21ddc0be2cba}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!Integrate@{Integrate}}
+\index{Integrate@{Integrate}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Integrate()}{Integrate()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Integrate (\begin{DoxyParamCaption}\item[{double($\ast$)(const Space \&, void $\ast$)}]{p\+Integrand,  }\item[{void $\ast$}]{p\+Auxiliary }\end{DoxyParamCaption})}
+
+
+
+Integrate the supplied function with respect to the current particle set. 
+
+This function returns the result of integrating the supplied function under the empirical measure associated with the particle set at the present time. The final argument of the integrand function is a pointer which will be supplied with p\+Auxiliary to allow for arbitrary additional information to be passed to the function being integrated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Integrand} & The function to integrate with respect to the particle set \\
+\hline
+{\em p\+Auxiliary} & A pointer to any auxiliary data which should be passed to the function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 262 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a760ce7ac6dfd846f27b1e8e241b1263c}\label{classsmc_1_1sampler_a760ce7ac6dfd846f27b1e8e241b1263c}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!IntegratePathSampling@{IntegratePathSampling}}
+\index{IntegratePathSampling@{IntegratePathSampling}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{IntegratePathSampling()}{IntegratePathSampling()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Integrate\+Path\+Sampling (\begin{DoxyParamCaption}\item[{double($\ast$)(long, const \mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$ Space $>$ \&, void $\ast$)}]{p\+Integrand,  }\item[{double($\ast$)(long, void $\ast$)}]{p\+Width,  }\item[{void $\ast$}]{p\+Auxiliary }\end{DoxyParamCaption})}
+
+
+
+Integrate the supplied function over the path path using the supplied width function. 
+
+This function is intended to be used to estimate integrals of the sort which must be evaluated to determine the normalising constant of a distribution obtain using a sequence of potential functions proportional to densities with respect to the initial distribution to define a sequence of distributions leading up to the terminal, interesting distribution.
+
+In this context, the particle set at each time is used to make an estimate of the path sampling integrand, and a trapezoidal integration is then performed to obtain an estimate of the path sampling integral which is the natural logarithm of the ratio of normalising densities.
+
+
+\begin{DoxyParams}{Parameters}
+{\em p\+Integrand} & The quantity which we wish to integrate at each time \\
+\hline
+{\em p\+Width} & A pointer to a function which specifies the width of each ~\newline
+ \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 288 of file sampler.\+hh.
+
+
+
+References smc\+::history$<$ Particle $>$\+::\+Integrate\+Path\+Sampling(), smc\+::history$<$ Particle $>$\+::\+Pop(), smc\+::history$<$ Particle $>$\+::\+Push(), S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+I\+ON, S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE, and S\+M\+C\+X\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+H\+I\+S\+T\+O\+RY.
+
+Here is the call graph for this function\+:
+% FIG 2
+\mbox{\Hypertarget{classsmc_1_1sampler_afdeb22eb6fea9e8505e3ebffcd9315b2}\label{classsmc_1_1sampler_afdeb22eb6fea9e8505e3ebffcd9315b2}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!Iterate@{Iterate}}
+\index{Iterate@{Iterate}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Iterate()}{Iterate()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Iterate (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Perform one iteration of the simulation algorithm. 
+
+The iterate function\+:
+\begin{DoxyEnumerate}
+\item appends the current particle set to the history if desired
+\begin{DoxyEnumerate}
+\item moves the current particle set
+\end{DoxyEnumerate}
+\item checks the effective sample size and resamples if necessary
+\item performs a mcmc step if required
+\item increments the current evolution time 
+\end{DoxyEnumerate}
+
+Definition at line 306 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_abd87e383ff67eff58d63660eb9e1c456}\label{classsmc_1_1sampler_abd87e383ff67eff58d63660eb9e1c456}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!IterateBack@{IterateBack}}
+\index{IterateBack@{IterateBack}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{IterateBack()}{IterateBack()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Iterate\+Back (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Cancel one iteration of the simulation algorithm. 
+
+
+
+Definition at line 313 of file sampler.\+hh.
+
+
+
+References smc\+::history$<$ Particle $>$\+::\+Pop(), S\+M\+C\+\_\+\+E\+X\+C\+E\+P\+T\+I\+ON, S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE, and S\+M\+C\+X\+\_\+\+M\+I\+S\+S\+I\+N\+G\+\_\+\+H\+I\+S\+T\+O\+RY.
+
+Here is the call graph for this function\+:
+% FIG 3
+\mbox{\Hypertarget{classsmc_1_1sampler_ad335a09ab2e8f4eb06ab176d0847a39f}\label{classsmc_1_1sampler_ad335a09ab2e8f4eb06ab176d0847a39f}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!IterateEss@{IterateEss}}
+\index{IterateEss@{IterateEss}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{IterateEss()}{IterateEss()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Iterate\+Ess (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Perform one iteration of the simulation algorithm and return the resulting ess. 
+
+
+
+Definition at line 324 of file sampler.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::\+Do\+M\+C\+M\+C(), smc\+::history$<$ Particle $>$\+::\+Push(), and S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+N\+O\+NE.
+
+Here is the call graph for this function\+:
+% FIG 4
+\mbox{\Hypertarget{classsmc_1_1sampler_a74c32488dbdb80e53a861d04b645b35d}\label{classsmc_1_1sampler_a74c32488dbdb80e53a861d04b645b35d}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!IterateUntil@{IterateUntil}}
+\index{IterateUntil@{IterateUntil}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{IterateUntil()}{IterateUntil()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Iterate\+Until (\begin{DoxyParamCaption}\item[{long}]{l\+Terminate }\end{DoxyParamCaption})}
+
+
+
+Perform iterations until the specified evolution time is reached. 
+
+
+
+Definition at line 364 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a4954035cfe91e765cc42cec4178e3558}\label{classsmc_1_1sampler_a4954035cfe91e765cc42cec4178e3558}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!MoveParticles@{MoveParticles}}
+\index{MoveParticles@{MoveParticles}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{MoveParticles()}{MoveParticles()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Move\+Particles (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Move the particle set by proposing an applying an appropriate move to each particle. 
+
+
+
+Definition at line 371 of file sampler.\+hh.
+
+
+
+References smc\+::moveset$<$ Space $>$\+::\+Do\+Move().
+
+Here is the call graph for this function\+:
+% FIG 5
+\mbox{\Hypertarget{classsmc_1_1sampler_a9c6cec4bb0ad63e59288df32f7483074}\label{classsmc_1_1sampler_a9c6cec4bb0ad63e59288df32f7483074}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$Space$>$\& \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classsmc_1_1sampler}{sampler}}$<$ Space $>$ \&}]{s\+From }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Duplication of \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}} is not currently permitted. 
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ae68189c3ed97937dedfe1ec125fb9e8c}\label{classsmc_1_1sampler_ae68189c3ed97937dedfe1ec125fb9e8c}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!Resample@{Resample}}
+\index{Resample@{Resample}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Resample()}{Resample()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Resample (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}}}]{l\+Mode }\end{DoxyParamCaption})}
+
+
+
+Resample the particle set using the specified resmpling scheme. 
+
+
+
+Definition at line 380 of file sampler.\+hh.
+
+
+
+References smc\+::particle$<$ Space $>$\+::\+Get\+Weight(), smc\+::rng\+::\+Multinomial(), smc\+::particle$<$ Space $>$\+::\+Set\+Log\+Weight(), smc\+::particle$<$ Space $>$\+::\+Set\+Value(), S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+M\+U\+L\+T\+I\+N\+O\+M\+I\+AL, S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+R\+E\+S\+I\+D\+U\+AL, S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED, S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+Y\+S\+T\+E\+M\+A\+T\+IC, and smc\+::rng\+::\+Uniform().
+
+Here is the call graph for this function\+:
+% FIG 6
+\mbox{\Hypertarget{classsmc_1_1sampler_a379e3e0604371ee40d79f5522e3dc721}\label{classsmc_1_1sampler_a379e3e0604371ee40d79f5522e3dc721}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!SetMoveSet@{SetMoveSet}}
+\index{SetMoveSet@{SetMoveSet}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetMoveSet()}{SetMoveSet()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Set\+Move\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$ Space $>$ \&}]{p\+New\+Moveset }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the entire moveset to the one which is supplied. 
+
+
+
+Definition at line 130 of file sampler.\+hh.
+
+
+
+References smc\+::sampler$<$ Space $>$\+::\+Moves.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a3bdfcb2f336ebd086a4524a08cd68f00}\label{classsmc_1_1sampler_a3bdfcb2f336ebd086a4524a08cd68f00}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!SetResampleParams@{SetResampleParams}}
+\index{SetResampleParams@{SetResampleParams}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{SetResampleParams()}{SetResampleParams()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+void \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Set\+Resample\+Params (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}}}]{rt\+Mode,  }\item[{double}]{d\+Threshold }\end{DoxyParamCaption})}
+
+
+
+Set Resampling Parameters. 
+
+This function configures the resampling parameters, allowing the specification of both the resampling mode and the threshold at which resampling is used.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt\+Mode} & The resampling mode to be used. \\
+\hline
+{\em d\+Threshold} & The threshold at which resampling is deemed necesary.\\
+\hline
+\end{DoxyParams}
+The rt\+Mode parameter should be set to one of the following\+:
+\begin{DoxyEnumerate}
+\item S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+M\+U\+L\+T\+I\+N\+O\+M\+I\+AL to use multinomial resampling ~\newline
+
+\item S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+R\+E\+S\+I\+D\+U\+AL to use residual resampling
+\item S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+T\+R\+A\+T\+I\+F\+I\+ED to use stratified resampling
+\item S\+M\+C\+\_\+\+R\+E\+S\+A\+M\+P\+L\+E\+\_\+\+S\+Y\+S\+T\+E\+M\+A\+T\+IC to use systematic resampling
+\end{DoxyEnumerate}
+
+The d\+Threshold parameter can be set to a value in the range \mbox{[}0,1) corresponding to a fraction of the size of the particle set or it may be set to an integer corresponding to an actual effective sample size. 
+
+Definition at line 512 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a26459cb9bb182dc4dcf3f9eb6db7c451}\label{classsmc_1_1sampler_a26459cb9bb182dc4dcf3f9eb6db7c451}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!StreamParticle@{StreamParticle}}
+\index{StreamParticle@{StreamParticle}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{StreamParticle()}{StreamParticle()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+std\+::ostream \& \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Stream\+Particle (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{long}]{n }\end{DoxyParamCaption})}
+
+
+
+Dump a specified particle to the specified output stream in a human readable form. 
+
+
+
+Definition at line 522 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ade33c0a75bec0da572634df8c6ec4f2e}\label{classsmc_1_1sampler_ade33c0a75bec0da572634df8c6ec4f2e}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!StreamParticles@{StreamParticles}}
+\index{StreamParticles@{StreamParticles}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{StreamParticles()}{StreamParticles()}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+std\+::ostream \& \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Stream\+Particles (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os }\end{DoxyParamCaption})}
+
+
+
+Dump the entire particle set to the specified output stream in a human readable form. 
+
+
+
+Definition at line 529 of file sampler.\+hh.
+
+
+
+Referenced by std\+::operator$<$$<$().
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1sampler_af3e6a5d75a0e7ca48b126a34d32549ee}\label{classsmc_1_1sampler_af3e6a5d75a0e7ca48b126a34d32549ee}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!dResampleThreshold@{dResampleThreshold}}
+\index{dResampleThreshold@{dResampleThreshold}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{dResampleThreshold}{dResampleThreshold}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::d\+Resample\+Threshold\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The effective sample size at which resampling should be used. 
+
+
+
+Definition at line 67 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ad52ec689dbce72927a84421d068d1f6a}\label{classsmc_1_1sampler_ad52ec689dbce72927a84421d068d1f6a}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!dRSWeights@{dRSWeights}}
+\index{dRSWeights@{dRSWeights}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{dRSWeights}{dRSWeights}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+double$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::d\+R\+S\+Weights\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Structure used internally for resampling. 
+
+
+
+Definition at line 69 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a2e766428268aae4e37e714690f7afe6c}\label{classsmc_1_1sampler_a2e766428268aae4e37e714690f7afe6c}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!History@{History}}
+\index{History@{History}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{History}{History}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1history}{history}}$<$\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$Space$>$ $>$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::History\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The historical process associated with the particle system. 
+
+
+
+Definition at line 88 of file sampler.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Get\+History().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ab9237fb1102627db441144a5ab44eac0}\label{classsmc_1_1sampler_ab9237fb1102627db441144a5ab44eac0}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!htHistoryMode@{htHistoryMode}}
+\index{htHistoryMode@{htHistoryMode}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{htHistoryMode}{htHistoryMode}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{sampler_8hh_a5132dc04a038b45ee5bf237a3281bbad}{History\+Type}} \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::ht\+History\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A mode flag which indicates whether historical information is stored. 
+
+
+
+Definition at line 86 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a38d563fd1a9346907b37a0da7fd0a533}\label{classsmc_1_1sampler_a38d563fd1a9346907b37a0da7fd0a533}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!Moves@{Moves}}
+\index{Moves@{Moves}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{Moves}{Moves}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1moveset}{moveset}}$<$Space$>$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::Moves\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The set of moves available. 
+
+
+
+Definition at line 78 of file sampler.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Set\+Move\+Set().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a3a2b1f3e2ad81e06a9ed16bb8d7dd8b2}\label{classsmc_1_1sampler_a3a2b1f3e2ad81e06a9ed16bb8d7dd8b2}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!N@{N}}
+\index{N@{N}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::N\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Number of particles in the system. 
+
+
+
+Definition at line 60 of file sampler.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Get\+Number().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ac93079033397dc574a69450af988c2ca}\label{classsmc_1_1sampler_ac93079033397dc574a69450af988c2ca}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!nAccepted@{nAccepted}}
+\index{nAccepted@{nAccepted}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{nAccepted}{nAccepted}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+int \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::n\+Accepted\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The number of M\+C\+MC moves which have been accepted during this iteration. 
+
+
+
+Definition at line 81 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_af1d5f73def28b785b8f678e477550f2a}\label{classsmc_1_1sampler_af1d5f73def28b785b8f678e477550f2a}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!nResampled@{nResampled}}
+\index{nResampled@{nResampled}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{nResampled}{nResampled}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+int \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::n\+Resampled\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A flag which tracks whether the ensemble was resampled during this iteration. 
+
+
+
+Definition at line 83 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a55e20844623867a0d4d285975ce23882}\label{classsmc_1_1sampler_a55e20844623867a0d4d285975ce23882}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!pParticles@{pParticles}}
+\index{pParticles@{pParticles}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pParticles}{pParticles}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1particle}{particle}}$<$Space$>$$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::p\+Particles\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The particles within the system. 
+
+
+
+Definition at line 76 of file sampler.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Get\+Particle\+Log\+Weight(), smc\+::sampler$<$ Space $>$\+::\+Get\+Particle\+Value(), and smc\+::sampler$<$ Space $>$\+::\+Get\+Particle\+Weight().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a9afabb1b27e2e01c93bcc2c106270023}\label{classsmc_1_1sampler_a9afabb1b27e2e01c93bcc2c106270023}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!pRng@{pRng}}
+\index{pRng@{pRng}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{pRng}{pRng}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{classsmc_1_1rng}{rng}}$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::p\+Rng\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+A random number generator. 
+
+
+
+Definition at line 57 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a619ddb7f79119ebc43b74fdfe358a36d}\label{classsmc_1_1sampler_a619ddb7f79119ebc43b74fdfe358a36d}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!rtResampleMode@{rtResampleMode}}
+\index{rtResampleMode@{rtResampleMode}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{rtResampleMode}{rtResampleMode}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+\mbox{\hyperlink{sampler_8hh_a72c142abcbed8879c1eb08df4dcfa997}{Resample\+Type}} \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::rt\+Resample\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The resampling mode which is to be employed. 
+
+
+
+Definition at line 65 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_afcda772e35b5fffeeb6f6b48e307063f}\label{classsmc_1_1sampler_afcda772e35b5fffeeb6f6b48e307063f}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!T@{T}}
+\index{T@{T}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{T}{T}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+long \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::T\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The current evolution time of the system. 
+
+
+
+Definition at line 62 of file sampler.\+hh.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Get\+Time().
+
+\mbox{\Hypertarget{classsmc_1_1sampler_ab6ffd041f3db53ff1ca753e40c2d1d58}\label{classsmc_1_1sampler_ab6ffd041f3db53ff1ca753e40c2d1d58}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!uRSCount@{uRSCount}}
+\index{uRSCount@{uRSCount}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{uRSCount}{uRSCount}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+unsigned int$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::u\+R\+S\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Structure used internally for resampling. 
+
+
+
+Definition at line 71 of file sampler.\+hh.
+
+\mbox{\Hypertarget{classsmc_1_1sampler_a5522343cf3f0f3df52ec6f416805f873}\label{classsmc_1_1sampler_a5522343cf3f0f3df52ec6f416805f873}} 
+\index{smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}!uRSIndices@{uRSIndices}}
+\index{uRSIndices@{uRSIndices}!smc::sampler$<$ Space $>$@{smc::sampler$<$ Space $>$}}
+\doxysubsubsection{\texorpdfstring{uRSIndices}{uRSIndices}}
+{\footnotesize\ttfamily template$<$class Space $>$ \\
+unsigned int$\ast$ \mbox{\hyperlink{classsmc_1_1sampler}{smc\+::sampler}}$<$ Space $>$\+::u\+R\+S\+Indices\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Structure used internally for resampling. 
+
+
+
+Definition at line 73 of file sampler.\+hh.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{sampler_8hh}{sampler.\+hh}}\end{DoxyCompactItemize}

@@ -1,0 +1,24 @@
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyAuthor}{Author}
+Adam M. Johansen
+\end{DoxyAuthor}
+\hypertarget{index_intro_sec}{}\doxysection{Summary}\label{index_intro_sec}
+The S\+MC template class library (S\+M\+C\+TC) is intended to be used to implement S\+MC algorithms ranging from simple particle filter to complicated S\+MC algorithms from simple particle filters to the S\+MC samplers of Del Moral, Doucet and Jasra (2006) within a generic framework.\hypertarget{index_license}{}\doxysection{License}\label{index_license}
+S\+M\+C\+TC is free software\+: you can redistribute it and/or modify it under the terms of the G\+NU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+S\+M\+C\+TC is distributed in the hope that it will be useful, but W\+I\+T\+H\+O\+UT A\+NY W\+A\+R\+R\+A\+N\+TY; without even the implied warranty of M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY or F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE. See the G\+NU General Public License for more details.
+
+You should have received a copy of the G\+NU General Public License along with S\+M\+C\+TC. If not, see \href{http://www.gnu.org/licenses/}{\texttt{ http\+://www.\+gnu.\+org/licenses/}}.
+
+The software is still in development but is thought to be sufficiently fully-\/featured and stable for use.\hypertarget{index_using_sec}{}\doxysection{Using the Template Library}\label{index_using_sec}
+In order to use the template libary it is necessary to place the set of header files in a suitable include directory and then to instantiate the various classes with the appropriate type for your sampler.
+
+For implementation details, please see the accompanying user guide.\hypertarget{index_example_sec}{}\doxysection{Examples}\label{index_example_sec}
+\hypertarget{index_A}{}\doxysubsection{Simple Particle Filter}\label{index_A}
+This example provides a simple particle filter for the approximate filtering of nonlinear, nongaussian state space models.\hypertarget{index_SMC}{}\doxysubsection{Samplers for Rare Event Simulation}\label{index_SMC}
+The main.\+cc file provides an example of a use of the template library to estimate Gaussian tail probabilities within an S\+MC samplers framework by making use of a sequence of intermediate distributions defined by introducing a potential function which varies from flat to being very close to an indicator function on the tail event.
+
+This example is taken from from Johansen, Del Moral and Doucet (2006).\hypertarget{index_Acknowledgements}{}\doxysubsection{Acknowledgements}\label{index_Acknowledgements}
+Thanks are due to Edmund Jackson and Mark Briers for testing S\+M\+C\+TC on a variety of platforms. The Visual C++ project and solution files are kindly provided by Mark Briers. 

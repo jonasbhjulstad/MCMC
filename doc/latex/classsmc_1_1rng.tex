@@ -1,0 +1,565 @@
+\hypertarget{classsmc_1_1rng}{}\doxysection{smc\+::rng Class Reference}
+\label{classsmc_1_1rng}\index{smc::rng@{smc::rng}}
+
+
+A random number generator class.  
+
+
+
+
+{\ttfamily \#include $<$rng.\+hh$>$}
+
+
+
+Collaboration diagram for smc\+::rng\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsmc_1_1rng_a3c15242b9a047542af5c3eef483e6a43}{rng}} ()
+\begin{DoxyCompactList}\small\item\em Initialise the random number generator using default settings. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1rng_a435b59539e71ac8dc9dba72766a7f8d1}{rng}} (const gsl\+\_\+rng\+\_\+type $\ast$Type)
+\begin{DoxyCompactList}\small\item\em Initialise the random number generator using the default seed for the type. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1rng_ae8f6bff224c1ec713bcf909e5fd2c807}{rng}} (const gsl\+\_\+rng\+\_\+type $\ast$Type, unsigned long int l\+Seed)
+\begin{DoxyCompactList}\small\item\em Initialise the random number generator using specified type and seed. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classsmc_1_1rng_a2897afe20d4b556acbbbbbb9c15073f9}{$\sim$rng}} ()
+\begin{DoxyCompactList}\small\item\em Free the workspace allocated for random number generation. \end{DoxyCompactList}\item 
+gsl\+\_\+rng $\ast$ \mbox{\hyperlink{classsmc_1_1rng_a3c3a750a8d37248723b793dc3a6aba59}{Get\+Raw}} (void)
+\begin{DoxyCompactList}\small\item\em Provide access to the raw random number generator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classsmc_1_1rng_a4c313f4501fd65d367511a5ae2bfaace}{Multinomial}} (unsigned n, unsigned k, const double $\ast$w, unsigned $\ast$X)
+\begin{DoxyCompactList}\small\item\em Generate a multinomial random vector with parameters (n,w\mbox{[}1\+:k\mbox{]}) and store it in X. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{classsmc_1_1rng_ac9d5b22ad80ed2f90540fcd7b09cf6ab}{Uniform\+Discrete}} (long l\+Min, long l\+Max)
+\begin{DoxyCompactList}\small\item\em Returns a random integer generated uniformly between the minimum and maximum values specified. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a1ec1cf1f32770bd59ed505a8a558630c}{Beta}} (double da, double db)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from a Beta distribution with the specified parameters. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_ad3decc00cc399c14cf9a59739e5d9114}{Cauchy}} (double d\+Scale)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from a Cauchy distribution with the specified scale parameter. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a62506092e92301c9b89868bbf28398fb}{Exponential}} (double d\+Mean)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from an exponential distribution with the specified mean. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_aa5e74befd1e720ab24d05280dd1783ff}{Gamma}} (double d\+Alpha, double d\+Beta)
+\begin{DoxyCompactList}\small\item\em Return a random number generated from a gamma distribution with shape alpha and scale beta. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a8f2ba1dce049cb1a3c30bc1ab848da5c}{Laplacian}} (double d\+Scale)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from a Laplacian distribution with the specified scale. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_ae92fe67c15cffb17fc49515cfe40f923}{Lognormal}} (double d\+Mu, double d\+Sigma)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from a Lognormal distribution of location mu and scale sigma. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_aab6d20223cbac6937ab944aa31eb1bb7}{Normal}} (double d\+Mean, double d\+Std)
+\begin{DoxyCompactList}\small\item\em Return a random number generated from a normal distribution with a specified mean and standard deviation. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a6da132a2ed0b653ab881767b5637d6d3}{NormalS}} (void)
+\begin{DoxyCompactList}\small\item\em Return a random number generated from a standard normal distribution. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_afc2bda9fb9156970057126ef67dde750}{Normal\+Truncated}} (double d\+Mean, double d\+Std, double d\+Threshold)
+\begin{DoxyCompactList}\small\item\em Returns a random number from a normal distribution, conditional upon it exceeding the specified threshold. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a808e51a5b2b562c651fa09495c749a91}{StudentT}} (double d\+DF)
+\begin{DoxyCompactList}\small\item\em Return a student-\/t random number generated with a specified number of degrees of freedom. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_ab8bb55fa47b83252a56c102c8cd77da3}{Uniform}} (double d\+Min, double d\+Max)
+\begin{DoxyCompactList}\small\item\em Return a random number generated uniformly between d\+Min and d\+Max. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classsmc_1_1rng_a08824bd059ec73e7672ab879de9c06a9}{UniformS}} (void)
+\begin{DoxyCompactList}\small\item\em Returns a random number generated from the standard uniform\mbox{[}0,1) distribution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const gsl\+\_\+rng\+\_\+type $\ast$ \mbox{\hyperlink{classsmc_1_1rng_a4b52cba03e1df572b3512b2b558f61a5}{type}}
+\begin{DoxyCompactList}\small\item\em This is the type of random number generator underlying the class. \end{DoxyCompactList}\item 
+gsl\+\_\+rng $\ast$ \mbox{\hyperlink{classsmc_1_1rng_a145601cf86888802bc232d198344fb67}{p\+Workspace}}
+\begin{DoxyCompactList}\small\item\em This is a pointer to the internal workspace of the rng including its current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A random number generator class. 
+
+At present this serves as a wrapper for the gsl random number generation code. 
+
+Definition at line 67 of file rng.\+hh.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsmc_1_1rng_a3c15242b9a047542af5c3eef483e6a43}\label{classsmc_1_1rng_a3c15242b9a047542af5c3eef483e6a43}} 
+\index{smc::rng@{smc::rng}!rng@{rng}}
+\index{rng@{rng}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{rng()}{rng()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily smc\+::rng\+::rng (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialise the random number generator using default settings. 
+
+When called without any arguments, the constructor for the \mbox{\hyperlink{classsmc_1_1rng}{smc\+::rng}} class simply allocates a buffer for a random number generator of type gsl\+\_\+rng\+\_\+default (something which can be set at run-\/time via an environment variable) using its default seed (which again can be over-\/ridden using an environment variable). 
+
+Definition at line 83 of file rng.\+cc.
+
+
+
+References p\+Workspace, and type.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a435b59539e71ac8dc9dba72766a7f8d1}\label{classsmc_1_1rng_a435b59539e71ac8dc9dba72766a7f8d1}} 
+\index{smc::rng@{smc::rng}!rng@{rng}}
+\index{rng@{rng}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{rng()}{rng()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily smc\+::rng\+::rng (\begin{DoxyParamCaption}\item[{const gsl\+\_\+rng\+\_\+type $\ast$}]{Type }\end{DoxyParamCaption})}
+
+
+
+Initialise the random number generator using the default seed for the type. 
+
+When called with a single argument, the constructor for the \mbox{\hyperlink{classsmc_1_1rng}{smc\+::rng}} class allocates a buffer for a random number generator of the specified type and initialises it with the default seed (which can be set using and environment variable if one wishes to vary it at run-\/time).
+
+
+\begin{DoxyParams}{Parameters}
+{\em Type} & The type of a G\+SL random number generator \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 95 of file rng.\+cc.
+
+
+
+References p\+Workspace, and type.
+
+\mbox{\Hypertarget{classsmc_1_1rng_ae8f6bff224c1ec713bcf909e5fd2c807}\label{classsmc_1_1rng_ae8f6bff224c1ec713bcf909e5fd2c807}} 
+\index{smc::rng@{smc::rng}!rng@{rng}}
+\index{rng@{rng}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{rng()}{rng()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily smc\+::rng\+::rng (\begin{DoxyParamCaption}\item[{const gsl\+\_\+rng\+\_\+type $\ast$}]{Type,  }\item[{unsigned long int}]{l\+Seed }\end{DoxyParamCaption})}
+
+
+
+Initialise the random number generator using specified type and seed. 
+
+When called with a pair of arguments, the constructor for the \mbox{\hyperlink{classsmc_1_1rng}{smc\+::rng}} class allocates a buffer for the specified random number generator type and initialises it with the specified seed (note that zero has special significance and is used to specify the seed with which the generator was originally used).
+
+
+\begin{DoxyParams}{Parameters}
+{\em Type} & The type of a G\+SL random number generator \\
+\hline
+{\em l\+Seed} & The value with which the generator is to be seeded \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 108 of file rng.\+cc.
+
+
+
+References p\+Workspace, and type.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a2897afe20d4b556acbbbbbb9c15073f9}\label{classsmc_1_1rng_a2897afe20d4b556acbbbbbb9c15073f9}} 
+\index{smc::rng@{smc::rng}!````~rng@{$\sim$rng}}
+\index{````~rng@{$\sim$rng}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{$\sim$rng()}{~rng()}}
+{\footnotesize\ttfamily smc\+::rng\+::$\sim$rng (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Free the workspace allocated for random number generation. 
+
+The destructor presently does no more than call the gsl\+\_\+rng\+\_\+free function to deallocate the memory which was previously allocate to the random number generator. 
+
+Definition at line 118 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classsmc_1_1rng_a1ec1cf1f32770bd59ed505a8a558630c}\label{classsmc_1_1rng_a1ec1cf1f32770bd59ed505a8a558630c}} 
+\index{smc::rng@{smc::rng}!Beta@{Beta}}
+\index{Beta@{Beta}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Beta()}{Beta()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Beta (\begin{DoxyParamCaption}\item[{double}]{da,  }\item[{double}]{db }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from a Beta distribution with the specified parameters. 
+
+This function simply calls gsl\+\_\+ran\+\_\+beta with the specified parameters. 
+\begin{DoxyParams}{Parameters}
+{\em da} & The parameter associated with \char`\"{}x\char`\"{}. \textbackslash{}paran db The parameter associated with \char`\"{}1-\/x\char`\"{}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 155 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_ad3decc00cc399c14cf9a59739e5d9114}\label{classsmc_1_1rng_ad3decc00cc399c14cf9a59739e5d9114}} 
+\index{smc::rng@{smc::rng}!Cauchy@{Cauchy}}
+\index{Cauchy@{Cauchy}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Cauchy()}{Cauchy()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Cauchy (\begin{DoxyParamCaption}\item[{double}]{d\+Scale }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from a Cauchy distribution with the specified scale parameter. 
+
+This function simply calls gsl\+\_\+ran\+\_\+cauchy with the specified parameter. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Scale} & The scale parameter of the distribution. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 162 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a62506092e92301c9b89868bbf28398fb}\label{classsmc_1_1rng_a62506092e92301c9b89868bbf28398fb}} 
+\index{smc::rng@{smc::rng}!Exponential@{Exponential}}
+\index{Exponential@{Exponential}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Exponential()}{Exponential()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Exponential (\begin{DoxyParamCaption}\item[{double}]{d\+Mean }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from an exponential distribution with the specified mean. 
+
+This function simply calls gsl\+\_\+ran\+\_\+exponential with the specified parameters. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Mean} & The scale (not rate) (and mean) of the distribution. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 169 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_aa5e74befd1e720ab24d05280dd1783ff}\label{classsmc_1_1rng_aa5e74befd1e720ab24d05280dd1783ff}} 
+\index{smc::rng@{smc::rng}!Gamma@{Gamma}}
+\index{Gamma@{Gamma}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Gamma()}{Gamma()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Gamma (\begin{DoxyParamCaption}\item[{double}]{d\+Alpha,  }\item[{double}]{d\+Beta }\end{DoxyParamCaption})}
+
+
+
+Return a random number generated from a gamma distribution with shape alpha and scale beta. 
+
+This function simply calls gsl\+\_\+ran\+\_\+gamma with the specified parameters. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Alpha} & The shape of the distribution (integers lead to Erlang distributions) \\
+\hline
+{\em d\+Beta} & The scale (not rate) of the distribution. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 177 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a3c3a750a8d37248723b793dc3a6aba59}\label{classsmc_1_1rng_a3c3a750a8d37248723b793dc3a6aba59}} 
+\index{smc::rng@{smc::rng}!GetRaw@{GetRaw}}
+\index{GetRaw@{GetRaw}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{GetRaw()}{GetRaw()}}
+{\footnotesize\ttfamily gsl\+\_\+rng $\ast$ smc\+::rng\+::\+Get\+Raw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Provide access to the raw random number generator. 
+
+This function returns a pointer to the underlying G\+SL random number generator which may be used to provide random number facilities which are not explicitly provided by the intermediate layer of \mbox{\hyperlink{classsmc_1_1rng}{smc\+::rng}}. 
+
+Definition at line 125 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a8f2ba1dce049cb1a3c30bc1ab848da5c}\label{classsmc_1_1rng_a8f2ba1dce049cb1a3c30bc1ab848da5c}} 
+\index{smc::rng@{smc::rng}!Laplacian@{Laplacian}}
+\index{Laplacian@{Laplacian}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Laplacian()}{Laplacian()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Laplacian (\begin{DoxyParamCaption}\item[{double}]{d\+Scale }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from a Laplacian distribution with the specified scale. 
+
+This function simply calls gsl\+\_\+ran\+\_\+laplace with the specified parameters. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Scale} & The scale (not rate) of the distribution. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 185 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_ae92fe67c15cffb17fc49515cfe40f923}\label{classsmc_1_1rng_ae92fe67c15cffb17fc49515cfe40f923}} 
+\index{smc::rng@{smc::rng}!Lognormal@{Lognormal}}
+\index{Lognormal@{Lognormal}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Lognormal()}{Lognormal()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Lognormal (\begin{DoxyParamCaption}\item[{double}]{d\+Mu,  }\item[{double}]{d\+Sigma }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from a Lognormal distribution of location mu and scale sigma. 
+
+This function simply calls gsl\+\_\+ran\+\_\+lognormal with the specified parameters. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Mu} & The location parameter of the distribution. \\
+\hline
+{\em d\+Sigma} & The scale parameter of the distribution. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 193 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a4c313f4501fd65d367511a5ae2bfaace}\label{classsmc_1_1rng_a4c313f4501fd65d367511a5ae2bfaace}} 
+\index{smc::rng@{smc::rng}!Multinomial@{Multinomial}}
+\index{Multinomial@{Multinomial}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Multinomial()}{Multinomial()}}
+{\footnotesize\ttfamily void smc\+::rng\+::\+Multinomial (\begin{DoxyParamCaption}\item[{unsigned}]{n,  }\item[{unsigned}]{k,  }\item[{const double $\ast$}]{w,  }\item[{unsigned $\ast$}]{X }\end{DoxyParamCaption})}
+
+
+
+Generate a multinomial random vector with parameters (n,w\mbox{[}1\+:k\mbox{]}) and store it in X. 
+
+This function simply passes the relevant arguments on to gsl\+\_\+ran\+\_\+multinomial. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of entities to assign. \\
+\hline
+{\em k} & Number of categories. \\
+\hline
+{\em w} & Weights of category elements \\
+\hline
+{\em X} & Array in which to return the sample values. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 135 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Resample().
+
+\mbox{\Hypertarget{classsmc_1_1rng_aab6d20223cbac6937ab944aa31eb1bb7}\label{classsmc_1_1rng_aab6d20223cbac6937ab944aa31eb1bb7}} 
+\index{smc::rng@{smc::rng}!Normal@{Normal}}
+\index{Normal@{Normal}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Normal()}{Normal()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Normal (\begin{DoxyParamCaption}\item[{double}]{d\+Mean,  }\item[{double}]{d\+Std }\end{DoxyParamCaption})}
+
+
+
+Return a random number generated from a normal distribution with a specified mean and standard deviation. 
+
+This function simply calls gsl\+\_\+ran\+\_\+gaussian with the specified standard deviation and shifts the result. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Mean} & The mean of the distribution. \\
+\hline
+{\em d\+Std} & The standard deviation of the distribution \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 201 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a6da132a2ed0b653ab881767b5637d6d3}\label{classsmc_1_1rng_a6da132a2ed0b653ab881767b5637d6d3}} 
+\index{smc::rng@{smc::rng}!NormalS@{NormalS}}
+\index{NormalS@{NormalS}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{NormalS()}{NormalS()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+NormalS (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Return a random number generated from a standard normal distribution. 
+
+This function simply calls gsl\+\_\+ran\+\_\+ugaussian returns the result. 
+
+Definition at line 207 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_afc2bda9fb9156970057126ef67dde750}\label{classsmc_1_1rng_afc2bda9fb9156970057126ef67dde750}} 
+\index{smc::rng@{smc::rng}!NormalTruncated@{NormalTruncated}}
+\index{NormalTruncated@{NormalTruncated}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{NormalTruncated()}{NormalTruncated()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Normal\+Truncated (\begin{DoxyParamCaption}\item[{double}]{d\+Mean,  }\item[{double}]{d\+Std,  }\item[{double}]{d\+Threshold }\end{DoxyParamCaption})}
+
+
+
+Returns a random number from a normal distribution, conditional upon it exceeding the specified threshold. 
+
+This function simply calls gsl\+\_\+ran\+\_\+gaussian\+\_\+tail with the specified parameters and performs appropriate shifting. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Mean} & The mean of the distribution. \\
+\hline
+{\em d\+Std} & The standard deviation of the distribution \\
+\hline
+{\em d\+Threshold} & The lower truncation threshold. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 216 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a808e51a5b2b562c651fa09495c749a91}\label{classsmc_1_1rng_a808e51a5b2b562c651fa09495c749a91}} 
+\index{smc::rng@{smc::rng}!StudentT@{StudentT}}
+\index{StudentT@{StudentT}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{StudentT()}{StudentT()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+StudentT (\begin{DoxyParamCaption}\item[{double}]{d\+DF }\end{DoxyParamCaption})}
+
+
+
+Return a student-\/t random number generated with a specified number of degrees of freedom. 
+
+This function simply calls gsl\+\_\+ran\+\_\+tdist with the specified number of degrees of freedom. 
+\begin{DoxyParams}{Parameters}
+{\em d\+DF} & The number of degrees of freedom. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 223 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_ab8bb55fa47b83252a56c102c8cd77da3}\label{classsmc_1_1rng_ab8bb55fa47b83252a56c102c8cd77da3}} 
+\index{smc::rng@{smc::rng}!Uniform@{Uniform}}
+\index{Uniform@{Uniform}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{Uniform()}{Uniform()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+Uniform (\begin{DoxyParamCaption}\item[{double}]{d\+Min,  }\item[{double}]{d\+Max }\end{DoxyParamCaption})}
+
+
+
+Return a random number generated uniformly between d\+Min and d\+Max. 
+
+This function simply calls gsl\+\_\+rng\+\_\+uniform and scales and shifts appropriately. 
+\begin{DoxyParams}{Parameters}
+{\em d\+Min} & The lowest value with positive density. \\
+\hline
+{\em d\+Max} & The largest value with positive density. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 231 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+
+
+Referenced by smc\+::sampler$<$ Space $>$\+::\+Resample().
+
+\mbox{\Hypertarget{classsmc_1_1rng_ac9d5b22ad80ed2f90540fcd7b09cf6ab}\label{classsmc_1_1rng_ac9d5b22ad80ed2f90540fcd7b09cf6ab}} 
+\index{smc::rng@{smc::rng}!UniformDiscrete@{UniformDiscrete}}
+\index{UniformDiscrete@{UniformDiscrete}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{UniformDiscrete()}{UniformDiscrete()}}
+{\footnotesize\ttfamily long smc\+::rng\+::\+Uniform\+Discrete (\begin{DoxyParamCaption}\item[{long}]{l\+Min,  }\item[{long}]{l\+Max }\end{DoxyParamCaption})}
+
+
+
+Returns a random integer generated uniformly between the minimum and maximum values specified. 
+
+This function simply calls gsl\+\_\+rng\+\_\+uniform\+\_\+int and shifts the result as appropriate such that the result is an integer generated uniformly from those between the two arguments (inclusive of those points). \begin{DoxyVerb}\param lMin The smallest value which can be returned
+ \param lMax the largest value which can be returned 
+\end{DoxyVerb}
+ 
+
+Definition at line 147 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+\mbox{\Hypertarget{classsmc_1_1rng_a08824bd059ec73e7672ab879de9c06a9}\label{classsmc_1_1rng_a08824bd059ec73e7672ab879de9c06a9}} 
+\index{smc::rng@{smc::rng}!UniformS@{UniformS}}
+\index{UniformS@{UniformS}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{UniformS()}{UniformS()}}
+{\footnotesize\ttfamily double smc\+::rng\+::\+UniformS (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns a random number generated from the standard uniform\mbox{[}0,1) distribution. 
+
+This function simply calls gsl\+\_\+rng\+\_\+uniform. 
+
+Definition at line 243 of file rng.\+cc.
+
+
+
+References p\+Workspace.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classsmc_1_1rng_a145601cf86888802bc232d198344fb67}\label{classsmc_1_1rng_a145601cf86888802bc232d198344fb67}} 
+\index{smc::rng@{smc::rng}!pWorkspace@{pWorkspace}}
+\index{pWorkspace@{pWorkspace}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{pWorkspace}{pWorkspace}}
+{\footnotesize\ttfamily gsl\+\_\+rng$\ast$ smc\+::rng\+::p\+Workspace\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This is a pointer to the internal workspace of the rng including its current state. 
+
+
+
+Definition at line 72 of file rng.\+hh.
+
+
+
+Referenced by Beta(), Cauchy(), Exponential(), Gamma(), Get\+Raw(), Laplacian(), Lognormal(), Multinomial(), Normal(), Normal\+S(), Normal\+Truncated(), rng(), Student\+T(), Uniform(), Uniform\+Discrete(), Uniform\+S(), and $\sim$rng().
+
+\mbox{\Hypertarget{classsmc_1_1rng_a4b52cba03e1df572b3512b2b558f61a5}\label{classsmc_1_1rng_a4b52cba03e1df572b3512b2b558f61a5}} 
+\index{smc::rng@{smc::rng}!type@{type}}
+\index{type@{type}!smc::rng@{smc::rng}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily const gsl\+\_\+rng\+\_\+type$\ast$ smc\+::rng\+::type\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+This is the type of random number generator underlying the class. 
+
+
+
+Definition at line 70 of file rng.\+hh.
+
+
+
+Referenced by rng().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{rng_8hh}{rng.\+hh}}\item 
+src/\mbox{\hyperlink{rng_8cc}{rng.\+cc}}\end{DoxyCompactItemize}

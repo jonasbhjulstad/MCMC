@@ -1,0 +1,53 @@
+\hypertarget{history_8hh}{}\doxysection{include/history.hh File Reference}
+\label{history_8hh}\index{include/history.hh@{include/history.hh}}
+
+
+Classes and function related to the history of the sampler.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classsmc_1_1historyflags}{smc\+::historyflags}}
+\begin{DoxyCompactList}\small\item\em The historyflags class holds a set of flags which describe various properties of the particle system at a given time. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classsmc_1_1historyelement}{smc\+::historyelement$<$ Particle $>$}}
+\begin{DoxyCompactList}\small\item\em A template class for the elements of a linked list to be used for the history of the sampler. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classsmc_1_1history}{smc\+::history$<$ Particle $>$}}
+\begin{DoxyCompactList}\small\item\em A template class for the history associated with a particle system evolving in S\+MC. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacesmc}{smc}}
+\begin{DoxyCompactList}\small\item\em The Sequential Monte Carlo namespace. \end{DoxyCompactList}\item 
+ \mbox{\hyperlink{namespacestd}{std}}
+\begin{DoxyCompactList}\small\item\em The standard namespace. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{history_8hh_af291cb87cc5b51cecc51fd1b41d82a3f}{\+\_\+\+\_\+\+S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+HH}}~1.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Particle $>$ }\\ostream \& \mbox{\hyperlink{namespacestd_aa3b8582b5b9ddbde967c5f960439009c}{std\+::operator$<$$<$}} (ostream \&os, \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}$<$ Particle $>$ h)
+\begin{DoxyCompactList}\small\item\em This function will ultimately allow the standard stream operators to be used to display a particle history in a human readable form. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classes and function related to the history of the sampler. 
+
+This file contains template definitions for the classes used to store the history of an S\+M\+C\+TC sampler. It defines \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}, \mbox{\hyperlink{classsmc_1_1historyelement}{smc\+::historyelement}} and \mbox{\hyperlink{classsmc_1_1history}{smc\+::history}}. 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{history_8hh_af291cb87cc5b51cecc51fd1b41d82a3f}\label{history_8hh_af291cb87cc5b51cecc51fd1b41d82a3f}} 
+\index{history.hh@{history.hh}!\_\_SMC\_HISTORY\_HH@{\_\_SMC\_HISTORY\_HH}}
+\index{\_\_SMC\_HISTORY\_HH@{\_\_SMC\_HISTORY\_HH}!history.hh@{history.hh}}
+\doxysubsubsection{\texorpdfstring{\_\_SMC\_HISTORY\_HH}{\_\_SMC\_HISTORY\_HH}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+S\+M\+C\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+HH~1.\+0}
+
+
+
+Definition at line 28 of file history.\+hh.
+
