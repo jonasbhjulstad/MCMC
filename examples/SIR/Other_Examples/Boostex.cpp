@@ -13,6 +13,7 @@
 #include <vector>
 #include <fstream>
 #include <boost/numeric/odeint.hpp>
+#include <boost/range/iterator_range.hpp>
 
 
 
@@ -25,7 +26,6 @@ const double R0 = 1.2;
 const double beta = alpha*R0;
 double N_pop = 1e8;
 double I0 = 1e7;
-
 
 /* The rhs of x' = f(x) */
 void f_SIR( const state_type &x , state_type &dxdt , const double /* t */ )
@@ -99,6 +99,8 @@ int main(int /* argc */ , char** /* argv */ )
     x[0] = N_pop - I0; // start at x=1.0, p=0.0
     x[1] = I0;
     x[2] = 0;
+    state_type x0(3);
+    x0 = x;
     //]
 
 
@@ -135,21 +137,6 @@ int main(int /* argc */ , char** /* argv */ )
     }
     //]
 
-    std::ofstream yFile;
-    yFile.open("/home/deb/Documents/smctc-1.0/examples/SIR/Data/SIR_y.csv");
-
-    for (size_t i=0; i<=steps; i++)
-    {
-        yFile << x_vec[i][0] << ',' << x_vec[i][1] << ',' << x_vec[i][2] << '\n';
-    }
-
-    yFile.close();
-
-
-
-
-
-
 
 
 
@@ -175,12 +162,25 @@ int main(int /* argc */ , char** /* argv */ )
     //]
 
 
-
+    times.clear();
+    x_vec.clear();
+    x = x0;
     //[ integrate_adapt
     typedef controlled_runge_kutta< error_stepper_type > controlled_stepper_type;
     controlled_stepper_type controlled_stepper;
-    integrate_adaptive( controlled_stepper , f_SIR , x , 0.0 , 10.0 , 0.01 );
+    steps = integrate_n_steps( controlled_stepper , f_SIR , x , 0.0 , 1.0, 365, push_back_state_and_time(x_vec, times));
     //]
+
+    std::ofstream yFile;
+    yFile.open("/home/deb/Documents/smctc-1.0/examples/SIR/Data/SIR_y.csv");
+
+    for (size_t i=0; i<=steps; i++)
+    {
+        yFile << x_vec[i][0] << ',' << x_vec[i][1] << ',' << x_vec[i][2] << '\n';
+    }
+
+    yFile.close();
+
 
     {
     //[integrate_adapt_full

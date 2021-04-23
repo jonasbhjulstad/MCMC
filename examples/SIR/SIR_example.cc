@@ -3,8 +3,11 @@
 #include <cstdio> 
 #include <cstdlib>
 #include <cstring>
+#include <array>
 
 using namespace std;
+
+const char dataPath[] = "/home/deb/Documents/smctc-1.0/examples/SIR/Data/SIR_y.csv";
 
 ///The observations
 double * y;
@@ -22,7 +25,7 @@ int main(int argc, char** argv)
 
   try {
     //Load observations
-    lIterates = load_data("data.csv", &y);
+    lIterates = load_data(dataPath);
 
     //Initialise and run the sampler
     smc::sampler<particle_SIR> Sampler(lNumber, SMC_HISTORY_NONE);  
@@ -50,7 +53,7 @@ int main(int argc, char** argv)
     }
 }
 
-long load_data(char const * szName, double** yp)
+long load_data(char const * szName)
 {
   FILE * fObs = fopen(szName,"rt");
   if (!fObs)
@@ -59,12 +62,20 @@ long load_data(char const * szName, double** yp)
   fgets(szBuffer, 1024, fObs);
   long lIterates = strtol(szBuffer, NULL, 10);
 
-  *yp = new double[lIterates];
+  double** data = new double*[lIterates];
+  for (int i; i < lIterates; i++)
+  {
+    data[i] = new double[3];
+  }
   
   for(long i = 0; i < lIterates; ++i)
     {
       fgets(szBuffer, 1024, fObs);
-      (*yp)[i] = strtod(strtok(szBuffer, ",\r\n "), NULL);
+
+      for (int k; k < 3; k++)
+      {
+        data[i][k] = strtod(strtok(szBuffer, ",\r\n"), NULL);
+      }
     }
   fclose(fObs);
 

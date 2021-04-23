@@ -13,7 +13,7 @@ LFLAGS := -I../../include -L../../lib $(LFLAGS)
 all: pf
 
 pf: $(PFC) $(PFH)
-	$(CC) $(CCFLAGS) -c $(PFC)
+	$(CC) $(CCFLAGS) -g -c $(PFC)
 	$(CC) $(PFO) -lsmctc $(LFLAGS) -opf
 	cp pf ../../bin
 	cp data.csv ../../bin
