@@ -7,18 +7,23 @@ PFC = SIR_example.cc SIR_funcs.cc
 PFO = SIR_example.o SIR_funcs.o
 PFH = SIR_funcs.hh
 
+
 CCFLAGS := $(CCFLAGS) -I../../include -L../../lib 
 LFLAGS := -I../../include -L../../lib $(LFLAGS)
 
-all: pf
+all: SIR
 
-pf: $(PFC) $(PFH)
+SIR: $(PFC) $(PFH)
 	$(CC) $(CCFLAGS) -c $(PFC)
-	$(CC) $(PFO) -lsmctc $(LFLAGS) -opf
-	cp pf ../../bin
+	$(CC) $(PFO) -lsmctc $(LFLAGS) -o SIR
+	cp SIR ../../bin
 	cp data.csv ../../bin
+
+debug: $(PFC) $(PFH)
+	$(CC) -g $(CCFLAGS) -c $(PFC)
+	$(CC) $(PFO) -lsmctc $(LFLAGS) -o SIR
 
 clean:
 	-rm *.o
 	-rm *~
-	-rm pf
+	-rm SIR

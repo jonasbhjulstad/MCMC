@@ -29,7 +29,7 @@ double logLikelihood(long lTime, const particle_SIR & pSIR)
 ///A function to initialise particles
 
 /// \param pRng A pointer to the random number generator which is to be used
-smc::particle<particle_SIR> fInitialise()
+smc::particle<particle_SIR> fInitialise(smc::rng *pRng)
 {
   particle_SIR pSIR;
   double I0 = 1e7;

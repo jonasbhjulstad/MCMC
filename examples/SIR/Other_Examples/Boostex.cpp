@@ -13,9 +13,7 @@
 #include <vector>
 #include <fstream>
 #include <boost/numeric/odeint.hpp>
-
-
-
+std::string DataPath = "/home/deb/Documents/MCMC/examples/SIR/Data/";
 //[ rhs_function
 /* The type of container used to hold the state vector */
 typedef std::vector< double > state_type;
@@ -96,9 +94,12 @@ int main(int /* argc */ , char** /* argv */ )
 
     //[ state_initialization
     state_type x(3);
-    x[0] = N_pop - I0; // start at x=1.0, p=0.0
-    x[1] = I0;
-    x[2] = 0;
+    state_type x0(3);
+    x0[0] = N_pop - I0; // start at x=1.0, p=0.0
+    x0[1] = I0;
+    x0[2] = 0;
+
+    x = x0;
     //]
 
 
@@ -135,21 +136,6 @@ int main(int /* argc */ , char** /* argv */ )
     }
     //]
 
-    std::ofstream yFile;
-    yFile.open("/home/deb/Documents/smctc-1.0/examples/SIR/Data/SIR_y.csv");
-
-    for (size_t i=0; i<=steps; i++)
-    {
-        yFile << x_vec[i][0] << ',' << x_vec[i][1] << ',' << x_vec[i][2] << '\n';
-    }
-
-    yFile.close();
-
-
-
-
-
-
 
 
 
@@ -162,9 +148,11 @@ int main(int /* argc */ , char** /* argv */ )
 
 
     //[ integrate_const_loop
-    const double dt = 0.01;
-    for( double t=0.0 ; t<10.0 ; t+= dt )
-        stepper.do_step( f_SIR , x , t , dt );
+    // const double dt = 0.01;
+    // for( double t=0.0 ; t<10.0 ; t+= dt ){
+    //     stepper.do_step( f_SIR , x , t , dt );
+    //     cout << x[0] << ',' << x[1] << endl;
+    // }    
     //]
 
 
@@ -174,58 +162,42 @@ int main(int /* argc */ , char** /* argv */ )
     typedef runge_kutta_cash_karp54< state_type > error_stepper_type;
     //]
 
-
-
-    //[ integrate_adapt
     typedef controlled_runge_kutta< error_stepper_type > controlled_stepper_type;
+
+    {
+    //[ integrate_adapt
     controlled_stepper_type controlled_stepper;
     integrate_adaptive( controlled_stepper , f_SIR , x , 0.0 , 10.0 , 0.01 );
     //]
+    }
 
-    {
+    x_vec.clear();
+    times.clear();
+    x = x0;
+    
     //[integrate_adapt_full
-    double abs_err = 1.0e-4 , rel_err = 1.0e-4 , a_x = 1.0 , a_dxdt = 1.0;
+    double abs_err = 1.0e-8 , rel_err = 1.0e-8 , a_x = 1.0 , a_dxdt = 1.0;
     controlled_stepper_type controlled_stepper( 
         default_error_checker< double , range_algebra , default_operations >( abs_err , rel_err , a_x , a_dxdt ) );
-    integrate_adaptive( controlled_stepper , f_SIR , x , 0.0 , 10.0 , 0.01 );
-    //]
-    }
-
-
-    // //[integrate_adapt_make_controlled
-    // integrate_adaptive( make_controlled< error_stepper_type >( 1.0e-10 , 1.0e-6 ) , 
-    //                     f_SIR , x , 0.0 , 10.0 , 0.01 );
-    // //]
-
-
-
-
-    // //[integrate_adapt_make_controlled_alternative
-    // integrate_adaptive( make_controlled( 1.0e-10 , 1.0e-6 , error_stepper_type() ) , 
-    //                     f_SIR , x , 0.0 , 10.0 , 0.01 );
+    steps = integrate_adaptive( controlled_stepper , f_SIR , x , 0.0 , 365.0 , 1.0, push_back_state_and_time(x_vec, times));
     //]
 
-    #ifdef BOOST_NUMERIC_ODEINT_CXX11
-    //[ define_const_stepper_cpp11
+    std::string yFilePath = DataPath;
+    yFilePath.append("SIR_y.csv");
+
+    std::ofstream yFile;
+    yFile.open(yFilePath);
+    yFile << (int) steps << '\n';
+    cout << (int) steps << endl;
+    for( size_t i=0; i<=steps; i++ )
     {
-    runge_kutta4< state_type > stepper;
-    integrate_const( stepper , []( const state_type &x , state_type &dxdt , double t ) {
-            dxdt[0] = -beta*x[0]*x[1]; dxdt[1] = beta*x[0]*x[1] - alpha*x[1]; dxdt[2] = alpha*x[1];}
-        , x , 0.0 , 10.0 , 0.01 );
+        cout << times[i] << '\t' << x_vec[i][0] << '\t' << x_vec[i][1] <<  x_vec[i][2] << '\n';
+        yFile << times[i] << ',' << x_vec[i][0] << ',' << x_vec[i][1] << x_vec[i][2] << '\n';
+
     }
     //]
-    
-    
-    
-    //[ harm_iterator_const_step]
-    std::for_each( make_const_step_time_iterator_begin( stepper , f_SIR, x , 0.0 , 0.1 , 10.0 ) ,
-                   make_const_step_time_iterator_end( stepper , f_SIR, x ) ,
-                   []( std::pair< const state_type & , const double & > x ) {
-                       cout << x.second << " " << x.first[0] << " " << x.first[1] << "\n"; } );
-    //]
-    #endif
-    
-    
+    yFile.close();
+
 
 
 }
