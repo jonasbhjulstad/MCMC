@@ -8,7 +8,7 @@ class particle_SIR
 {
 public:
   double S, I, R;
-  double* y;
+  double** data;
   SIR_param param;
 };
 
@@ -19,6 +19,8 @@ long fSelect(long lTime, const smc::particle<particle_SIR> & p,
 	     smc::rng *pRng);
 void fMove(long lTime, smc::particle<particle_SIR> & pFrom, 
 	   smc::rng *pRng);
+
+long load_data(char const * szName, double** ptr_data);
 
 extern double nu_x;
 extern double nu_y;

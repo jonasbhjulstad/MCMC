@@ -8,7 +8,6 @@ extern long lChainLength;
 extern double dSchedule;
 extern double dThreshold;
 
-// SIR-State
 typedef double State[3];
 
 double logDensity(long lTime, const mChain<State> & X);
@@ -23,7 +22,7 @@ int fMCMC(long lTime, smc::particle<mChain<State> > & pFrom, smc::rng *pRng);
 State pIntegrandPS(long lTime, const smc::particle<mChain<State> >& pPos, void* pVoid);
 State pWidthPS(long lTime, void* pVoid);
 State pIntegrandFS(const mChain<State>& dPos, void* pVoid);
-State* F_SIR(State x, smc::rng *pRng);
+mChain<State> f_SIR(mChain<State> &Chain, smc::rng *pRng)
 
 ///The number of grid elements to either side of the current state for the single state move
 #define GRIDSIZE 12
@@ -35,3 +34,4 @@ State* F_SIR(State x, smc::rng *pRng);
 #define THRESHOLD dThreshold
 ///The number of steps in the Markov chain
 #define PATHLENGTH lChainLength
+

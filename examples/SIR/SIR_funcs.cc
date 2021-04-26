@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <gsl/gsl_randist.h>
-
+#include <string>
 #include "smctc.hh"
 #include "SIR_funcs.hh"
 
@@ -18,6 +18,8 @@ double Delta = 0.1;
 double sigma = 100000;
 
 ///The function corresponding to the log likelihood at specified time and position (up to normalisation)
+const char* dataPath = 
+load_data(dataPath, pSIR.data);
 
 ///  \param lTime The current time (i.e. the index of the current distribution)
 ///  \param X     The state to consider 
@@ -38,6 +40,8 @@ smc::particle<particle_SIR> fInitialise(smc::rng *pRng)
   pSIR.S = S0;
   pSIR.I = I0;
   pSIR.R = 0;
+
+  pSIR.data = new double*;
 
 
   return smc::particle<particle_SIR>(pSIR,1);
@@ -67,4 +71,35 @@ double beta = pSIR->param.beta;
   pSIR->R += pSIR->R + K_IR;
 
   pFrom.AddToLogWeight(logLikelihood(lTime, *pSIR));
+}
+
+
+long load_data(char const * szName, double** ptr_data)
+{
+  FILE * fObs = fopen(szName,"rt");
+  char* szBuffer = new char[1024];
+  fgets(szBuffer, 1024, fObs);
+  long lIterates = strtol(szBuffer, NULL, 10);
+  cout << "allocating data" << endl;
+  double** data = new double*[lIterates];
+  for (int i; i < lIterates; i++)
+  {
+    data[i] = new double[3];
+  }
+  cout << "reading data.." << endl;
+  for(long i = 0; i < lIterates; ++i)
+    {
+      fgets(szBuffer, 1024, fObs);
+      cout << szBuffer << endl;
+      for (int k; k < 3; k++)
+      {
+        data[i][k] = strtod(strtok(szBuffer, ",\r\n"), NULL);
+      }
+    }
+  fclose(fObs);
+
+  delete [] szBuffer;
+  ptr_data = &data[0];
+  cout << ptr_data << endl;
+  return lIterates;
 }
