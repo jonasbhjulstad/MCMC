@@ -7,58 +7,100 @@
 
 using namespace std;
 
-extern double N_pop, alpha, beta, dt, I0;
-extern double* y;
-///The function corresponding to the log posterior density at specified time and position
+extern double N_pop, alpha, beta, dt, I0, std_ll, std_alpha, std_beta;
+extern long N_iterates, N_MCMC;
+extern double y[];
+//Allocate space for alpha, beta
+gsl_vector* param_prior_mu = gsl_vector_alloc(2);
+gsl_matrix* param_prior_std = gsl_matrix_alloc(2,2);
 
-///   \param lTime The current time (i.e. the index of the current distribution)
-///    \param X     The state to consider  **/
-double logDensity(long lTime, const mChain<double> & X)
+
+double particle_logLikelihood(long lTime, double I)
 {
+  double ll = gsl_ran_gaussian_pdf(I-y[lTime%N_iterates], std_ll);
+  return ll;
+}
+void prior_sample(gsl_vector* res, smc::rng* pRng)
+{
+  gsl_ran_multivariate_gaussian(pRng->GetRaw(), param_prior_mu, param_prior_std, res);
+}
+double prior_logLikelihood(const gsl_vector* param)
+{
+  //Workspace for multivariate normal:
+  static gsl_vector* work = gsl_vector_alloc(2);
+  
+  double plog_prior = 0;
+  gsl_ran_multivariate_gaussian_log_pdf(param, param_prior_mu,param_prior_std, &plog_prior, work);
+  return plog_prior;
+}
+
+// Corresponds to q(theta)
+void proposal_sample(gsl_vector* &res, const gsl_vector* oldParam, smc::rng* pRng)
+{
+  gsl_ran_multivariate_gaussian(pRng->GetRaw(), oldParam, param_prior_std, res);
+}
+
+double proposal_loglikelihood(const gsl_vector* param_0, const gsl_vector* param_1)
+{
+  static gsl_vector* work = gsl_vector_alloc(2);
+  double res = .0;
+  return gsl_ran_multivariate_gaussian_log_pdf(param_0, param_1, param_prior_std, &res, work);
+}
+double logWeightFactor(long lTime, const pSIR & pState)
+{
+  
+  double I = pState.X[1];
+  double I_prev = pState.X_prev[1];
 
 
+  //Recursive Weight update factors:
 
-  mElement<double> *x = X.GetElement(0);
-  mElement<double> *y = x->pNext;
-  //Begin with the density exluding the effect of the potential
-  lp = log(gsl_ran_ugaussian_pdf(x->value));
+  double plog_prior = prior_logLikelihood(pState.param);
 
-  //Now include the effect of the multiplicative potential function
-  lp -= log(1.0 + exp(-(ALPHA(lTime) * (x->value - THRESHOLD) )));
-  return lp;
+  double plog_ll = log(gsl_ran_gaussian_pdf(I-y[lTime%N_iterates], std_ll));
+
+
+  double p_I_prev = 1-exp(I_prev/N_pop*dt);
+  double plog_transition = log(gsl_ran_binomial_pdf(I, p_I_prev, (int) I_prev));
+
+  return plog_transition+plog_ll-plog_prior;
 }
 
 ///A function to initialise double type markov chain-valued particles
 /// \param pRng A pointer to the random number generator which is to be used
-smc::particle<mChain<State> > fInitialise(smc::rng *pRng)
+smc::particle<pSIR> fInitialise(smc::rng *pRng)
 {
   // Create a Markov chain with the appropriate initialisation and then assign that to the particles.
-  mChain<State> Mc;
+  gsl_vector_set(param_prior_mu, 0, alpha);
+  gsl_vector_set(param_prior_mu, 1, beta);
 
-  State x0 = {N_pop - I0, I0, 0};
-  for(int i = 0; i < PATHLENGTH; i++) {
-    Mc.AppendElement(x0);
-  }
+  gsl_matrix_set(param_prior_std, 0, 0, std_alpha);
+  gsl_matrix_set(param_prior_std, 0, 1, 0);
+  gsl_matrix_set(param_prior_std, 1, 0, 0);
+  gsl_matrix_set(param_prior_std, 1, 1, std_beta);
+  
+  pSIR* initState = new pSIR;
 
-  return smc::particle<mChain<State> >(Mc,0);
+  initState->X[0] = N_pop-I0;
+  initState->X[1] = I0;
+  initState->X[2] = 0.0;
+  initState->X_prev[0] = N_pop-I0;
+  initState->X_prev[1] = I0;
+  initState->X_prev[2] = 0.0;
+  initState->param = gsl_vector_alloc(2);
+  gsl_vector_set(initState->param, 0, alpha);
+  gsl_vector_set(initState->param, 1, beta);
+  initState->ll_log.push_back(1.0);
+
+  return smc::particle<pSIR>(*initState,0);
 }
 
-///A function to select a move randomly
-/// \param lTime  The current evolution time of the system
-/// \param p      The current position of the particle which is to be moved
-/// \param pRng   A pointer to the random number generator which is to be used
-long fSelect(long lTime, const smc::particle<mChain<State> > & p, smc::rng *pRng)
+void f_SIR(pSIR* pState, smc::rng *pRng)
 {
-    return 0;
-}
 
-mChain<State> f_SIR(mChain<State> &Chain, smc::rng *pRng)
-{
-  State* x = &Chain.GetElement(Chain.GetLength())->value;
-
-  double S = x[0][0];
-  double I = x[0][1];
-  double R = x[0][2];
+  double S = pState->X[0];
+  double I = pState->X[1];
+  double R = pState->X[2];
 
   double p_I = 1-exp(I/N_pop*dt);
   double p_R = 1-exp(-alpha*dt);
@@ -66,117 +108,69 @@ mChain<State> f_SIR(mChain<State> &Chain, smc::rng *pRng)
   double K_SI = gsl_ran_poisson(pRng->GetRaw(), S*p_I);
   double K_IR = gsl_ran_binomial(pRng->GetRaw(), p_R, (int) I);
 
-  State delta_x = {S - K_SI, I + K_SI - K_IR, R + K_IR};
+  double delta_x[3] = {- K_SI, K_SI - K_IR, K_IR};
 
-  return Chain + delta_x;
-
+  for (int i=0; i < 3; i++)
+  {
+    pState->X_prev[i] = pState->X[i];
+    pState->X[i] += delta_x[i];
+  }
 }
 
-void fMove1(long lTime, smc::particle<mChain<State> > & pFrom, smc::rng *pRng)
+void fMove1(long lTime, smc::particle<pSIR> & pFrom, smc::rng *pRng)
 {
-  // The distance between points in the random grid.
-  static double delta = 0.025;
-  static double gridweight[2*GRIDSIZE+1], gridws = 0;
-  static mChain<State> NewPos[2*GRIDSIZE+1];
-  static mChain<State> OldPos[2*GRIDSIZE+1];
 
-  // First select a new position from a grid centred on the old position, weighting the possible choises by the
-  // posterior probability of the resulting states.
-  gridws = 0;
-  for(int i = 0; i < 2*GRIDSIZE+1; i++) {
-    NewPos[i] = f_SIR(pFrom.GetValue(), pRng);
-    gridweight[i] = exp(logDensity(lTime,NewPos[i]));
-    gridws        = gridws + gridweight[i];
-  }
+  //Move
+  f_SIR(pFrom.GetValuePointer(), pRng);
+  cout << "Time:\t" << lTime << "\tState:\t" << pFrom.GetValue().X[0] << ",\t" << pFrom.GetValue().X[1] << ",\t"<< pFrom.GetValue().X[2];
+  cout << "\t R0: \t" << gsl_vector_get(pFrom.GetValue().param, 1)/gsl_vector_get(pFrom.GetValue().param,0) << endl;
+  double wk_1 = pFrom.GetLogWeight() + logWeightFactor(lTime, pFrom.GetValue());
 
-  double dRUnif = pRng->Uniform(0,gridws);
-  long j = -1;
-
-  while(dRUnif > 0 && j <= 2*GRIDSIZE) {
-    j++;
-    dRUnif -= gridweight[j];
-  }
-  
-  pFrom.SetValue(NewPos[j]);
-
-  // Now calculate the weight change which the particle suffers as a result
-  double logInc = log(gridweight[j]), Inc = 0; 
-
-  for(int i = 0; i < 2*GRIDSIZE+1; i++) {
-    OldPos[i] = pFrom.GetValue() - ((double)(i - GRIDSIZE))*delta;
-    gridws = 0;
-    for(int k = 0; k < 2*GRIDSIZE+1; k++) {
-      NewPos[k] = OldPos[i] + ((double)(k-GRIDSIZE))*delta;
-      gridweight[k] = exp(logDensity(lTime, NewPos[k]));
-      gridws += gridweight[k];
-    }
-    Inc += exp(logDensity(lTime-1, OldPos[i])) * exp(logDensity(lTime, pFrom.GetValue())) / gridws;
-  }
-    logInc -= log(Inc);
-
-  pFrom.SetLogWeight(pFrom.GetLogWeight() + logInc);
-
-  for(int i = 0; i < 2*GRIDSIZE+1; i++)
-    {
-      NewPos[i].Empty();
-      OldPos[i].Empty();
-    }
+  pFrom.SetLogWeight(wk_1);
 
   return;
 }
-///Another move function
-void fMove2(long lTime, smc::particle<mChain<double> > & pFrom, smc::rng *pRng)
-{
-  pFrom.SetLogWeight(pFrom.GetLogWeight() + logDensity(lTime,pFrom.GetValue()) - logDensity(lTime-1,pFrom.GetValue()));
-}
 
 ///An MCMC step suitable for introducing sample diversity
-int fMCMC(long lTime, smc::particle<mChain<double> > & pFrom, smc::rng *pRng)
+int fMCMC(long lTime, smc::particle<pSIR> & pFrom, smc::rng *pRng)
 {
-  static smc::particle<mChain<double> > pTo;
-  
-  mChain<double> * pMC = new mChain<double>;
+if ((lTime % (N_iterates)) == 0)
+{
+  pSIR* pState = pFrom.GetValuePointer();
+  gsl_vector* propParam = gsl_vector_alloc(2);
+  gsl_vector* oldParam = pFrom.GetValue().param;
 
-  for(int i = 0; i < pFrom.GetValue().GetLength(); i++) 
-    pMC->AppendElement(pFrom.GetValue().GetElement(i)->value + pRng->Normal(0, 0.5));
-  pTo.SetValue(*pMC);
-  pTo.SetLogWeight(pFrom.GetLogWeight());
+  double ll_prev = pState->ll_log.back();
+  double ll_current = pFrom.GetLogWeight();
 
-  delete pMC;
+  proposal_sample(propParam, oldParam, pRng);
 
-  double alpha = exp(logDensity(lTime,pTo.GetValue()) - logDensity(lTime,pFrom.GetValue()));
-  if(alpha < 1)
-    if (pRng->UniformS() > alpha) {
+  double ll_prop = proposal_loglikelihood(propParam, oldParam);
+  double ll_prop_reverse = proposal_loglikelihood(oldParam, propParam);
+
+  double alpha_Hastings = exp(ll_current - ll_prev + ll_prop_reverse - ll_prop);
+
+  if(alpha_Hastings < 1)
+    if (pRng->UniformS() > alpha_Hastings) {
+      gsl_vector_free(propParam);
+      pState->ll_log.push_back(ll_prev);
       return false;
     }
+  gsl_vector_memcpy(oldParam, propParam);
+  gsl_vector_free(propParam);
+  pState->X[0] = N_pop-I0;
+  pState->X[1] = I0;
+  pState->X[2] = 0.0;
+  pState->X_prev[0] = N_pop-I0;
+  pState->X_prev[1] = I0;
+  pState->X_prev[2] = 0.0;
+  // cout << "Old particle, alpha = " << gsl_vector_get(oldParam, 0) << ", beta = " << gsl_vector_get(oldParam, 1) << endl;
 
-  pFrom = pTo;
   return true;
 }
-
-///A function to be integrated in the path sampling step.
-double pIntegrandPS(long lTime, const smc::particle<mChain<double> >& pPos, void* pVoid)
+else
 {
-  double dPos = pPos.GetValue().GetTerminal()->value;
-  return (dPos - THRESHOLD) / (1.0 + exp(ALPHA(lTime) * (dPos - THRESHOLD)));
+  return false;
 }
-
-///A function which gives the width distribution for the path sampling step.
-double pWidthPS(long lTime, void* pVoid)
-{
-  if(lTime > 1 && lTime < lIterates)
-    return ((0.5)*double(ALPHA(lTime+1.0)-ALPHA(lTime-1.0)));
-  else 
-    return((0.5)*double(ALPHA(lTime+1.0)-ALPHA(lTime)) +(ALPHA(1)-0.0));
-}
-
-//The final state weighting function -- how likely is a random path from this distribution to hit the rare set...
-double pIntegrandFS(const mChain<double>& dPos, void* pVoid)
-{
-  if(dPos.GetTerminal()->value > THRESHOLD) {
-    return (1.0 + exp(-FTIME*(dPos.GetTerminal()->value-THRESHOLD)));
-  }
-  else
-    return 0;
 }
 

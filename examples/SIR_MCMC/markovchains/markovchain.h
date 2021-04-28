@@ -58,6 +58,7 @@ template <class Space> class mChain
   long nLength;
   mElement<Space> *pRoot;
   mElement<Space> *pLeaf;
+  double ll_tot;
 
   Space (*pfKernel) (Space);
  public:

@@ -18,7 +18,7 @@ clean:
 	-rm rare
 
 rare: $(C) $(H)
-	$(CC) $(CCFLAGS) -c $(C)
+	$(CC) $(CCFLAGS) -g -c $(C)
 	$(CC) $(O) -lsmctc $(LFLAGS) -orare
 	cp rare ../../bin
 
