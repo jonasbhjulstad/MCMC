@@ -2,79 +2,69 @@
 
 using namespace std;
 
-extern long N_iterates, N_MCMC, Nx, N_sysparam;
-extern double prop_mu[], prop_std[];
-extern double y[];
-extern double x0[];
-//Allocate space for alpha, beta
+gsl_vector *SIR_Model::vec_prior_mu;
+gsl_vector *SIR_Model::vec_oldProp;
+gsl_vector *SIR_Model::vec_resProp;
+gsl_matrix *SIR_Model::mat_prior_std;
+gsl_matrix *SIR_Model::mat_prop_std;
+gsl_vector *SIR_Model::vec_prop_mu;
+gsl_vector *SIR_Model::vec_prior_work;
 
-gsl_vector* vec_prop_mu;
-gsl_matrix* mat_prop_std;
-gsl_vector* vec_prior_mu;
-gsl_matrix* mat_prior_std;
+long SIR_Model::N_param_ODE;
+long SIR_Model::Nx;
+double *SIR_Model::y;
+double *SIR_Model::x0;
+long SIR_Model::N_iterations;
 
-// double particle_logLikelihood(long lTime, double I)
-// {
-//   double ll = gsl_ran_gaussian_pdf(I-y[lTime%N_iterates], std_ll);
-//   return ll;
-// }
-void prior_sample(gsl_vector* res, smc::rng* pRng)
+SIR_Model::SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init)
+{
+  N_param_ODE = N_ODE_param;
+  vec_prior_mu = gsl_vector_alloc(N_param_ODE);
+  vec_oldProp = gsl_vector_alloc(N_param_ODE);
+  vec_resProp = gsl_vector_alloc(N_param_ODE);
+  vec_prop_mu = gsl_vector_alloc(N_param_ODE);
+  vec_prior_work = gsl_vector_alloc(N_param_ODE);
+  Nx = N_x;
+  y = new double[N_iterations];
+  memcpy(y, y_obs, sizeof(double) * N_iterations);
+  x0 = new double[Nx];
+  memcpy(x0, x_init, sizeof(double) * Nx);
+}
+
+void SIR_Model::prior_sample(gsl_vector *res, smc::rng *pRng)
 {
   gsl_ran_multivariate_gaussian(pRng->GetRaw(), vec_prior_mu, mat_prior_std, res);
 }
-double prior_logLikelihood(const gsl_vector* param)
+double SIR_Model::prior_logLikelihood(const gsl_vector *param)
 {
   //Workspace for multivariate normal:
-  gsl_vector* work = gsl_vector_alloc(2);
-  
-  double plog_prior = 0;
-  gsl_ran_multivariate_gaussian_log_pdf(param, vec_prior_mu,mat_prior_std, &plog_prior, work);
 
-  gsl_vector_free(work);
+  double plog_prior = 0;
+  gsl_ran_multivariate_gaussian_log_pdf(param, vec_prior_mu, mat_prior_std, &plog_prior, vec_prior_work);
+
   return plog_prior;
 }
 
 // Corresponds to q(theta)
-void proposal_sample(double *&res, const double *oldParam, smc::rng *pRng)
+void SIR_Model::proposal_sample(double *&res, const double *oldParam, smc::rng *pRng)
 {
-  gsl_vector* oldP = gsl_vector_alloc(Nx);
-  gsl_vector* result = gsl_vector_alloc(Nx);
-  for (int i=0; i < Nx; i++)
+  for (int i = 0; i < N_param_ODE; i++)
   {
-    gsl_vector_set(oldP, i, oldParam[i]);
+    gsl_vector_set(vec_oldProp, i, oldParam[i]);
   }
 
-  gsl_ran_multivariate_gaussian(pRng->GetRaw(), oldP, mat_prop_std, result);
-  for (int i = 0; i < Nx; i++)
+  gsl_ran_multivariate_gaussian(pRng->GetRaw(), vec_oldProp, mat_prop_std, vec_resProp);
+  for (int i = 0; i < N_param_ODE; i++)
   {
-    res[i] = gsl_vector_get(result, i);
+    res[i] = gsl_vector_get(vec_resProp, i);
   }
-  gsl_vector_free(oldP);
-  gsl_vector_free(result);
-
 }
-
-// double proposal_loglikelihood(const gsl_vector* param_0, const gsl_vector* param_1)
-// {
-//   gsl_vector* work = gsl_vector_alloc(2);
-//   double res = .0;
-
-//   return gsl_ran_multivariate_gaussian_log_pdf(param_0, param_1, mat_prop_std, &res, work);
-
-// }
 
 ///A function to initialise double type markov chain-valued particles
 /// \param pRng A pointer to the random number generator which is to be used
-smc::particle<pSIR> fInitialise(smc::rng *pRng)
+smc::particle<pSIR> SIR_Model::fInitialise(smc::rng *pRng)
 {
-  mat_prop_std = gsl_matrix_alloc(N_sysparam, N_sysparam);
-  vec_prop_mu = gsl_vector_alloc(N_sysparam);
-  for (int i = 0; i < N_sysparam; i++)
-  {
-    gsl_matrix_set(mat_prop_std, i, i, prop_std[i]);
-    gsl_vector_set(vec_prop_mu, i, prop_mu[i]);
-  }
-  smc::particle<pSIR>* InitParticle = new smc::particle<pSIR>;
+  smc::particle<pSIR> *InitParticle = new smc::particle<pSIR>;
   for (int i = 0; i < Nx; i++)
   {
     InitParticle->GetValuePointer()->X[i] = x0[i];
@@ -84,7 +74,7 @@ smc::particle<pSIR> fInitialise(smc::rng *pRng)
 }
 
 //Calculates the next state and likelihood for that state
-void f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng)
+void SIR_Model::f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng)
 {
 
   double alpha = param[0];
@@ -92,22 +82,35 @@ void f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRn
   double N_pop = param[2];
   double dt = param[3];
 
+  double *x = (double *)pState.GetValuePointer();
 
-  double* x = (double*) pState.GetValuePointer();
+  double p_I = 1 - exp(x[1] / N_pop * dt);
+  double p_R = 1 - exp(-alpha * dt);
 
-  double p_I = 1-exp(x[1]/N_pop*dt);
-  double p_R = 1-exp(-alpha*dt);
+  double K_SI = gsl_ran_poisson(pRng->GetRaw(), x[0] * p_I);
+  double K_IR = gsl_ran_binomial(pRng->GetRaw(), p_R, (int)x[1]);
 
-  double K_SI = gsl_ran_poisson(pRng->GetRaw(), x[0]*p_I);
-  double K_IR = gsl_ran_binomial(pRng->GetRaw(), p_R, (int) x[1]);
-
-  double delta_x[3] = {- K_SI, K_SI - K_IR, K_IR};
+  double delta_x[3] = {-K_SI, K_SI - K_IR, K_IR};
 
   for (int i = 0; i < 3; i++)
   {
-    x[i]+= delta_x[i];
+    x[i] += delta_x[i];
   }
-  double p_I_y = 1-exp(y[lTime]/N_pop*dt);
-  double ll = log(gsl_ran_binomial_pdf(x[1], p_I_y, (int)y[lTime]));
+  double p_I_y = 1 - exp(y[lTime] / N_pop * dt);
+  double ll = log(gsl_ran_binomial_pdf(x[1], p_I_y, (int) y[lTime]));
   pState.SetLogWeight(ll);
 }
+
+SIR_Model::~SIR_Model()
+{
+  gsl_vector_free(vec_prior_mu);
+  gsl_vector_free(vec_oldProp);
+  gsl_vector_free(vec_resProp);
+  gsl_vector_free(vec_prop_mu);
+  gsl_vector_free(vec_prior_work);
+  if (y)
+    delete[] y;
+  if (x0)
+    delete[] x0;
+}
+

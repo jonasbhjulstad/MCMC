@@ -1,47 +1,59 @@
-#ifndef SIMFUNCTIONS_H
-#define SIMFUNCTIONS_H
-
-#include "MCMC_Sampler.hpp"
-#include <vector>
-#include <iostream>
-#include <cstring>
-#include <cmath>
-#include <gsl/gsl_randist.h>
+#ifndef SIR_MODEL_H
+#define SIR_MODEL_H
 #include <gsl/gsl_rng.h>
-#include <gsl/gsl_vector_double.h>
-#include <gsl/gsl_matrix_double.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_matrix.h>
+#include <MCMC_Sampler.hpp>
+#include "rng.hh"
+#include "particle.hh"
+using namespace std;
 
-extern long lIterates;
-extern long lNumber;
-extern long lChainLength;
-extern double dSchedule;
-extern double dThreshold;
-
-struct pSIR
+class pSIR
 {
+    public:
     double X[3];
 };
 
+class SIR_Model
+{
+private:
+    static gsl_vector *vec_prior_mu;
+    static gsl_vector *vec_oldProp;
+    static gsl_vector *vec_resProp;
+    static gsl_matrix *mat_prior_std;
+    static gsl_matrix *mat_prop_std;
+    static gsl_vector *vec_prop_mu;
+    static gsl_vector *vec_prior_work;
 
-void fMove(long lTime, smc::particle<pSIR>  & pFrom, smc::rng *pRng);
+    static long N_param_ODE;
+    static long Nx;
+    static double *y;
+    static double *x0;
+    static long N_iterations;
 
-double logWeightFactor(long lTime, const pSIR & pState);
-double prior_logLikelihood(const gsl_vector* param);
-double particle_logLikelihood(long lTime, double I);
-void f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng);
-void proposal_sample(double *&res, const double *oldParam, smc::rng *pRng);
+public:
+    SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init);
 
-smc::particle<pSIR> fInitialise(smc::rng *pRng);
+    ~SIR_Model();
 
-///The number of grid elements to either side of the current state for the single state move
-#define GRIDSIZE 12
-///The value of alpha at the specified time
-#define ALPHA(T) (double(T)*double(dSchedule) / double(lIterates))
-///The terminal version of alpha
-#define FTIME    (ALPHA(lIterates))
-///The exceedance threshold which we are interested in.
-#define THRESHOLD dThreshold
-///The number of steps in the Markov chain
-#define PATHLENGTH lChainLength
+    static void prior_sample(gsl_vector *res, smc::rng *pRng);
+
+    static double prior_logLikelihood(const gsl_vector *param);
+
+
+    // Corresponds to q(theta)
+    static void proposal_sample(double *&res, const double *oldParam, smc::rng *pRng);
+
+
+    ///A function to initialise double type markov chain-valued particles
+    /// \param pRng A pointer to the random number generator which is to be used
+    static smc::particle<pSIR> fInitialise(smc::rng *pRng);
+
+
+    //Calculates the next state and likelihood for that state
+    static void f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng);
+
+  
+};
 
 #endif

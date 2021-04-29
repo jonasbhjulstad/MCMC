@@ -143,7 +143,6 @@ if ((lTime % (N_iterates)) == 0)
   double ll_prev = pState->ll_log.back();
   double ll_current = pFrom.GetLogWeight();
 
-  proposal_sample(propParam, oldParam, pRng);
 
   double ll_prop = proposal_loglikelihood(propParam, oldParam);
   double ll_prop_reverse = proposal_loglikelihood(oldParam, propParam);

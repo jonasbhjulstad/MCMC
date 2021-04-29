@@ -172,7 +172,9 @@ int main(int /* argc */ , char** /* argv */ )
     //]
 
     std::ofstream yFile;
-    yFile.open("/home/deb/Documents/smctc-1.0/examples/SIR/Data/SIR_y.csv");
+    yFile.open("/home/deb/Documents/MCMC/Custom_MCMC/Data/SIR_y.csv");
+
+    yFile << steps << '\n';
 
     for (size_t i=0; i<=steps; i++)
     {

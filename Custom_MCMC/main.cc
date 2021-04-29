@@ -53,9 +53,10 @@ int main(int argc, char** argv)
   {
     y[i] = data_ptr[i][1];
   }
+  SIR_Model SIR(N_sysparam, Nx, N_iterates, y, x0);
 
   smc::sampler<pSIR> Sampler(lNumber, N_iterates,N_MCMC, N_param, param);
-  Sampler.SetSampleFunctions(fInitialise, f_SIR, proposal_sample);
+  Sampler.SetSampleFunctions(SIR.fInitialise, SIR.f_SIR, SIR.proposal_sample);
 
 
   Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.5);
