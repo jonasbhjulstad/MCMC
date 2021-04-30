@@ -105,11 +105,12 @@ void SIR_Model::step(long lTime, smc::particle<pSIR> &pState, double *param, smc
   {
     x[i] += delta_x[i];
   }
-  double p_I_y = 1 - exp(-beta*y[lTime] / N_pop * dt);
+  // double p_I_y = 1 - exp(-beta*y[lTime] / N_pop * dt);
 
   // double ll = log(gsl_ran_binomial_pdf(x[1], p_I_y, (int) y[lTime]));
-  double ll = log(gsl_ran_gaussian_pdf(x[1]- y[lTime], 1e4));
+  double ll = log(gsl_ran_gaussian_pdf(x[1]- y[lTime], 1e5));
 
+  
   // cout << ll << endl;
   pState.SetLogWeight(pState.GetLogWeight() + ll);
 }

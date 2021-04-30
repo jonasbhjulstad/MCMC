@@ -121,7 +121,7 @@ namespace smc
         ///Dispose of a sampler.
         ~sampler();
         ///Calculates and Returns the Effective Sample Size.
-        double GetESS(void) const;
+        double GetNeff(void) const;
         ///Returns the number of particles within the system.
         long GetNumber(void) const { return N; }
         ///Return the value of particle n
@@ -180,7 +180,7 @@ namespace smc
 
         for (int i = 0; i < N_MCMC; i++)
         {
-            pAvgLogWeights[i] = new double[T_max];
+            pAvgLogWeights[i] = new double[N];
             params[i] = new double[N_param];
         }
 
@@ -250,17 +250,15 @@ namespace smc
     }
 
     template <class Space>
-    double sampler<Space>::GetESS(void) const
+    double sampler<Space>::GetNeff(void) const
     {
-        long double sum = 0;
-        long double sumsq = 0;
-
-        for (int i = 0; i < N; i++){
-            sum += expl(pParticles[i].GetLogWeight());}
-
+        double Neff;
         for (int i = 0; i < N; i++)
-            sumsq += expl(2.0 * (pParticles[i].GetLogWeight()));
-        return expl(-log(sumsq) + 2 * log(sum));
+        {
+            Neff +=  pParticles[i].getWeight()*pParticles[i].getWeight();
+        }
+        Neff = 1/Neff;
+        return Neff;
     }
 
 
@@ -283,33 +281,31 @@ namespace smc
         //Move the particle set.
         MoveParticles();
 
-        //Compute average particle weight:
-        pAvgLogWeights[T_MCMC][T] = 0;
+        //Add current weight to the current iteration total
         for (int i = 0; i < N; i++)
         {
-            pAvgLogWeights[T_MCMC][T] += pParticles[i].GetWeight();
+            pAvgLogWeights[T_MCMC][i] += pParticles[i].GetWeight();
         }
-        pAvgLogWeights[T_MCMC][T]/=N;
 
         //Normalise the weights to sensible values....
         double dMaxWeight = -std::numeric_limits<double>::infinity();
         for (int i = 0; i < N; i++)
             dMaxWeight = std::max(dMaxWeight, pParticles[i].GetLogWeight());
+        double Wt;
         for (int i = 0; i < N; i++){
+            Wt = pParticles[i].GetLogWeight();
+
             pParticles[i].SetLogWeight(pParticles[i].GetLogWeight() - (dMaxWeight));
-            std::cout << pParticles[i].GetWeight() << std::endl;}
-        
+        }        
         //Check if the ESS is below some reasonable threshold and resample if necessary.
         //A mechanism for setting this threshold is required.
-        double ESS = GetESS();
-        if (ESS < dResampleThreshold)
+        double ESS = GetNeff();
+        if (ESS < N_threshold)
         {
-
-            nResampled = 1;
+            
+            nResampled += 1;
             Resample(rtResampleMode);
         }
-        else
-            nResampled = 0;
         // Increment the evolution time.
         T++;
     }
@@ -335,126 +331,9 @@ namespace smc
     template <class Space>
     void sampler<Space>::Resample(ResampleType lMode)
     {
-        //Resampling is done in place.
-        double dWeightSum = 0;
-        unsigned uMultinomialCount;
-        //First obtain a count of the number of children each particle has.
-        switch (lMode)
-        {
-        case SMC_RESAMPLE_MULTINOMIAL:
-            //Sample from a suitable multinomial vector
-            for (int i = 0; i < N; ++i)
-                dRSWeights[i] = pParticles[i].GetWeight();
-            pRng->Multinomial(N, N, dRSWeights, uRSCount);
-            break;
+        
 
-        case SMC_RESAMPLE_RESIDUAL:
-            //Sample from a suitable multinomial vector and add the integer replicate
-            //counts afterwards
-            dWeightSum = 0;
-            for (int i = 0; i < N; ++i)
-            {
-                dRSWeights[i] = pParticles[i].GetWeight();
-                dWeightSum += dRSWeights[i];
-            }
-
-            uMultinomialCount = N;
-            for (int i = 0; i < N; ++i)
-            {
-                dRSWeights[i] = N * dRSWeights[i] / dWeightSum;
-                uRSIndices[i] = unsigned(floor(dRSWeights[i])); //Reuse temporary storage.
-                dRSWeights[i] = (dRSWeights[i] - uRSIndices[i]);
-                uMultinomialCount -= uRSIndices[i];
-            }
-            pRng->Multinomial(uMultinomialCount, N, dRSWeights, uRSCount);
-            for (int i = 0; i < N; ++i)
-                uRSCount[i] += uRSIndices[i];
-            break;
-
-        case SMC_RESAMPLE_STRATIFIED:
-        default:
-        {
-            // Procedure for stratified sampling
-            dWeightSum = 0;
-            double dWeightCumulative = 0;
-            // Calculate the normalising constant of the weight vector
-            for (int i = 0; i < N; i++)
-                dWeightSum += exp(pParticles[i].GetLogWeight());
-            //Generate a random number between 0 and 1/N times the sum of the weights
-            double dRand = pRng->Uniform(0, 1.0 / ((double)N));
-
-            int j = 0, k = 0;
-            for (int i = 0; i < N; ++i)
-                uRSCount[i] = 0;
-
-            dWeightCumulative = exp(pParticles[0].GetLogWeight()) / dWeightSum;
-            while (j < N)
-            {
-                while ((dWeightCumulative - dRand) > ((double)j) / ((double)N) && j < N)
-                {
-                    uRSCount[k]++;
-                    j++;
-                    dRand = pRng->Uniform(0, 1.0 / ((double)N));
-                }
-                k++;
-                dWeightCumulative += exp(pParticles[k].GetLogWeight()) / dWeightSum;
-            }
-            break;
-        }
-
-        case SMC_RESAMPLE_SYSTEMATIC:
-        {
-            // Procedure for stratified sampling but with a common RV for each stratum
-            dWeightSum = 0;
-            double dWeightCumulative = 0;
-            // Calculate the normalising constant of the weight vector
-            for (int i = 0; i < N; i++)
-                dWeightSum += exp(pParticles[i].GetLogWeight());
-            //Generate a random number between 0 and 1/N times the sum of the weights
-            double dRand = pRng->Uniform(0, 1.0 / ((double)N));
-
-            int j = 0, k = 0;
-            for (int i = 0; i < N; ++i)
-                uRSCount[i] = 0;
-
-            dWeightCumulative = exp(pParticles[0].GetLogWeight()) / dWeightSum;
-            while (j < N)
-            {
-                while ((dWeightCumulative - dRand) > ((double)j) / ((double)N) && j < N)
-                {
-                    uRSCount[k]++;
-                    j++;
-                }
-                k++;
-                dWeightCumulative += exp(pParticles[k].GetLogWeight()) / dWeightSum;
-            }
-            break;
-        }
-        }
-
-        //Map count to indices to allow in-place resampling
-        for (unsigned int i = 0, j = 0; i < N; ++i)
-        {
-            if (uRSCount[i] > 0)
-            {
-                uRSIndices[i] = i;
-                while (uRSCount[i] > 1)
-                {
-                    while (uRSCount[j] > 0)
-                        ++j;             // find next free spot
-                    uRSIndices[j++] = i; // assign index
-                    --uRSCount[i];       // decrement number of remaining offsprings
-                }
-            }
-        }
-
-        //Perform the replication of the chosen.
-        for (int i = 0; i < N; ++i)
-        {
-            if (uRSIndices[i] != i)
-                pParticles[i].SetValue(pParticles[uRSIndices[i]].GetValue());
-            pParticles[i].SetLogWeight(0);
-        }
+  
     }
 
     /// This function configures the resampling parameters, allowing the specification of both the resampling
@@ -489,7 +368,7 @@ namespace smc
         double* prevParam = (T_MCMC == 0) ? propParam : params[T_MCMC];
         double ll_prev = (T_MCMC == 0) ? 0 : pMCMCLogWeights[T_MCMC-1];
         double ll_prop = 0;
-        for (int i = 0; i < T_max; i++)
+        for (int i = 0; i < N; i++)
         {
             ll_prop += pAvgLogWeights[T_MCMC][i];
             // std::cout << pAvgLogWeights[T_MCMC][i] << std::endl;
@@ -530,6 +409,9 @@ namespace smc
             pfReset(pParticles[i]);
         }
         T_MCMC++;
+        std::cout << "N resampled:\t" << nResampled << std::endl;
+
+        nResampled = 0;
         return accept;
 
 

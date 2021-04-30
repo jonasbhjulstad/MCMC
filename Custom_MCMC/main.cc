@@ -22,7 +22,7 @@ double dSchedule = 30.0;
 ///Rare event threshold
 double dThreshold = 5.0;
 
-long lNumber = 1000;
+long lNumber = 10;
 
 void b();
 double N_pop = 1e8;
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
   Sampler.SetSampleFunctions(SIR.init, SIR.step, SIR.proposal_sample, SIR.reset);
 
 
-  Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.99995);
+  Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.5);
 
   Sampler.Initialize(param);
   cout << "Running MCMC-algorithm.." << endl;
