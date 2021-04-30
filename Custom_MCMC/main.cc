@@ -12,14 +12,17 @@
 
 using namespace std;
 long load_data(char const*, double** &data_ptr);
-const char fpath[] = "/home/deb/Documents/MCMC/Custom_MCMC/Data/SIR_y.csv";
+const char fpath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/SIR_y.csv";
+const char paramPath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/param_out.csv";
+const char weightPath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/weight_out.csv";
+
 
 ///Annealing schedule constant
 double dSchedule = 30.0;
 ///Rare event threshold
 double dThreshold = 5.0;
 
-long lNumber = 1;
+long lNumber = 1000;
 
 void b();
 double N_pop = 1e8;
@@ -29,14 +32,12 @@ double R0 = 1.2;
 double beta = R0*alpha;
 double x0[] = {N_pop - I0, I0, 0};
 long Nx = 3;
-double std_ll = 100;
-double std_alpha = alpha/10;
-double std_beta = beta/10;
+double std_ll = 1000000;
 double dt = 1.0;
 double** data_ptr;
 double y[N_OBSERVATIONS_MAX];
 long N_iterates;
-long N_MCMC = 1;
+long N_MCMC = 1000000;
 long N_param = 4;
 long N_sysparam = 2;
 double param[] = {alpha, beta, N_pop, dt};
@@ -48,21 +49,32 @@ int main(int argc, char** argv)
 {
   N_iterates = load_data(fpath, data_ptr);
 
-
   for (int i = 0; i < N_iterates; i++)
   {
     y[i] = data_ptr[i][1];
   }
-  SIR_Model SIR(N_sysparam, Nx, N_iterates, y, x0);
+  SIR_Model SIR(N_sysparam, Nx, N_iterates, y, x0, prop_std);
 
-  smc::sampler<pSIR> Sampler(lNumber, N_iterates,N_MCMC, N_param, param);
-  Sampler.SetSampleFunctions(SIR.fInitialise, SIR.f_SIR, SIR.proposal_sample);
+  smc::sampler<pSIR> Sampler(lNumber, N_iterates,N_MCMC, N_param, param, N_sysparam);
+  Sampler.SetSampleFunctions(SIR.init, SIR.step, SIR.proposal_sample, SIR.reset);
 
 
-  Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.5);
+  Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.99995);
 
   Sampler.Initialize(param);
-  Sampler.IterateMCMC();
+  cout << "Running MCMC-algorithm.." << endl;
+  for (int i = 0; i < N_MCMC; i++)
+  {
+    Sampler.IterateMCMC();
+  }
+  b();
+  fstream f;
+  f.open(paramPath, fstream::out);
+  Sampler.StreamParameters(f);
+  f.close();
+  f.open(weightPath, fstream::out);
+  Sampler.StreamWeights(f);
+  f.close();
 }
 
 
@@ -85,17 +97,16 @@ long load_data(char const * szName, double** &data_ptr)
     {
       
       getline(f, line);
-      cout << "line: " << line << "liter " << lIterates << endl;
       stringstream s(line);
       for (int k = 0; k < 3; k++)
       {
         getline(s, word, ',');
         data[i][k] = stod(word);
-        cout << data[i][k] << endl;
+        // cout << data[i][k] << endl;
       }
     }
   f.close();
-  cout << "writing complete!" << endl;
+  // cout << "writing complete!" << endl;
   data_ptr = data;
   return lIterates;
 }

@@ -16,7 +16,7 @@ double *SIR_Model::y;
 double *SIR_Model::x0;
 long SIR_Model::N_iterations;
 
-SIR_Model::SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init)
+SIR_Model::SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init, double* prop_std)
 {
   N_param_ODE = N_ODE_param;
   vec_prior_mu = gsl_vector_alloc(N_param_ODE);
@@ -29,6 +29,12 @@ SIR_Model::SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_ob
   memcpy(y, y_obs, sizeof(double) * N_iterations);
   x0 = new double[Nx];
   memcpy(x0, x_init, sizeof(double) * Nx);
+  mat_prior_std = gsl_matrix_alloc(N_param_ODE, N_param_ODE);
+  mat_prop_std = gsl_matrix_alloc(N_param_ODE, N_param_ODE);
+  for (int i = 0; i < N_param_ODE; i++)
+  {
+    gsl_matrix_set(mat_prop_std, i, i, prop_std[i]);
+  }
 }
 
 void SIR_Model::prior_sample(gsl_vector *res, smc::rng *pRng)
@@ -62,19 +68,21 @@ void SIR_Model::proposal_sample(double *&res, const double *oldParam, smc::rng *
 
 ///A function to initialise double type markov chain-valued particles
 /// \param pRng A pointer to the random number generator which is to be used
-smc::particle<pSIR> SIR_Model::fInitialise(smc::rng *pRng)
+smc::particle<pSIR> SIR_Model::init(smc::rng *pRng)
 {
   smc::particle<pSIR> *InitParticle = new smc::particle<pSIR>;
   for (int i = 0; i < Nx; i++)
   {
     InitParticle->GetValuePointer()->X[i] = x0[i];
   }
+  InitParticle->SetLogWeight(0);
   // memcpy(*InitParticle->GetValuePointer(), x0, Nx);
   return *InitParticle;
 }
 
+
 //Calculates the next state and likelihood for that state
-void SIR_Model::f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng)
+void SIR_Model::step(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng)
 {
 
   double alpha = param[0];
@@ -84,11 +92,12 @@ void SIR_Model::f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, sm
 
   double *x = (double *)pState.GetValuePointer();
 
-  double p_I = 1 - exp(x[1] / N_pop * dt);
+  double p_I = 1 - exp(-beta*x[1] / N_pop * dt);
   double p_R = 1 - exp(-alpha * dt);
 
   double K_SI = gsl_ran_poisson(pRng->GetRaw(), x[0] * p_I);
   double K_IR = gsl_ran_binomial(pRng->GetRaw(), p_R, (int)x[1]);
+
 
   double delta_x[3] = {-K_SI, K_SI - K_IR, K_IR};
 
@@ -96,9 +105,18 @@ void SIR_Model::f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, sm
   {
     x[i] += delta_x[i];
   }
-  double p_I_y = 1 - exp(y[lTime] / N_pop * dt);
-  double ll = log(gsl_ran_binomial_pdf(x[1], p_I_y, (int) y[lTime]));
-  pState.SetLogWeight(ll);
+  double p_I_y = 1 - exp(-beta*y[lTime] / N_pop * dt);
+
+  // double ll = log(gsl_ran_binomial_pdf(x[1], p_I_y, (int) y[lTime]));
+  double ll = log(gsl_ran_gaussian_pdf(x[1]- y[lTime], 1e4));
+
+  // cout << ll << endl;
+  pState.SetLogWeight(pState.GetLogWeight() + ll);
+}
+
+void SIR_Model::reset(smc::particle<pSIR> &pState)
+{
+  memcpy(pState.GetValuePointer()->X, x0, sizeof(double)*Nx);
 }
 
 SIR_Model::~SIR_Model()

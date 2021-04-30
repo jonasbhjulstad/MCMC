@@ -32,7 +32,7 @@ private:
     static long N_iterations;
 
 public:
-    SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init);
+    SIR_Model(long N_ODE_param, long N_x, long N_iterations, double *y_obs, double *x_init, double* prop_std);
 
     ~SIR_Model();
 
@@ -47,12 +47,14 @@ public:
 
     ///A function to initialise double type markov chain-valued particles
     /// \param pRng A pointer to the random number generator which is to be used
-    static smc::particle<pSIR> fInitialise(smc::rng *pRng);
+    static smc::particle<pSIR> init(smc::rng *pRng);
 
 
     //Calculates the next state and likelihood for that state
-    static void f_SIR(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng);
+    static void step(long lTime, smc::particle<pSIR> &pState, double *param, smc::rng *pRng);
 
+    //Set the state 
+    static void reset(smc::particle<pSIR> &pState);
   
 };
 

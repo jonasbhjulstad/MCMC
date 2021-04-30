@@ -34,6 +34,7 @@
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
+#include <fstream>
 
 #include "rng.hh"
 #include "particle.hh"
@@ -70,6 +71,8 @@ namespace smc
         long T_max;
         //Number of parameters to be passed to fmove()
         long N_params;
+        //Number of ODE_parameters
+        long N_params_ODE;
         //Model parameters
         double** params;
         //Current proposed parameters:
@@ -104,12 +107,17 @@ namespace smc
         int (*pfMCMC)(long, particle<Space> &, rng *);
         ///Parameter proposal function
         void (*pfProp)(double* &, const double*, rng *);
+        ///Particle State-reset function:
+        void (*pfReset)(particle<Space> &);
 
     public:
         ///Create an particle system containing lSize unInitialized particles with the specified mode.
-        sampler(long lSize, long T_maximum,long N_MCMC_iterations,long N_param, double* param);
+        sampler(long lSize, long T_maximum,long N_MCMC_iterations,long N_param, double* param, long N_param_ODE);
         ///Set functions
-        void SetSampleFunctions(particle<Space> (*f_init)(rng *), void (*f_move)(long, particle<Space> &,double*, rng *), void (*f_prop)(double* &,const double*, rng *));
+        void SetSampleFunctions(particle<Space> (*f_init)(rng *), 
+                                void (*f_move)(long, particle<Space> &,double*, rng *), 
+                                void (*f_prop)(double* &,const double*, rng *), 
+                                void (*pfReset)(particle<Space> &));
         ///Dispose of a sampler.
         ~sampler();
         ///Calculates and Returns the Effective Sample Size.
@@ -144,20 +152,25 @@ namespace smc
         std::ostream &StreamParticle(std::ostream &os, long n);
         ///Dump the entire particle set to the specified output stream in a human readable form
         std::ostream &StreamParticles(std::ostream &os);
-        ///Allow a human readable version of the sampler configuration to be produced using the stream operator.
-        /// std::ostream & operator<< (std::ostream& os, sampler<Space> & s);
+        //Dump all parameters to file
+        void StreamParameters(std::fstream &file);
+        //Dump all MCMC-weights to file
+        void StreamWeights(std::fstream &f);
+
+
     };
 
     template <class Space>
-    sampler<Space>::sampler(long lSize, long T_maximum,long N_MCMC_iterations, long N_param, double* param_init)
+    sampler<Space>::sampler(long lSize, long T_maximum,long N_MCMC_iterations, long N_param, double* param_init, long N_param_ODE)
     {
         pRng = new rng();
         N = lSize;
         N_MCMC = N_MCMC_iterations;
         N_params = N_param;
+        N_params_ODE = N_param_ODE;
         T_max = T_maximum;
         T_MCMC = 0;
-
+        
         propParam = new double[N_param];
         memcpy(propParam, param_init, sizeof(double)*N_param);
 
@@ -188,11 +201,15 @@ namespace smc
     }
 
     template <class Space>
-    void sampler<Space>::SetSampleFunctions(particle<Space> (*f_init)(rng *), void (*f_move)(long, particle<Space> &, double *, rng *), void (*f_prop)(double* &,const double*, rng *))
+    void sampler<Space>::SetSampleFunctions(particle<Space> (*f_init)(rng *), 
+                                            void (*f_move)(long, particle<Space> &, double *, rng *), 
+                                            void (*f_prop)(double* &,const double*, rng *), 
+                                            void (*f_reset)(particle<Space> &))
     {
         pfInitialize = f_init;
         pfMove = f_move;
         pfProp = f_prop;
+        pfReset = f_reset;
     }
 
 
@@ -238,12 +255,11 @@ namespace smc
         long double sum = 0;
         long double sumsq = 0;
 
-        for (int i = 0; i < N; i++)
-            sum += expl(pParticles[i].GetLogWeight());
+        for (int i = 0; i < N; i++){
+            sum += expl(pParticles[i].GetLogWeight());}
 
         for (int i = 0; i < N; i++)
             sumsq += expl(2.0 * (pParticles[i].GetLogWeight()));
-
         return expl(-log(sumsq) + 2 * log(sum));
     }
 
@@ -267,26 +283,28 @@ namespace smc
         //Move the particle set.
         MoveParticles();
 
-        //Normalise the weights to sensible values....
-        double dMaxWeight = -std::numeric_limits<double>::infinity();
-        for (int i = 0; i < N; i++)
-            dMaxWeight = std::max(dMaxWeight, pParticles[i].GetLogWeight());
-        for (int i = 0; i < N; i++)
-            pParticles[i].SetLogWeight(pParticles[i].GetLogWeight() - (dMaxWeight));
-        
         //Compute average particle weight:
         pAvgLogWeights[T_MCMC][T] = 0;
         for (int i = 0; i < N; i++)
         {
-            pAvgLogWeights[T_MCMC][T] += pParticles[i].GetLogWeight();
+            pAvgLogWeights[T_MCMC][T] += pParticles[i].GetWeight();
         }
         pAvgLogWeights[T_MCMC][T]/=N;
 
+        //Normalise the weights to sensible values....
+        double dMaxWeight = -std::numeric_limits<double>::infinity();
+        for (int i = 0; i < N; i++)
+            dMaxWeight = std::max(dMaxWeight, pParticles[i].GetLogWeight());
+        for (int i = 0; i < N; i++){
+            pParticles[i].SetLogWeight(pParticles[i].GetLogWeight() - (dMaxWeight));
+            std::cout << pParticles[i].GetWeight() << std::endl;}
+        
         //Check if the ESS is below some reasonable threshold and resample if necessary.
         //A mechanism for setting this threshold is required.
         double ESS = GetESS();
         if (ESS < dResampleThreshold)
         {
+
             nResampled = 1;
             Resample(rtResampleMode);
         }
@@ -310,7 +328,7 @@ namespace smc
     {
         for (int i = 0; i < N; i++)
         {
-            pfMove(T + 1, pParticles[i], propParam, pRng);
+            pfMove(T, pParticles[i], propParam, pRng);
         }
     }
 
@@ -320,7 +338,6 @@ namespace smc
         //Resampling is done in place.
         double dWeightSum = 0;
         unsigned uMultinomialCount;
-
         //First obtain a count of the number of children each particle has.
         switch (lMode)
         {
@@ -333,7 +350,7 @@ namespace smc
 
         case SMC_RESAMPLE_RESIDUAL:
             //Sample from a suitable multinomial vector and add the integer replicate
-            //counts afterwards.
+            //counts afterwards
             dWeightSum = 0;
             for (int i = 0; i < N; ++i)
             {
@@ -474,38 +491,71 @@ namespace smc
         double ll_prop = 0;
         for (int i = 0; i < T_max; i++)
         {
-            ll_prop += pAvgLogWeights[N_MCMC][i];
+            ll_prop += pAvgLogWeights[T_MCMC][i];
+            // std::cout << pAvgLogWeights[T_MCMC][i] << std::endl;
         }
         ll_prop /= T_max;
 
+
         double alpha_prop = exp(ll_prop - ll_prev);
         double alpha_Metropolis = (1 > alpha_prop) ? 1 : alpha_prop;
-
-        T_MCMC++;
-
+        int accept;
         //Accept the proposal
         if (pRng->UniformS() < alpha_Metropolis)
         {
             pMCMCLogWeights[T_MCMC] = ll_prop;
-            memcpy(params[T_MCMC], propParam, sizeof(double)*N_params);
+            memcpy(params[T_MCMC], propParam, sizeof(double)*N_params_ODE);
             //Draw new proposal
             pfProp(propParam,params[T_MCMC], pRng);
-            //Initialize particles with a new proposal
-            Initialize(propParam);
-            return 0;
+            accept++;
         }
         //Reject the proposal
         else{
             pMCMCLogWeights[T_MCMC] = ll_prop;
-            memcpy(params[T_MCMC], prevParam, sizeof(double) * N_params);
+            memcpy(params[T_MCMC], prevParam, sizeof(double) * N_params_ODE);
             //Draw new proposal from old parameters
-            pfProp(prevParam, params[T_MCMC], pRng);
-            //Initialize particles with a new proposal
-            Initialize(propParam);
-            return 1;
+            pfProp(propParam,prevParam,pRng);
         }
 
+        //Ensure that parameters are positive by running abs(propParam)
+        for (int k = 0; k < N_params_ODE; k++)
+        {
+            propParam[k] = (propParam[k] < 0) ? -propParam[k] : propParam[k];
+        }
+
+        //std::cout << "Param:\t" << params[T_MCMC][0] << "\t" << params[T_MCMC][1] << std::endl;
+        //Set state of all particles to x0:
+        for (int i = 0; i < N; i++)
+        {
+            pfReset(pParticles[i]);
+        }
+        T_MCMC++;
+        return accept;
+
+
     }   
+
+    template <class Space>
+    void sampler<Space>::StreamParameters(std::fstream &f)
+    {
+        for (int i=0; i < T_MCMC; i++)
+        {
+            for (int k=0; k < (N_params_ODE-1); k++)
+            {
+                f << params[i][k] << ",";
+            }
+            f << params[i][N_params_ODE-1] << std::endl;
+        }
+    }
+
+    template <class Space>
+    void sampler<Space>::StreamWeights(std::fstream &f)
+    {
+        for (int i=0; i < T_MCMC; i++)
+        {
+            f << pMCMCLogWeights[i] << std::endl;
+        }
+    }
 
     template <class Space>
     std::ostream &sampler<Space>::StreamParticle(std::ostream &os, long n)
