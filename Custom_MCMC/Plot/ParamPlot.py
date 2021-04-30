@@ -8,5 +8,5 @@ if __name__ == '__main__':
     df_weights = pd.read_csv("../Data/weight_out.csv", names=['Weights'], header=None)
 
     print(df_weights)
-    # plt.hist(df)
-    # plt.show()
+    plt.hist(df_weights)
+    plt.show()

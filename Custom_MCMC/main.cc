@@ -12,17 +12,12 @@
 
 using namespace std;
 long load_data(char const*, double** &data_ptr);
-const char fpath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/SIR_y.csv";
-const char paramPath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/param_out.csv";
-const char weightPath[] = "/home/deb/Documents/MCMC_git/Custom_MCMC/Data/weight_out.csv";
+const char fpath[] = "/home/deb/Documents/MCMC/Custom_MCMC/Data/SIR_y.csv";
+const char paramPath[] = "/home/deb/Documents/MCMC/Custom_MCMC/Data/param_out.csv";
+const char weightPath[] = "/home/deb/Documents/MCMC/Custom_MCMC/Data/weight_out.csv";
 
 
-///Annealing schedule constant
-double dSchedule = 30.0;
-///Rare event threshold
-double dThreshold = 5.0;
-
-long lNumber = 10;
+long lNumber = 100;
 
 void b();
 double N_pop = 1e8;
@@ -32,16 +27,15 @@ double R0 = 1.2;
 double beta = R0*alpha;
 double x0[] = {N_pop - I0, I0, 0};
 long Nx = 3;
-double std_ll = 1000000;
 double dt = 1.0;
 double** data_ptr;
 double y[N_OBSERVATIONS_MAX];
 long N_iterates;
-long N_MCMC = 1000000;
+long N_MCMC = 100;
 long N_param = 4;
 long N_sysparam = 2;
 double param[] = {alpha, beta, N_pop, dt};
-
+double N_threshold = 0.8;
 double prop_std[] = {.1*alpha, .1*beta};
 double prop_mu[] = {alpha, beta};
 
@@ -57,14 +51,14 @@ int main(int argc, char** argv)
 
   smc::sampler<pSIR> Sampler(lNumber, N_iterates,N_MCMC, N_param, param, N_sysparam);
   Sampler.SetSampleFunctions(SIR.init, SIR.step, SIR.proposal_sample, SIR.reset);
-
-
-  Sampler.SetResampleParams(SMC_RESAMPLE_STRATIFIED, 0.5);
+  Sampler.SetResampleParams(SMC_RESAMPLE_SYSTEMATIC, .5);
 
   Sampler.Initialize(param);
   cout << "Running MCMC-algorithm.." << endl;
   for (int i = 0; i < N_MCMC; i++)
   {
+    if ((i % (N_MCMC / 10)) == 0)
+    cout << i << endl;
     Sampler.IterateMCMC();
   }
   b();

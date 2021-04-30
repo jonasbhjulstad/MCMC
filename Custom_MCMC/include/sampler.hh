@@ -216,6 +216,15 @@ namespace smc {
   }
 
   template <class Space>
+  void sampler<Space>::SetResampleParams(ResampleType rtMode, double dThreshold)
+  {
+    rtResampleMode = rtMode;
+    if (dThreshold < 1)
+      dResampleThreshold = dThreshold * N;
+    else
+      dResampleThreshold = dThreshold;
+  }
+  template <class Space>
   double sampler<Space>::GetESS(void) const
   {
     long double sum = 0;
@@ -493,30 +502,7 @@ namespace smc {
     }
   } 
 
-  /// This function configures the resampling parameters, allowing the specification of both the resampling
-  /// mode and the threshold at which resampling is used.
-  ///
-  /// \param rtMode The resampling mode to be used.
-  /// \param dThreshold The threshold at which resampling is deemed necesary.
-  ///
-  /// The rtMode parameter should be set to one of the following:
-  /// -# SMC_RESAMPLE_MULTINOMIAL to use multinomial resampling  
-  /// -# SMC_RESAMPLE_RESIDUAL to use residual resampling
-  /// -# SMC_RESAMPLE_STRATIFIED to use stratified resampling
-  /// -# SMC_RESAMPLE_SYSTEMATIC to use systematic resampling
-  ///
-  /// The dThreshold parameter can be set to a value in the range [0,1) corresponding to a fraction of the size of
-  /// the particle set or it may be set to an integer corresponding to an actual effective sample size.
 
-  template <class Space>
-  void sampler<Space>::SetResampleParams(ResampleType rtMode, double dThreshold)
-  {
-    rtResampleMode = rtMode;
-    if(dThreshold < 1)
-      dResampleThreshold = dThreshold * N;
-    else
-      dResampleThreshold = dThreshold;
-  }
 
   template <class Space>
   std::ostream & sampler<Space>::StreamParticle(std::ostream & os, long n)
