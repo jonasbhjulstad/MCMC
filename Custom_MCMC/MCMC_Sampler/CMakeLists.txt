@@ -1,0 +1,1 @@
+add_library(MCMC_S INTERFACE)

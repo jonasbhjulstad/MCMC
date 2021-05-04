@@ -77,7 +77,7 @@ namespace smc {
       ///The set of moves available.
       moveset<Space> Moves;
 
-      ///The number of MCMC moves which have been accepted during this iteration
+      ///The number of smc moves which have been accepted during this iteration
       int nAccepted;
       ///A flag which tracks whether the ensemble was resampled during this iteration
       int nResampled;
@@ -358,7 +358,7 @@ namespace smc {
     }
     else
       nResampled = 0;
-    //A possible MCMC step should be included here.
+    //A possible smc step should be included here.
     for(int i = 0; i < N; i++) {
       if(Moves.DoMCMC(T+1,pParticles[i], pRng))
 	nAccepted++;

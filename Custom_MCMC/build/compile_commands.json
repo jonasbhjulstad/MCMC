@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/deb/Documents/MCMC_git/Custom_MCMC/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9  -DBOOST_ALL_NO_LIB -DBOOST_ATOMIC_DYN_LINK -DBOOST_THREAD_DYN_LINK -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Sampler -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model -I/home/deb/Documents/MCMC_git/Custom_MCMC/include -I/home/deb/Documents/MCMC_git/Custom_MCMC/SIR -I/home/deb/Documents/MCMC_git/Custom_MCMC/SIR/../MCMC_Sampler -I/home/deb/Documents/MCMC_git/Custom_MCMC/SIR/../MCMC_Model -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../MCMC_Sampler -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../include -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../MCMC_Model   -pthread -g   -pthread -std=gnu++17 -o CMakeFiles/Custom_MCMC.dir/main.cc.o -c /home/deb/Documents/MCMC_git/Custom_MCMC/main.cc",
+  "file": "/home/deb/Documents/MCMC_git/Custom_MCMC/main.cc"
+},
+{
+  "directory": "/home/deb/Documents/MCMC_git/Custom_MCMC/build/SIR",
+  "command": "/bin/x86_64-linux-gnu-g++-9   -I/home/deb/Documents/MCMC_git/Custom_MCMC/SIR/../MCMC_Sampler -I/home/deb/Documents/MCMC_git/Custom_MCMC/SIR/../MCMC_Model -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../MCMC_Sampler -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../include -I/home/deb/Documents/MCMC_git/Custom_MCMC/MCMC_Model/../MCMC_Model   -pthread -g   -o CMakeFiles/SIR.dir/SIR_Stochastic.cc.o -c /home/deb/Documents/MCMC_git/Custom_MCMC/SIR/SIR_Stochastic.cc",
+  "file": "/home/deb/Documents/MCMC_git/Custom_MCMC/SIR/SIR_Stochastic.cc"
+}
+]

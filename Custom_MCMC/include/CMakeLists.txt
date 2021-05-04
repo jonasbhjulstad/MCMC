@@ -1,0 +1,5 @@
+# add_library(particle particle.hh)
+# add_library(particle rng.hh)
+# add_library(particle sampler.hh)
+# add_library(particle smc-exception.hh)
+# add_library(particle smctc.hh)

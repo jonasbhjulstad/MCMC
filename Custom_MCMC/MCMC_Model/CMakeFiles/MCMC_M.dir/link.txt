@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMCMC_M.a  CMakeFiles/MCMC_M.dir/MCMC_Model.cc.o
+/usr/bin/ranlib libMCMC_M.a

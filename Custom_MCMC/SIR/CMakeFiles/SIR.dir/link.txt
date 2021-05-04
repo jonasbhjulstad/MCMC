@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSIR.a  CMakeFiles/SIR.dir/SIR_Stochastic.cc.o
+/usr/bin/ranlib libSIR.a
