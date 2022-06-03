@@ -1,0 +1,29 @@
+#ifndef SMC_UTILS_CLHPP
+#define SMC_UTILS_CLHPP
+
+#define FLOAT_MIN 1e-37f
+#define FLOAT_MAX 1e37f
+
+inline void copy_vec(float* dest, float* src, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+inline void assign_vec(float* dest, float val, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = val;
+    }
+}
+
+inline float abs(float x)
+{
+    return x > 0 ? x : -x;
+}
+
+
+#endif

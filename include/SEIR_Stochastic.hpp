@@ -1,24 +1,24 @@
-#ifndef SEIAR_MODEL_H
-#define SEIAR_MODEL_H
+#ifndef SEIR_MODEL_H
+#define SEIR_MODEL_H
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
 #include <math.h>
 #include <cstring>
-#include "Distributions.hh"
-#include "Particle.hh"
-#include "SMC_Model.hh"
+#include "Distributions.hpp"
+#include "SMC_Particle.hpp"
+#include "SMC_Model.hpp"
 using namespace std;
 
-class SEIAR_Model: public SMC::Model
+class SEIR_Model: public SMC::Model
 {
 private: 
     Rng* G;
     double ll_sigma;
-    double prop_sigma[5];
+    double prop_sigma[3];
     double *y;
-    static constexpr size_t Nx = 5;
-    double x0[5];
+    static constexpr size_t Nx = 4;
+    double x0[Nx];
     long N_iterations;
     double dt;
     double N_pop;
@@ -28,12 +28,12 @@ private:
     bool is_dispersed;
 
 public:
-    SEIAR_Model(long N_iterations, double *y_obs, double *x_init, double dt, double N_pop,  double* prop_std, double ll_std);
+    SEIR_Model(long N_iterations, double *y_obs, double *x_init, double dt, double N_pop,  double* prop_std, double ll_std);
 
     void set_dispersion_parameters(const double &nu_E_init, const double &nu_I_init, const double & nu_R_init);
     void dispersion_set(long disperse_flag);
 
-    ~SEIAR_Model();
+    ~SEIR_Model();
 
     //Should contain allocation necessary to run
     void Init(double*&, long &);

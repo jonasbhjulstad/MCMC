@@ -4,22 +4,22 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include "SIR_Stochastic.hh"
-#include "SMC_Sampler.hh"
-#include "MCMC_Sampler.hh"
-#include "csv_reader.hh"
+#include "SEIAR_Stochastic.hpp"
+#include "SMC_Sampler.hpp"
+#include "MCMC_Sampler.hpp"
+#include "csv_reader.hpp"
+
 //Setup defined here!
-#include "Parameter_Configuration.hh"
+#include "Parameter_Configuration.hpp"
+
+
 
 using namespace std;
 
-const long N_ODE_params = 2;
-const long Nx = 3;
-// extern void load_data(std::string, double**, double*, const long &);
-
+const long N_ODE_params = 5;
+const long Nx = 5;
 int main(int argc, char** argv)
 {
-
   // Load observations into y:
   string dataPath = dataDir;
   dataPath.append("SIR_I0_");
@@ -37,28 +37,29 @@ int main(int argc, char** argv)
   }
 
   //Perform MCMC over all nu in nu_list
+  double nu_E;
   for (int i=0; i < N_nu; i++)
   {
-  nu_I = nu_list[i];
-  SIR_Model SIR(N_observations, 
-  y, x0_SIR, dt, N_pop, prop_std, ll_std);
+  nu_E = nu_list[i];
+  SEIAR_Model SEIAR(N_observations, 
+  y, x0_SEIR, dt, N_pop, prop_std, ll_std);
 
-  SIR.set_dispersion_parameters(nu_I, nu_R);
-  if (nu_I == 0){
-    SIR.dispersion_set(0);}
+  SEIAR.set_dispersion_parameters(nu_E, nu_I, nu_R);
+  if (nu_E == 0){
+    SEIAR.dispersion_set(0);}
   else{
-    SIR.dispersion_set(1);
+    SEIAR.dispersion_set(1);
   }
-  SMC::SMC_Sampler smcSampler(&SIR, N_particles, propParam, N_ODE_params, N_observations);
+  SMC::SMC_Sampler smcSampler(&SEIAR, N_particles, propParam, N_ODE_params, N_observations);
   SMC::MCMC_Sampler Sampler(&smcSampler, N_MCMC);
   Sampler.InitializeParticles();
 
 
-  cout << "Running MCMC-algorithm on SIR-Model" <<  ", nu_I = " << nu_I << endl;
-  double perc = 0;
+  cout << "Running MCMC-algorithm on SEIAR-Model" <<  ", nu_E = " << nu_E << endl;
+  long perc = 0;
   for (int i = 0; i < N_MCMC; i++)
   {
-    if ((i % (N_MCMC / 10)) == 0) {
+    if ((i % (N_MCMC / 10)) == 0){
       cout << perc << "%" << endl;
       perc+=10;}
     Sampler.IterateMCMC();
@@ -68,8 +69,8 @@ int main(int argc, char** argv)
 
   //Store weights and parameters
   string paramPath = dataDir;
-  paramPath.append("SIR/param_");
-  paramPath.append(to_string((int)nu_I));
+  paramPath.append("SEIAR/param_");
+  paramPath.append(to_string((int)nu_E));
   paramPath.append("_");
   paramPath.append(to_string((int) ll_std));
   paramPath.append("_");
@@ -81,8 +82,8 @@ int main(int argc, char** argv)
   f.close();
 
   string weightPath = dataDir;
-  weightPath.append("SIR/weight_");
-  weightPath.append(to_string((int)nu_I));
+  weightPath.append("SEIAR/weight_");
+  weightPath.append(to_string((int)nu_E));
   weightPath.append("_");
   weightPath.append(to_string((int) ll_std));
   weightPath.append("_");

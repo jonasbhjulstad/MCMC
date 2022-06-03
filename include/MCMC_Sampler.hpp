@@ -2,7 +2,7 @@
 #define MCMC_SAMPLER_H
 #include <fstream>
 #include <chrono>
-#include "SMC_Sampler.hh"
+#include "SMC_Sampler.hpp"
 namespace SMC
 {
 class MCMC_Sampler: public SMC_Sampler

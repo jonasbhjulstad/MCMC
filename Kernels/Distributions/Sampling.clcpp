@@ -1,0 +1,118 @@
+
+#ifndef CLG_SAMPLING_CLCPP
+#define CLG_SAMPLING_CLCPP
+#include <Decompositions.clcpp>
+
+template <typename PRNG_generator>
+void UniformSample(PRNG_generator& rng, float min, float max, uint N, float* res)
+{
+    const float uint_max = 0xffffffff;
+
+    for (int i = 0; i < N; i++)
+    {
+        
+        res[i] = rng.generate_uint() *(max-min)/uint_max + min;
+    }
+}
+
+template<typename PRNG_generator>
+float UniformSample(PRNG_generator& rng)
+{
+    const float uint_max = 0xffffffff;
+    float res = rng.generate_uint()/uint_max;
+    return res;
+}
+
+template <typename PRNG_generator>
+bool BernoulliTrial(PRNG_generator& rng, const float p)
+{
+    float r = UniformSample(rng);
+    return r < p;
+}
+
+template <typename PRNG_generator>
+uint BinomialSample(PRNG_generator& rng, const uint N, float p)
+{
+    float uSample = 1.f;
+    uint count = 0;
+    for (uint i = 0; i < N; i++)
+    {
+        UniformSample(rng, 0, 1, 1, &uSample);
+        if (uSample < p)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+uint MultinomialSample(PRNG_generator& rng, const uint N, const float K, const float p)
+{
+    float uSample = 1.f;
+    uint count = 0;
+    for (uint i = 0; i < N; i++)
+    {
+        UniformSample(rng, 0, 1, 1, &uSample);
+        if (uSample < p)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+template <typename PRNG_generator>
+float PoissonSample(PRNG_generator& rng, float lambda)
+{
+    float x = 0;
+    float p = -lambda;
+    float s = 1;
+    float u;
+    // printf("p: %e, lbd: %f", p, lambda);
+    while(s > p)
+    {
+        UniformSample(rng, 0, 1, 1, &u);
+        x++;
+        s = s + log(u);
+    }
+    // printf("x: %f\n", x);
+    return x-1;
+}
+
+template <typename PRNG_generator>
+float MultivariateNormalSample(PRNG_generator& rng, const float* mu, const float* sigma, const uint N, float* res)
+{
+    float z[N];
+    UniformSample(rng, 0, 1, N, z);
+    float L[N*N];
+    cholesky(sigma, L, N);
+    matrix_multiply_lower(L, x, res, N);
+}
+
+template <typename PRNG_generator>
+float GammaSample(PRNG_generator& rng, const float alpha, const float beta)
+{
+    float uniformsamples[3];
+    UniformSample(rng, 0, 1, 3, uniformsamples);
+    if (uniformsamples[0])
+}
+
+template <typename PRNG_generator>
+float BetaBinomialSample(PRNG_generator& rng, const float alpha, const float beta, const uint N)
+{
+    float x = 0;
+    float p = -beta;
+    float s = 1;
+    float u;
+    // printf("p: %e, lbd: %f", p, lambda);
+    while(s > p)
+    {
+        UniformSample(rng, 0, 1, 1, &u);
+        x++;
+        s = s + log(u);
+    }
+    // printf("x: %f\n", x);
+    return x-1;
+}
+
+#endif

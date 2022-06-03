@@ -1,0 +1,82 @@
+#ifndef SIR_MODEL_H
+#define SIR_MODEL_H
+#include <Distributions.clcpp>
+#include <Sampling.clcpp>
+#include "SMC_Particle.hpp"
+#include "SMC_Model.hpp"
+using namespace std;
+
+template <typename PRNG_generator, size_t N_observations>
+class SIR_Model: public SMC::Model<SIR_Model<PRNG_generator, N_observations>>
+{
+private: 
+    float ll_sigma;
+    float prop_sigma[2];
+    float y[N_observations];
+    static constexpr size_t Nx = 3;
+    float x0[Nx];
+    long N_iterations;
+    float dt;
+    float N_pop;
+    float nu_I;
+    float nu_R;
+    bool is_dispersed;
+
+public:
+    static constexpr size_t Ny = N_observations;
+    SIR_Model(long N_iterations, 
+    float *y_obs, 
+    float *x_init, 
+    float dt, 
+    float N_pop,  
+    float* prop_std, 
+    float ll_std,
+    float nu_I_init, 
+    float nu_R_init)
+{
+  y = float[Ny];
+  copy_vec(y, y_obs, Ny);
+  copy_vec(x0, x_init, Nx);
+  ll_sigma = llsigma;
+  copy_vec(prop_sigma, prop_std, 2);
+  dt = DT;
+  N_pop = Npop;
+}
+
+    //Calculates the next state and likelihood for that state
+    void advance(const long &lTime, float* X, const float *param)
+    {
+    static constexpr size_t Nx = 3;
+    float alpha = param[0];
+    float beta = param[1];
+
+    float p_I = 1 - exp(-beta*X[1] / N_pop * dt);
+    float p_R = 1 - exp(-alpha * dt);
+
+    float K_SI;
+    float K_IR;
+
+    K_SI = BinomialSample(rng, p_I, (uint)X[0]);
+    K_IR = BinomialSample(rng, p_R, (uint)X[1]);
+    float delta_x[Nx] = {-K_SI, K_SI - K_IR, K_IR};
+
+    for (int i = 0; i < Nx; i++)
+    {
+        X[i] += delta_x[i];
+    }
+    }
+    //Update the parameter proposal:
+    void proposal_sample(const float* param_old, float* res)
+    {
+        MultivariateNormalSample(rng, param_old, prop_sigma, Nx, res);
+    }
+    float log_likelihood(const float* X, const long &lTime)
+    {
+    return log(gsl_ran_gaussian_pdf(y[lTime]-X[1], ll_sigma));
+    }
+    void reset_particles(float * X)
+    {
+        memcpy(X, x0, sizeof(float)*Nx);
+    }
+};
+#endif

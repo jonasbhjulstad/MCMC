@@ -1,0 +1,3 @@
+add_executable(Gen_SIR Generate_SIR_data.cpp)
+add_executable(Gen_SEIR Generate_SEIR_data.cpp)
+add_executable(Gen_SEIAR Generate_SEIAR_data.cpp)

@@ -1,0 +1,132 @@
+#include "SMC_Sampler.clhpp"
+namespace SMC
+{
+
+void initialize_weights(float* weights, size_t N_particles)
+{
+    for (int i = 0; i < N_particles; i++){
+        particles[i].LogWeight = FLOAT_MIN;}
+    return;
+}
+
+
+float set_resample_threshold(float threshold, size_t N_particles)
+{
+    if (threshold < 1)
+        return threshold * N_particles;
+    else
+        return threshold;
+}
+
+
+void normalize_accumulate_weights(SMC_Particle* particles, size_t N_particles)
+{
+    float dMaxWeight = -FLOAT_MAX;
+    for (int i = 0; i < N_particles; i++){
+        if (dMaxWeight < particles[i].log_weight)
+            dMaxWeight = particles[i].log_weight;
+    for (int i = 0; i < N_particles; i++){
+        particles[i].log_weight = particles[i].log_weight - (dMaxWeight);
+    }
+}
+
+template <size_t N_particles>
+void resample(SMC_Particle* particles)
+{
+    float resampling_weights[N_particles];
+    //Sample from a suitable multinomial vector
+    for (int i = 0; i < N_particles; ++i)
+        resampling_weights[i] = exp(particles[i].log_weight);
+    MultinomialSample(N_particles, N_particles, resampling_weights, resampling_count);
+
+    //Map count to indices to allow in-place resampling
+    for (unsigned int i = 0, j = 0; i < N_particles; ++i)
+    {
+        if (resample_count[i] > 0)
+        {
+            resample_indices[i] = i;
+            while (resample_count[i] > 1)
+            {
+                while (resample_count[j] > 0)
+                    ++j;             // find next free spot
+                resample_indices[j++] = i; // assign index
+                --resample_count[i];       // decrement number of remaining offsprings
+            }
+        }
+    }
+
+    //Perform the replication of the chosen.
+    for (int i = 0; i < N_particles; ++i)
+    {
+        if (resample_indices[i] != i)
+            particles[i] = particles[resample_indices[i]];
+        particles[i].log_weight = 0;
+    }
+}
+
+int advance(float & log_average_weight, SMC_Data& p, SMC_Particle* particles)
+{   
+    move_particles(particles, N_particles);
+
+    normalize_accumulate_weights(particles, p.N_particles);
+    //Check if the ESS is below some reasonable threshold and resample if necessary.
+    //A mechanism for setting this threshold is required.
+    float ESS = get_effective_sample_size(particles, N_particles);
+    if (ESS < resample_threshold)
+    {
+        nResampled++;
+        resample(particles);
+    }
+    
+    //Calculate the average logweight:
+    float ll_sum = 0;
+    for (int i = 0; i < N_particles; i++)
+    {
+        ll_sum+=particles[i].log_weight;
+    }
+    log_average_weight = ll_sum/N_particles;
+    
+}
+
+
+void move_particles(SMC_Particle* particles, const size_t N_particles)
+{
+    float ll;
+    for (int i = 0; i < N_particles; i++)
+    {
+        m_Model->Step(T, particles[i].State, propParam);
+        ll = m_Model->LogLikelihood(particles[i].State,T);
+        //Update particle weight with loglikelihood:
+        particles[i].LogWeight;
+    }
+
+}
+
+//Get Effective Sample Size
+float get_effective_sample_size(SMC_particles* particles, size_t N_particles)
+{
+    float sum = 0;
+    float sumsq = 0;
+
+    for (int i = 0; i < N_particles; i++)
+        sum += exp(particles[i].log_weight);
+
+    for (int i = 0; i < N_particles; i++)
+        sumsq += exp(2.0 * (particles[i].log_weight));
+
+    return exp(-log(sumsq) + 2 * log(sum));
+}
+
+
+template <typename Model>
+void ResetParticles(Model& model){
+
+    for (int i = 0; i < N_particles; i++)
+    {
+        model.particle_reset(particles[i].State);
+        particles[i].log_weight = 0;
+    }
+}
+
+};
+}

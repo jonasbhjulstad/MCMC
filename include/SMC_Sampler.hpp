@@ -16,9 +16,9 @@
 #include <fstream>
 #include <limits>
 #include <math.h>
-#include "Distributions.hh"
-#include "Particle.hh"
-#include "SMC_Model.hh"
+#include "Distributions.hpp"
+#include "SMC_Particle.hpp"
+#include "SMC_Model.hpp"
 
 
 enum ResampleType

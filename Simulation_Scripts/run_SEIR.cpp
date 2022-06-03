@@ -4,12 +4,12 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include "SEIR_Stochastic.hh"
-#include "SMC_Sampler.hh"
-#include "MCMC_Sampler.hh"
-#include "csv_reader.hh"
+#include "SEIR_Stochastic.hpp"
+#include "SMC_Sampler.hpp"
+#include "MCMC_Sampler.hpp"
+#include "csv_reader.hpp"
 //Setup defined here!
-#include "Parameter_Configuration.hh"
+#include "Parameter_Configuration.hpp"
 
 using namespace std;
 

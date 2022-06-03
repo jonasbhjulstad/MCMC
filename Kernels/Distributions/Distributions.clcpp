@@ -1,0 +1,16 @@
+#ifndef CLG_DISTRIBUTIONS_CLCPP
+#define CLG_DISTRIBUTIONS_CLCPP
+#define M_PI 3.14159265358979323846
+
+float gaussian_pdf(float x, float mu, float sigma)
+{
+    return 1.0f / sqrt(2.0f * M_PI * sigma * sigma) * exp(-0.5f * (x - mu) * (x - mu) / (sigma * sigma));
+}
+
+float log_gaussian_pdf(float x, float mu, float sigma)
+{
+    return -0.5f * log(2.0f * M_PI * sigma * sigma) - 0.5f * (x - mu) * (x - mu) / (sigma * sigma);
+}
+
+
+#endif
