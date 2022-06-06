@@ -84,8 +84,7 @@ int advance(float & log_average_weight, SMC_Data& p, SMC_Particle* particles)
     {
         ll_sum+=particles[i].log_weight;
     }
-    log_average_weight = ll_sum/N_particles;
-    
+    log_average_weight = ll_sum/N_particles;   
 }
 
 
@@ -119,7 +118,7 @@ float get_effective_sample_size(SMC_particles* particles, size_t N_particles)
 
 
 template <typename Model>
-void ResetParticles(Model& model){
+void reset_particles(Model& model, SMC_Particle* particles){
 
     for (int i = 0; i < N_particles; i++)
     {

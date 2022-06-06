@@ -94,7 +94,7 @@ float GammaSample(PRNG_generator& rng, const float alpha, const float beta)
 {
     float uniformsamples[3];
     UniformSample(rng, 0, 1, 3, uniformsamples);
-    if (uniformsamples[0])
+    if (uniformsamples[0] < )
 }
 
 template <typename PRNG_generator>

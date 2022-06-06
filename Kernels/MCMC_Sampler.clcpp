@@ -2,63 +2,67 @@
 
 namespace MCMC
 {
-template <typename PRNG_Generator, size_t N_param>
-void mcmc_advance(PRNG_Generator& rng, float* param, float* param_prop, float* log_sum_weights)
+
+template <typename PRNG_Generator, typename Model, size_t N_param>
+void mcmc_advance(PRNG_Generator& rng, 
+                Model& model,
+                SMC_Particle* particles, 
+                float* param_prev,
+                float* param_current 
+                float* param_prop, 
+                float* log_sum_weight_prev,
+                float* log_sum_weight_current)
 {
     float average_log_weight = 0;
-    LogWeightSums[mcmc_iter] = 0;
-
     for (size_t t = 0; t < Nt; t++)
     {
         SMC::smc_advance(average_log_weight)
     }
     
-    metropolis<PRNG_Generator, N_param>(rng, param, param_prop, log_sum_weights, mcmc_iter);
-    ResetParticles();
+    float param_prev[N_param];
+    copy_vec(param_prev, param_prop, N_param);
+    
+    metropolis<PRNG_Generator, Model, N_param>(rng, model, );
+    
+    float* param_prev, 
+float* param_current,
+float* param_prop,
+float& log_sum_weight_prev,
+float& log_sum_weight_current)
+    
+    SMC::reset_particles(model, particles);
 }
 
-template <typename PRNG_Generator, size_t N_param>
-void metropolis(PRNG_Generator& rng, 
-float* param, 
+template <typename PRNG_Generator, typename Model, size_t N_param>
+void metropolis(PRNG_Generator& rng,
+Model& model, 
+const float* param_prev, 
+float* param_current,
 float* param_prop,
-float* log_sum_weights, 
-size_t mcmc_iter)
+float& log_sum_weight_prev,
+float& log_sum_weight_current)
 {
-    float* p_param_current = &param[mcmc_iter * N_param];
-    float* p_param_prev = &param[(mcmc_iter - 1) * N_param];
-    float log_sum_weight_prev = log_sum_weights[mcmc_iter - 1];
-    float log_sum_weight_current = log_sum_weights[mcmc_iter];
 
-
-    float prevParam[N_param];
-    if (mcmc_iter == 0){
-        assign_vec(prevParam, param_prop, N_param);
-        assign_vec(p_param_current, param_prop, N_param);}
-    else{
-        assign_vec(prevParam, p_param_prev, N_param);}
-
-    float ll_prev = (mcmc_iter == 0) ? -FLOAT_MAX: log_sum_weight_prev;
-    float ll_prop = log_sum_weight_current;
     //Did the proposal likelihood improve fit?
-    float alpha_prop = exp(ll_prop - ll_prev);
+    float alpha_prop = exp(log_sum_weight_current - log_sum_weight_prev);
     float alpha_Metropolis = (1 < alpha_prop) ? 1 : alpha_prop;
 
     size_t accept=0;
     //Accept the proposal
     if (UniformSample(rng) < alpha_Metropolis)
     {
-        LogWeightSums[mcmc_iter] = ll_prop;
-        assign_vec(p_param_current, param_prop, N_param);
+        log_sum_weight_current = ll_prop;
+        assign_vec(param_current, param_prop, N_param);
         accept++;
     }
     //Reject the proposal
     else{
-        LogWeightSums[mcmc_iter] = ll_prev;
-        assign_vec(p_param_current, prevParam, N_param);
+        log_sum_weight_current = ll_prev;
+        assign_vec(param_current, param_prev, N_param);
     }
 
     //Draw new proposal sample
-    m_Model->ProposalSample(p_param_current, param_prop);
+    m_Model->proposal_sample(param_current, param_prop);
 
     //Ensure that parameters are positive by running abs(param_prop)
     for (int k = 0; k < N_param; k++)

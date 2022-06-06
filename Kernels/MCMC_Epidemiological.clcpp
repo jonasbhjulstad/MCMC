@@ -1,0 +1,33 @@
+#ifndef MCMC_EPIDEMIOLOGICAL_CLCPP
+#define MCMC_EPIDEMIOLOGICAL_CLCPP
+#include <Distributions.clcpp>
+#include "MCMC_Sampler.clcpp"
+#include <SIR_Stochastic.clhpp>
+
+#ifndef PRNG_TYPE
+#define PRNG_TYPE PRNG_ISAAC
+#endif
+
+
+__kernel void SIR_compute(constant float* x_init, 
+                        constant float* y_obs, 
+                        float dt,
+                        float N_pop,
+                        constant float* prop_std,
+                        float ll_std,
+                        float nu_I_init,
+                        float nu_R_init,
+                        size_t N_MCMC_Iterations)
+{
+    PRNG_TYPE rng(seed[get_global_id(0)]);
+    SIR_Model<PRNG_TYPE, N_OBSERVATIONS> model(N_MCMC_iterations, y_obs, 
+    x_init, dt, N_pop, prop_std, ll_std, nu_I_init, nu_R_init);
+
+    for (size_t i = 0; i < N_MCMC_iterations; i++)
+    {
+        model.advance(rng, model, particles, param, param_prop, log_sum_weights);
+    }
+}
+
+
+#endif
