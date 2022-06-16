@@ -1,10 +1,15 @@
 #ifndef SMC_UTILS_CLHPP
 #define SMC_UTILS_CLHPP
-
+#include <stddef.h>
+#ifndef FLOAT_MIN
 #define FLOAT_MIN 1e-37f
+#endif
+#ifndef FLOAT_MAX
 #define FLOAT_MAX 1e37f
+#endif
 
-inline void copy_vec(float* dest, float* src, size_t N)
+template <typename T0, typename T1>
+inline void copy_vec(T0* dest, constant T1* src, size_t N)
 {
     for(size_t i = 0; i < N; i++)
     {
@@ -12,13 +17,53 @@ inline void copy_vec(float* dest, float* src, size_t N)
     }
 }
 
-inline void assign_vec(float* dest, float val, size_t N)
+template <typename T>
+inline void copy_vec(T* dest, const T* src, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+template <typename T>
+inline void copy_vec(T* dest, T* src, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+
+template <typename T0, typename T1>
+inline void copy_vec(global T0* dest, T1* src, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+template <typename T>
+inline void copy_vec(global T* dest, constant T* src, size_t N)
+{
+    for(size_t i = 0; i < N; i++)
+    {
+        dest[i] = src[i];
+    }
+}
+
+template <typename T>
+inline void assign_vec(T* dest, T val, size_t N)
 {
     for(size_t i = 0; i < N; i++)
     {
         dest[i] = val;
     }
 }
+
+
 
 inline float abs(float x)
 {

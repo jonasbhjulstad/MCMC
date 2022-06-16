@@ -1,28 +1,36 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(OpenCL_MCMC)
+project(CLCPP_MCMC)
 include(FetchContent)
 
 
 
-set(CMAKE_CXX_STANDARD_REQUIRED YES)   # See below (1)
-set(CMAKE_THREAD_LIBS_INIT "-lpthread")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-set(CMAKE_HAVE_THREADS_LIBRARY 1)
-set(CMAKE_USE_WIN32_THREADS_INIT 0)
-set(CMAKE_USE_PTHREADS_INIT 1)
-set(THREADS_PREFER_PTHREAD_FLAG ON)
+set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_BUILD_TYPE Debug)
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY Executables)
 
+find_package(OpenCL REQUIRED)
+find_package(OpenCLHeaders REQUIRED)
+if(UNIX)
+find_package(OpenCLICDLoader REQUIRED)
+endif()
+if(WIN32)
+endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED 17)
 set(CMAKE_CXX_STANDARD 17)
-FetchContent_Declare(randomCL_repo
-GIT_REPOSITORY https://github.com/bstatcomp/RandomCL.git
-)
-FetchContent_MakeAvailable(randomCL_repo)
+find_package(CLCPP_PRNG REQUIRED HINTS "/home/deb/Documents/CLCPP_PRNG/build/pkg/")
+message(WARNING ${CLCPP_PRNG_INCLUDE_DIR})
+if (UNIX)
+find_package(CLG_Utils REQUIRED HINTS "/home/deb/Documents/OpenCL-Graph/build/pkg/")
+endif()
 
-
+set(CLCPP_MCMC_KERNEL_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Kernels/")
+set(CLCPP_MCMC_KERNEL_DECOMPOSITIONS_SOURCE_DIR "${CLCPP_MCMC_KERNEL_SOURCE_DIR}/Decompositions/")
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/data)
+set(CLCPP_MCMC_DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/data")
+add_subdirectory(Utils)
+add_subdirectory(Kernels)
 add_subdirectory(include)
 add_subdirectory(Generate)
 add_subdirectory(Simulation_Scripts)

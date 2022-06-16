@@ -1,29 +1,31 @@
 #ifndef SMC_MODEL_CLHPP
 #define SMC_MODEL_CLHPP
+#include "SMC_Utils.clhpp"
 namespace SMC{
 
 template <typename Derived>
 struct Model
 {
     //Should integrate the state & update particle weight
-    void advance(const long &lTime, float* X, const float *param)
+    template <typename PRNG_Generator>
+    void advance(PRNG_Generator& rng, const long &lTime, float* X, const float *param)
     {
-        static_cast<Derived*>(this)->Step(lTime, X, param);
+        static_cast<Derived*>(this)->advance(rng, lTime, X, param);
     }
 
     //Update the parameter proposal:
-    void ProposalSample(const float* param_prop, float* res)
+    void proposal_sample(const float* param_prop, float* res)
     {
-        static_cast<Derived*>(this)->ProposalSample(param_prop, res);
+        static_cast<Derived*>(this)->proposal_sample(param_prop, res);
     }
     //Likelihood required for particle weight updates
-    float LogLikelihood(const float *state, const size_t &N)
+    float log_likelihood(const float *state, const size_t &N)
     {
-        return static_cast<Derived*>(this)->LogLikelihood(state, N);
+        return static_cast<Derived*>(this)->log_likelihood(state, N);
     }
-    void reset_particles(float* state)
+    void reset(float* state)
     {
-        static_cast<Derived*>(this)->reset_particles(state);
+        static_cast<Derived*>(this)->reset(state);
     }
 };
 }

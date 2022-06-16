@@ -1,6 +1,6 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
-#include <SMC_Utils.clhpp>
+#ifndef PARTICLE_CLHPP
+#define PARTICLE_CLHPP
+#include "SMC_Utils.clhpp"
 namespace SMC
 {
 template <size_t Nx>

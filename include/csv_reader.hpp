@@ -7,7 +7,7 @@
 
 
 //Helper function for loading trajectory data from ../Data/ into data_ptr
-long load_data(std::string dataPath, double **&data_ptr, double *DT, const long & Nx)
+long load_data(std::string dataPath, float **&data_ptr, float *DT, const long & Nx)
 {
     using namespace std;
     fstream f;
@@ -21,10 +21,10 @@ long load_data(std::string dataPath, double **&data_ptr, double *DT, const long 
     string word;
     string::size_type sz;
     DT[0] = stod(line, &sz);
-    double **data = new double *[lIterates];
+    float **data = new float *[lIterates];
     for (int i = 0; i < lIterates; i++)
     {
-        data[i] = new double[Nx];
+        data[i] = new float[Nx];
     }
     for (long i = 0; i < lIterates; ++i)
     {

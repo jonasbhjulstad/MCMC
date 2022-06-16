@@ -44,13 +44,13 @@ int main(int argc, char** argv)
   SEIAR_Model SEIAR(N_observations, 
   y, x0_SEIR, dt, N_pop, prop_std, ll_std);
 
-  SEIAR.set_dispersion_parameters(nu_E, nu_I, nu_R);
+  SEIAR.set_dispersion_parameters(nu_E, nu_I, nu_R); 
   if (nu_E == 0){
     SEIAR.dispersion_set(0);}
   else{
     SEIAR.dispersion_set(1);
   }
-  SMC::SMC_Sampler smcSampler(&SEIAR, N_particles, propParam, N_ODE_params, N_observations);
+  SMC::SMC_Sampler smcSampler(&SEIAR, N_particles, param_prop, N_ODE_params, N_observations);
   SMC::MCMC_Sampler Sampler(&smcSampler, N_MCMC);
   Sampler.InitializeParticles();
 

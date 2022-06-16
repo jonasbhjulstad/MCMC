@@ -48,7 +48,7 @@ int main(int argc, char** argv)
   else{
     SEIR.dispersion_set(1);
   }
-  SMC::SMC_Sampler smcSampler(&SEIR, N_particles, propParam, N_ODE_params, N_observations);
+  SMC::SMC_Sampler smcSampler(&SEIR, N_particles, param_prop, N_ODE_params, N_observations);
   SMC::MCMC_Sampler Sampler(&smcSampler, N_MCMC);
   Sampler.InitializeParticles();
 

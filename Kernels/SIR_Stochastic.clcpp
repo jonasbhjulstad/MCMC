@@ -23,7 +23,7 @@ void SIR_Model::set_dispersion_parameters(const float &nu_I_init, const float &n
 
 
 //Calculates the next state and likelihood for that state
-void SIR_Model::Step(const long &lTime, float* X, const float *param)
+void SIR_Model::step(const long &lTime, float* X, const float *param)
 {
   static constexpr size_t Nx = 3;
   float alpha = param[0];
