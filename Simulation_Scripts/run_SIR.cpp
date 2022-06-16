@@ -17,14 +17,15 @@ using namespace std;
 #define SPIRV_COMPILER "clang-14"
 #endif
 
-std::string kernel_file = std::string(CLCPP_MCMC_KERNEL_SOURCE_DIR) + "/MCMC_Epidemiological";
+// std::string kernel_file = std::string(CLCPP_MCMC_KERNEL_SOURCE_DIR) + "/MCMC_Epidemiological";
+std::string kernel_file = std::string(CLCPP_MCMC_KERNEL_SOURCE_DIR) + "/testKernel";
 const long N_ODE_params = 2;
 const long Nx = 3;
 // extern void load_data(std::string, double**, double*, const long &);
 
 void compile_kernel(size_t N_observations, size_t N_MCMC_ITERATIONS, size_t N_particles, bool emit_spirv=false, CLG_PRNG_TYPE prng_type = CLG_PRNG_TYPE_KISS99)
 {
-    std::string spirv_compile_command = std::string(SPIRV_COMPILER) + " --target=spirv32 -c -cl-kernel-arg-info -cl-std=clc++2021 " + kernel_file + ".clcpp -o " + kernel_file + ".spv";
+    std::string spirv_compile_command = std::string(SPIRV_COMPILER) + " -Wall --target=spirv32 -c -cl-kernel-arg-info -cl-std=clc++2021 " + kernel_file + ".clcpp -o " + kernel_file + ".spv";
     std::string preprocessor_definitions = " -D PRNG_GENERATOR=" + CLG_PRNG_class_strmap.at(prng_type) + 
      + " -D N_OBSERVATIONS=" + std::to_string(N_observations)
      + " -D N_MCMC_ITERATIONS=" + std::to_string(N_MCMC_ITERATIONS)
@@ -33,16 +34,18 @@ void compile_kernel(size_t N_observations, size_t N_MCMC_ITERATIONS, size_t N_pa
     std::string kernel_include_directories = " -I " + std::string(CLCPP_MCMC_KERNEL_DECOMPOSITIONS_DIR) + 
     " " + std::string(CLCPP_PRNG_INCLUDE) + 
     " -I " + std::string(CLG_KERNEL_DIR) + "/Epidemiological/";
+
+    std::string warning_flags = " -Wimplicit-const-int-float-conversion ";
     std::cout << CLCPP_PRNG_INCLUDE << std::endl;
     std::cout << spirv_compile_command + preprocessor_definitions + kernel_include_directories << std::endl;
 
-    int res = std::system((spirv_compile_command + preprocessor_definitions + kernel_include_directories).c_str());
+    int res = std::system((spirv_compile_command + warning_flags + preprocessor_definitions + kernel_include_directories).c_str());
     std::cout << "system Error code: " << res << std::endl;
 
     if (emit_spirv)
     {
       spirv_compile_command = std::string(SPIRV_COMPILER) + " --target=spirv32 -c -cl-kernel-arg-info -cl-std=clc++2021 -emit-llvm " + kernel_file + ".clcpp -o " + kernel_file + ".ll";
-      res = std::system((spirv_compile_command + preprocessor_definitions + kernel_include_directories).c_str()); 
+      res = std::system((spirv_compile_command + preprocessor_definitions + kernel_include_directories + warning_flags).c_str()); 
       res = std::system(("llvm-spirv --spirv-text " + std::string(kernel_file) + ".ll -o " + std::string(kernel_file) + ".rspv").c_str());
     }
 }
@@ -118,7 +121,7 @@ int main(int argc, char** argv)
                                                 logSumWeightBufferLength*sizeof(float), NULL, &err);
 
     /*Step 8: Create kernel object */
-    cl_kernel kernel = clCreateKernel(clInstance.program, "SIR_compute", &err);
+    cl_kernel kernel = clCreateKernel(clInstance.program, "test_compute", &err);
     assert(err == CL_SUCCESS);
     /*Step 9: Sets Kernel arguments.*/
     status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&seedBuffer);
@@ -128,26 +131,13 @@ int main(int argc, char** argv)
     status = clSetKernelArg(kernel, 4, sizeof(float), (void *)&dt);
     status = clSetKernelArg(kernel, 5, sizeof(float), (void *)&N_pop);
     status = clSetKernelArg(kernel, 6, sizeof(cl_mem), (void *)&prop_std_Buffer);
-    status = clSetKernelArg(kernel, 4, sizeof(float), (void *)&ll_std);
-    status = clSetKernelArg(kernel, 5, sizeof(float), (void*)&nu_I);
-    status = clSetKernelArg(kernel, 6, sizeof(float), (void*)&nu_R);
-    status = clSetKernelArg(kernel, 7, sizeof(float), (void*)&resample_threshold);
-    status = clSetKernelArg(kernel, 7, sizeof(cl_mem), (void *)&paramBuffer);
-    status = clSetKernelArg(kernel, 8, sizeof(cl_mem), (void *)&logSumWeightBuffer);
+    status = clSetKernelArg(kernel, 7, sizeof(float), (void *)&ll_std);
+    status = clSetKernelArg(kernel, 8, sizeof(float), (void*)&nu_I);
+    status = clSetKernelArg(kernel, 9, sizeof(float), (void*)&nu_R);
+    status = clSetKernelArg(kernel, 10, sizeof(float), (void*)&resampleThreshold);
+    status = clSetKernelArg(kernel, 11, sizeof(cl_mem), (void *)&paramBuffer);
+    status = clSetKernelArg(kernel, 12, sizeof(cl_mem), (void *)&logSumWeightBuffer);
 
-constant ulong* seed,
-                        constant float* x_init, 
-                        constant float* y_obs, 
-                        constant float* param_init,
-                        float dt,
-                        float N_pop,
-                        constant float* prop_std,
-                        float ll_std,
-                        float nu_I_init,
-                        float nu_R_init,
-                        float resample_threshold,
-                        global float* param_res,
-                        global float* log_sum_weight_res)
     assert(status == CL_SUCCESS);
 
     float param_res[paramBufferLength];
@@ -156,7 +146,7 @@ constant ulong* seed,
     std::ofstream outfile(std::string(CLCPP_MCMC_DATA_DIR) + "/SIR_Stochastic/x_traj.csv");
     std::mt19937 rng;
     std::uniform_int_distribution<cl_ulong> dist(0, UINT64_MAX);
-
+    N_SingleRun_Trajectories = 8;
     for (int i = 0; i < N_runs; i++)
     {
         for (int j = 0; j < N_SingleRun_Trajectories; j++)
@@ -187,6 +177,10 @@ constant ulong* seed,
     status = clReleaseMemObject(seedBuffer);
     status = clReleaseMemObject(paramBuffer);
     status = clReleaseMemObject(logSumWeightBuffer);
+    status = clReleaseMemObject(x0_SIR_Buffer);
+    status = clReleaseMemObject(yBuffer);
+    status = clReleaseMemObject(initParamBuffer);
+    status = clReleaseMemObject(prop_std_Buffer);    
     status = clReleaseCommandQueue(clInstance.commandQueue); //Release  Command queue.
     status = clReleaseContext(clInstance.context);           //Release context.
 

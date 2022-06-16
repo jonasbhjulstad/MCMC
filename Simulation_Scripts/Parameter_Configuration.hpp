@@ -47,5 +47,6 @@ const float initParam[] = {2.f * p_alpha, 2.f * p_beta, 2.f * p_gamma, 1.5f * p_
 
 long N_particles = 100;
 long N_MCMC = 500;
+float resampleThreshold = .2*N_particles;
 
 #endif

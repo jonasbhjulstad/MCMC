@@ -1,0 +1,23 @@
+#ifndef TEST_KERNEL_CLCPP
+#define TEST_KERNEL_CLCPP
+
+
+__kernel void test_compute(constant ulong* seed,
+                        constant float* x_init, 
+                        constant float* y_obs, 
+                        constant float* param_init,
+                        float dt,
+                        float N_pop,
+                        constant float* prop_std,
+                        float ll_std,
+                        float nu_I_init,
+                        float nu_R_init,
+                        float resample_threshold,
+                        global float* param_res,
+                        global float* log_sum_weight_res)
+
+{
+    printf("test_compute %f, %f\n", param_init[0], param_init[1]);
+}
+
+#endif

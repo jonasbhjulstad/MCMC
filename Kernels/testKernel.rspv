@@ -1,0 +1,108 @@
+119734787 66560 393230 57 0 
+2 Capability Addresses 
+2 Capability Kernel 
+2 Capability Float64 
+2 Capability Int64 
+2 Capability Int8 
+5 ExtInstImport 1 "OpenCL.std" 
+3 MemoryModel 1 2 
+8 EntryPoint 6 31 "test_compute" 23 
+3 Source 3 300000 
+4 Name 23 ".str" 
+4 Name 32 "seed" 
+4 Name 33 "x_init" 
+4 Name 34 "y_obs" 
+5 Name 35 "param_init" 
+3 Name 36 "dt" 
+4 Name 37 "N_pop" 
+5 Name 38 "prop_std" 
+4 Name 39 "ll_std" 
+5 Name 40 "nu_I_init" 
+5 Name 41 "nu_R_init" 
+7 Name 42 "resample_threshold" 
+5 Name 43 "param_res" 
+7 Name 44 "log_sum_weight_res" 
+4 Name 45 "entry" 
+4 Name 48 "conv" 
+5 Name 50 "arrayidx1" 
+4 Name 52 "conv2" 
+4 Name 56 "call" 
+3 Decorate 23 Constant 
+4 Decorate 23 Alignment 1 
+4 Decorate 32 FuncParamAttr 5 
+4 Decorate 32 FuncParamAttr 6 
+4 Decorate 33 FuncParamAttr 5 
+4 Decorate 33 FuncParamAttr 6 
+4 Decorate 34 FuncParamAttr 5 
+4 Decorate 34 FuncParamAttr 6 
+4 Decorate 35 FuncParamAttr 5 
+4 Decorate 35 FuncParamAttr 6 
+4 Decorate 38 FuncParamAttr 5 
+4 Decorate 38 FuncParamAttr 6 
+4 Decorate 43 FuncParamAttr 5 
+4 Decorate 43 FuncParamAttr 6 
+4 Decorate 44 FuncParamAttr 5 
+4 Decorate 44 FuncParamAttr 6 
+4 TypeInt 2 8 0 
+4 TypeInt 18 32 0 
+4 TypeInt 25 64 0 
+4 Constant 2 3 116 
+4 Constant 2 4 101 
+4 Constant 2 5 115 
+4 Constant 2 6 95 
+4 Constant 2 7 99 
+4 Constant 2 8 111 
+4 Constant 2 9 109 
+4 Constant 2 10 112 
+4 Constant 2 11 117 
+4 Constant 2 12 32 
+4 Constant 2 13 37 
+4 Constant 2 14 102 
+4 Constant 2 15 44 
+4 Constant 2 16 10 
+4 Constant 2 17 0 
+4 Constant 18 19 21 
+4 Constant 18 49 1 
+4 Constant 18 53 0 
+4 TypeArray 20 2 19 
+4 TypePointer 22 0 20 
+2 TypeVoid 24 
+4 TypePointer 26 0 25 
+3 TypeFloat 27 32 
+4 TypePointer 28 0 27 
+4 TypePointer 29 5 27 
+16 TypeFunction 30 24 26 28 28 28 27 27 28 27 27 27 27 29 29 
+3 TypeFloat 47 64 
+4 TypePointer 54 0 2 
+24 ConstantComposite 20 21 3 4 5 3 6 7 8 9 10 11 3 4 12 13 14 15 12 13 14 16 17 
+
+5 Variable 22 23 0 21 
+
+
+5 Function 24 31 0 30 
+3 FunctionParameter 26 32 
+3 FunctionParameter 28 33 
+3 FunctionParameter 28 34 
+3 FunctionParameter 28 35 
+3 FunctionParameter 27 36 
+3 FunctionParameter 27 37 
+3 FunctionParameter 28 38 
+3 FunctionParameter 27 39 
+3 FunctionParameter 27 40 
+3 FunctionParameter 27 41 
+3 FunctionParameter 27 42 
+3 FunctionParameter 29 43 
+3 FunctionParameter 29 44 
+
+2 Label 45 
+6 Load 27 46 35 2 4 
+4 FConvert 47 48 46 
+5 InBoundsPtrAccessChain 28 50 35 49 
+6 Load 27 51 50 2 4 
+4 FConvert 47 52 51 
+6 InBoundsPtrAccessChain 54 55 23 53 53 
+8 ExtInst 18 56 1 printf 55 48 52 
+1 Return 
+
+1 FunctionEnd 
+
