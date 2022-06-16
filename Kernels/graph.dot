@@ -1,0 +1,275 @@
+digraph {
+legend_merge_src [shape=plaintext, label=""];
+legend_merge_dest [shape=plaintext, label=""];
+legend_merge_src -> legend_merge_dest [label=" merge",style=dashed];
+legend_continue_src [shape=plaintext, label=""];
+legend_continue_dest [shape=plaintext, label=""];
+legend_continue_src -> legend_continue_dest [label=" continue",style=dotted];
+26 [label="entry
+Fn _Z12gaussian_pdffff entry", shape=box];
+49 [label="entry_0
+Fn _Z16log_gaussian_pdffff entry", shape=box];
+73 [label="entry_1
+Fn _Z13isaac_advancePU3AS411isaac_state entry", shape=box];
+73 -> 74;
+74 [label="for_body"];
+74 -> 74;
+74 -> 75;
+75 [label="for_body75_preheader"];
+75 -> 76;
+76 [label="for_body75"];
+76 -> 76;
+76 -> 77;
+77 [label="for_end148"];
+292 [label="entry_2
+Fn _Z11_isaac_uintPU3AS411isaac_state entry", shape=box];
+292 -> 293;
+292 -> 294;
+293 [label="if_then"];
+293 -> 294;
+294 [label="if_end"];
+309 [label="entry_3
+Fn _Z10isaac_seedPU3AS411isaac_statem entry", shape=box];
+309 -> 311;
+310 [label="for_cond_cleanup"];
+311 [label="for_body_0"];
+311 -> 311;
+311 -> 310;
+338 [label="entry_4
+Fn _Z12_kiss99_uintPU3AS412kiss99_state entry", shape=box];
+377 [label="entry_5
+Fn _Z11kiss99_seedPU3AS412kiss99_statem entry", shape=box];
+403 [label="entry_6
+Fn _Z13_lcg6432_uintPU3AS4m entry", shape=box];
+415 [label="entry_7
+Fn _Z12lcg6432_seedPU3AS4mm entry", shape=box];
+422 [label="entry_8
+Fn _Z19_lfib_ternary_ulongPU3AS410lfib_state entry", shape=box];
+444 [label="entry_9
+Fn _Z11_lfib_ulongPU3AS410lfib_state entry", shape=box];
+465 [label="entry_10
+Fn _Z15_lfib_inc_ulongPU3AS410lfib_state entry", shape=box];
+488 [label="entry_11
+Fn _Z9lfib_seedPU3AS410lfib_statem entry", shape=box];
+572 [label="entry_12
+Fn _Z14_mrg31k3p_uintPU3AS414mrg31k3p_state entry", shape=box];
+642 [label="entry_13
+Fn _Z13mrg31k3p_seedPU3AS414mrg31k3p_statem entry", shape=box];
+642 -> 643;
+642 -> 644;
+643 [label="if_end41_thread"];
+643 -> 648;
+644 [label="if_end_0"];
+644 -> 645;
+644 -> 648;
+645 [label="if_end41"];
+645 -> 646;
+645 -> 648;
+646 [label="if_end47"];
+646 -> 647;
+646 -> 648;
+647 [label="if_then50"];
+647 -> 648;
+648 [label="if_end77"];
+648 -> 649;
+648 -> 650;
+649 [label="if_then80"];
+649 -> 650;
+650 [label="if_end83"];
+683 [label="entry_14
+Fn _Z16mrg63k3a_advancePU3AS414mrg63k3a_state entry", shape=box];
+764 [label="entry_15
+Fn _Z15_mrg63k3a_ulongPU3AS414mrg63k3a_state entry", shape=box];
+831 [label="entry_16
+Fn _Z13mrg63k3a_seedPU3AS414mrg63k3a_statem entry", shape=box];
+831 -> 832;
+831 -> 833;
+832 [label="if_then_0"];
+832 -> 833;
+833 [label="if_end_1"];
+847 [label="entry_17
+Fn _Z11_msws_ulongPU3AS410msws_state entry", shape=box];
+2106 [label="rotate
+Fn spirv_llvm_fshl_i64 entry", shape=box];
+864 [label="entry_18
+Fn _Z16_msws_swap_ulongPU3AS410msws_state entry", shape=box];
+881 [label="entry_19
+Fn _Z17_msws_swap2_ulongPU3AS410msws_state entry", shape=box];
+897 [label="entry_20
+Fn _Z9msws_seedPU3AS410msws_statem entry", shape=box];
+907 [label="entry_21
+Fn _Z13_mt19937_uintPU3AS413mt19937_state entry", shape=box];
+907 -> 908;
+907 -> 909;
+908 [label="if_then_1"];
+908 -> 912;
+909 [label="if_else"];
+909 -> 910;
+909 -> 911;
+910 [label="if_then18"];
+910 -> 912;
+911 [label="if_else41"];
+911 -> 912;
+912 [label="if_end59"];
+992 [label="entry_22
+Fn _Z18_mt19937_loop_uintPU3AS413mt19937_state entry", shape=box];
+992 -> 993;
+992 -> 998;
+993 [label="for_body_preheader"];
+993 -> 995;
+994 [label="for_body15_preheader"];
+994 -> 996;
+995 [label="for_body_1"];
+995 -> 995;
+995 -> 994;
+996 [label="for_body15"];
+996 -> 996;
+996 -> 997;
+997 [label="for_end36"];
+997 -> 998;
+998 [label="if_end_2"];
+1082 [label="entry_23
+Fn _Z12mt19937_seedPU3AS413mt19937_statej entry", shape=box];
+1082 -> 1083;
+1083 [label="for_body_2"];
+1083 -> 1083;
+1083 -> 1084;
+1084 [label="for_end"];
+1104 [label="entry_24
+Fn _Z12_mwc64x_uintPU3AS412mwc64x_state entry", shape=box];
+1123 [label="entry_25
+Fn _Z11mwc64x_seedPU3AS412mwc64x_statem entry", shape=box];
+1127 [label="entry_26
+Fn _Z13_pcg6432_uintPU3AS4m entry", shape=box];
+1149 [label="entry_27
+Fn _Z12pcg6432_seedPU3AS4mm entry", shape=box];
+1156 [label="entry_28
+Fn _Z13philox2x32_1019philox2x32_10_statej entry", shape=box];
+1231 [label="entry_29
+Fn _Z20_philox2x32_10_ulongPU3AS419philox2x32_10_state entry", shape=box];
+1243 [label="entry_30
+Fn _Z18philox2x32_10_seedPU3AS419philox2x32_10_statem entry", shape=box];
+1252 [label="entry_31
+Fn _Z10_ran2_uintPU3AS410ran2_state entry", shape=box];
+1252 -> 1253;
+1252 -> 1254;
+1253 [label="if_then32"];
+1253 -> 1254;
+1254 [label="if_end35"];
+1304 [label="entry_32
+Fn _Z9ran2_seedPU3AS410ran2_statem entry", shape=box];
+1304 -> 1306;
+1305 [label="for_cond_cleanup_0"];
+1306 [label="for_body_3"];
+1306 -> 1307;
+1306 -> 1308;
+1307 [label="if_end20"];
+1307 -> 1305;
+1307 -> 1308;
+1308 [label="if_end20_for_body_crit_edge"];
+1308 -> 1306;
+1347 [label="entry_33
+Fn _Z13tinymt32_seedPU3AS412TINYMT32WP_Tm entry", shape=box];
+1347 -> 1348;
+1347 -> 1349;
+1348 [label="if_then_i_i"];
+1348 -> 1349;
+1349 [label="_ZL13tinymt32_initPU3AS412TINYMT32WP_Tj_exit"];
+1547 [label="entry_34
+Fn _Z13tyche_advancePU3AS411tyche_state entry", shape=box];
+2113 [label="rotate_0
+Fn spirv_llvm_fshl_i32 entry", shape=box];
+1583 [label="entry_35
+Fn _Z10tyche_seedPU3AS411tyche_statem entry", shape=box];
+1583 -> 1585;
+1584 [label="for_cond_cleanup_1"];
+1585 [label="for_body_4"];
+1585 -> 1585;
+1585 -> 1584;
+1643 [label="entry_36
+Fn _Z13_well512_uintPU3AS413well512_state entry", shape=box];
+1691 [label="entry_37
+Fn _Z12well512_seedPU3AS413well512_statem entry", shape=box];
+1756 [label="entry_38
+Fn _Z21matrix_multiply_lowerPU3AS4fS0_S0_j entry", shape=box];
+1756 -> 1759;
+1756 -> 1757;
+1757 [label="for_body_preheader_0"];
+1757 -> 1760;
+1758 [label="for_cond_cleanup_loopexit"];
+1758 -> 1759;
+1759 [label="for_cond_cleanup_2"];
+1760 [label="for_body_5"];
+1760 -> 1763;
+1760 -> 1761;
+1761 [label="for_body4_lr_ph"];
+1761 -> 1764;
+1762 [label="for_cond_cleanup3_loopexit"];
+1762 -> 1763;
+1763 [label="for_cond_cleanup3"];
+1763 -> 1760;
+1763 -> 1758;
+1764 [label="for_body4"];
+1764 -> 1764;
+1764 -> 1762;
+1791 [label="entry_39
+Fn _Z8choleskyPU3AS4KfPU3AS4fj entry", shape=box];
+1791 -> 1795;
+1791 -> 1792;
+1792 [label="for_cond1_preheader_preheader"];
+1792 -> 1793;
+1793 [label="for_cond1_preheader"];
+1793 -> 1796;
+1794 [label="for_cond_cleanup_loopexit_0"];
+1794 -> 1795;
+1795 [label="for_cond_cleanup_3"];
+1796 [label="for_cond5_preheader"];
+1796 -> 1800;
+1796 -> 1797;
+1797 [label="for_body8_lr_ph"];
+1797 -> 1801;
+1798 [label="for_cond_cleanup3_0"];
+1798 -> 1793;
+1798 -> 1794;
+1799 [label="for_cond_cleanup7_loopexit"];
+1799 -> 1800;
+1800 [label="for_cond_cleanup7"];
+1800 -> 1802;
+1800 -> 1803;
+1801 [label="for_body8"];
+1801 -> 1801;
+1801 -> 1799;
+1802 [label="if_then_2"];
+1802 -> 1804;
+1803 [label="if_else_0"];
+1803 -> 1804;
+1804 [label="if_end_3"];
+1804 -> 1796;
+1804 -> 1798;
+1856 [label="entry_40
+Fn _ZN3SMC22set_resample_thresholdEfj entry", shape=box];
+1880 [label="entry_41
+Fn 1866 entry", shape=box];
+1966 [label="entry_42
+Fn _ZNU3AS49SIR_ModelILj100EE7advanceIU3AS411PRNG_KISS99EEvRT_RU3AS4KjPU3AS4fPU3AS4Kf entry", shape=box];
+1966 -> 1970;
+1966 -> 1967;
+1967 [label="for_body_lr_ph_i"];
+1967 -> 1969;
+1968 [label="for_cond_for_cond_cleanup_crit_edge_i"];
+1968 -> 1970;
+1969 [label="for_body_i"];
+1969 -> 1969;
+1969 -> 1968;
+1970 [label="_Z14BinomialSampleIU3AS411PRNG_KISS99EjRT_jf_exit"];
+1970 -> 1974;
+1970 -> 1971;
+1971 [label="for_body_lr_ph_i48"];
+1971 -> 1973;
+1972 [label="for_cond_for_cond_cleanup_crit_edge_i49"];
+1972 -> 1974;
+1973 [label="for_body_i85"];
+1973 -> 1973;
+1973 -> 1972;
+1974 [label="_Z14BinomialSampleIU3AS411PRNG_KISS99EjRT_jf_exit86"];
+}

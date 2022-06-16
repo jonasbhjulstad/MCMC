@@ -45,7 +45,7 @@ size_t N_param)
 
 }   
 
-template <typename PRNG_Generator, typename Model, size_t Nx, size_t N_param>
+template <typename PRNG_Generator, typename Model, size_t Nx, size_t N_particles, size_t N_param>
 void advance(PRNG_Generator& rng, 
                 Model& model,
                 SMC::SMC_Particle<Nx>* particles, 
@@ -55,13 +55,12 @@ void advance(PRNG_Generator& rng,
                 float& log_sum_weight_prev,
                 float& log_sum_weight_current,
                 size_t Nt,
-                size_t N_particles,
                 float resample_threshold)
 {
     float average_log_weight = 0;
     for (size_t t = 0; t < Nt; t++)
     {
-        SMC::advance<PRNG_Generator, Model, Nx>(rng, model, average_log_weight, particles, param_prop, N_particles, resample_threshold, t);
+        SMC::advance<PRNG_Generator, Model, Nx, N_particles>(rng, model, average_log_weight, particles, param_prop, resample_threshold, t);
     }
     
     metropolis<PRNG_Generator, Model>(rng, model, param_prev, param_current, param_prop, log_sum_weight_prev, log_sum_weight_current, N_param);

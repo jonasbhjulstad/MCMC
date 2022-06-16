@@ -46,7 +46,7 @@ __kernel void SIR_compute(constant ulong* seed,
         float* param_current = &param[(i+1)*N_param];
         float& log_sum_weight_prev = log_sum_weights[i];
         float& log_sum_weight_current = log_sum_weights[i+1];
-        MCMC::advance<PRNG_GENERATOR,Model, Nx, N_param>(rng, model, particles, param_prev, param_current, param_prop, log_sum_weight_prev, log_sum_weight_current, N_OBSERVATIONS, N_PARTICLES, resample_threshold);
+        MCMC::advance<PRNG_GENERATOR,Model, Nx, N_PARTICLES, N_param>(rng, model, particles, param_prev, param_current, param_prop, log_sum_weight_prev, log_sum_weight_current, N_OBSERVATIONS, resample_threshold);
     }
 
     copy_vec(&param_res[(N_param*N_MCMC_ITERATIONS+1)*gID], param, N_param*(N_MCMC_ITERATIONS+1));

@@ -43,7 +43,7 @@ const long N_nu = 5;
 float nu_list[N_nu] = {0, 1, 2, 3, 4};
 
 //Initial Parameter proposal:
-const float param_prop[] = {2.f * p_alpha, 2.f * p_beta, 2.f * p_gamma, 1.5f * p_p, 2.f * p_mu};
+const float initParam[] = {2.f * p_alpha, 2.f * p_beta, 2.f * p_gamma, 1.5f * p_p, 2.f * p_mu};
 
 long N_particles = 100;
 long N_MCMC = 500;

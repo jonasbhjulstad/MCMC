@@ -14,7 +14,7 @@
 
 using namespace std;
 #ifndef SPIRV_COMPILER
-#define SPIRV_COMPILER "clang"
+#define SPIRV_COMPILER "clang-14"
 #endif
 
 std::string kernel_file = std::string(CLCPP_MCMC_KERNEL_SOURCE_DIR) + "/MCMC_Epidemiological";
@@ -22,9 +22,9 @@ const long N_ODE_params = 2;
 const long Nx = 3;
 // extern void load_data(std::string, double**, double*, const long &);
 
-void compile_kernel(size_t N_observations, size_t N_MCMC_ITERATIONS, size_t N_particles, CLG_PRNG_TYPE prng_type = CLG_PRNG_TYPE_KISS99)
+void compile_kernel(size_t N_observations, size_t N_MCMC_ITERATIONS, size_t N_particles, bool emit_spirv=false, CLG_PRNG_TYPE prng_type = CLG_PRNG_TYPE_KISS99)
 {
-    std::string spirv_compile_command = std::string(SPIRV_COMPILER) + " -c -cl-kernel-arg-info -cl-std=clc++2021 " + kernel_file + ".clcpp -o " + kernel_file + ".spv";
+    std::string spirv_compile_command = std::string(SPIRV_COMPILER) + " --target=spirv32 -c -cl-kernel-arg-info -cl-std=clc++2021 " + kernel_file + ".clcpp -o " + kernel_file + ".spv";
     std::string preprocessor_definitions = " -D PRNG_GENERATOR=" + CLG_PRNG_class_strmap.at(prng_type) + 
      + " -D N_OBSERVATIONS=" + std::to_string(N_observations)
      + " -D N_MCMC_ITERATIONS=" + std::to_string(N_MCMC_ITERATIONS)
@@ -38,6 +38,13 @@ void compile_kernel(size_t N_observations, size_t N_MCMC_ITERATIONS, size_t N_pa
 
     int res = std::system((spirv_compile_command + preprocessor_definitions + kernel_include_directories).c_str());
     std::cout << "system Error code: " << res << std::endl;
+
+    if (emit_spirv)
+    {
+      spirv_compile_command = std::string(SPIRV_COMPILER) + " --target=spirv32 -c -cl-kernel-arg-info -cl-std=clc++2021 -emit-llvm " + kernel_file + ".clcpp -o " + kernel_file + ".ll";
+      res = std::system((spirv_compile_command + preprocessor_definitions + kernel_include_directories).c_str()); 
+      res = std::system(("llvm-spirv --spirv-text " + std::string(kernel_file) + ".ll -o " + std::string(kernel_file) + ".rspv").c_str());
+    }
 }
 
 int main(int argc, char** argv)
@@ -57,12 +64,13 @@ int main(int argc, char** argv)
 
     CLG_Instance clInstance = clDefaultInitialize();
 
-    std::string kernel_file = std::string() + "SIR_Compute_Stochastic";
+    std::string kernel_file = std::string(CLCPP_MCMC_KERNEL_SOURCE_DIR) + "MCMC_Epidemiological";
 
     constexpr size_t N_observations = 100;
-    compile_kernel(N_observations, N_MCMC, N_particles);
+    compile_kernel(N_observations, N_MCMC, N_particles, true);
 
     int err = 0;
+    std::cout << "Kernel file: " << kernel_file << std::endl;
     std::string programBinary = convertToString((kernel_file + ".spv").c_str());
     long unsigned int programSize = sizeof(char)*programBinary.length();
 
@@ -90,29 +98,56 @@ int main(int argc, char** argv)
 
     cl_mem x0_SIR_Buffer = clCreateBuffer(clInstance.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
                                      sizeof(float)*Nx, (void *)x0_SIR, &err);
+    
+    cl_mem yBuffer = clCreateBuffer(clInstance.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                                    sizeof(float)*N_observations, (void *)y, &err);
+    
+    cl_mem initParamBuffer = clCreateBuffer(clInstance.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                                            sizeof(float)*N_ODE_params, (void *)initParam, &err);
+
     const size_t paramBufferLength = N_param_SIR*(N_MCMC+1);
 
     cl_mem paramBuffer = clCreateBuffer(clInstance.context, CL_MEM_WRITE_ONLY,
                                          paramBufferLength* sizeof(float), NULL, &err);
+    
+    cl_mem prop_std_Buffer = clCreateBuffer(clInstance.context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
+                                            sizeof(float)*N_ODE_params, (void *)prop_std, &err);
+    
     const size_t logSumWeightBufferLength = (N_MCMC+1);
     cl_mem logSumWeightBuffer = clCreateBuffer(clInstance.context, CL_MEM_WRITE_ONLY,
                                                 logSumWeightBufferLength*sizeof(float), NULL, &err);
 
     /*Step 8: Create kernel object */
-    cl_kernel kernel = clCreateKernel(clInstance.program, "SIR_Compute_Stochastic", &err);
+    cl_kernel kernel = clCreateKernel(clInstance.program, "SIR_compute", &err);
     assert(err == CL_SUCCESS);
     /*Step 9: Sets Kernel arguments.*/
     status = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&seedBuffer);
     status = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&x0_SIR_Buffer);
-    status = clSetKernelArg(kernel, 2, sizeof(float), (void *)&dt);
-    status = clSetKernelArg(kernel, 3, sizeof(float), (void *)&prop_std);
+    status = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&yBuffer);
+    status = clSetKernelArg(kernel, 3, sizeof(cl_mem), (void *)&initParamBuffer);
+    status = clSetKernelArg(kernel, 4, sizeof(float), (void *)&dt);
+    status = clSetKernelArg(kernel, 5, sizeof(float), (void *)&N_pop);
+    status = clSetKernelArg(kernel, 6, sizeof(cl_mem), (void *)&prop_std_Buffer);
     status = clSetKernelArg(kernel, 4, sizeof(float), (void *)&ll_std);
-    status = clSetKernelArg(kernel, 5, sizeof(float), &nu_I);
-    status = clSetKernelArg(kernel, 6, sizeof(float), &nu_R);
+    status = clSetKernelArg(kernel, 5, sizeof(float), (void*)&nu_I);
+    status = clSetKernelArg(kernel, 6, sizeof(float), (void*)&nu_R);
+    status = clSetKernelArg(kernel, 7, sizeof(float), (void*)&resample_threshold);
     status = clSetKernelArg(kernel, 7, sizeof(cl_mem), (void *)&paramBuffer);
     status = clSetKernelArg(kernel, 8, sizeof(cl_mem), (void *)&logSumWeightBuffer);
 
-
+constant ulong* seed,
+                        constant float* x_init, 
+                        constant float* y_obs, 
+                        constant float* param_init,
+                        float dt,
+                        float N_pop,
+                        constant float* prop_std,
+                        float ll_std,
+                        float nu_I_init,
+                        float nu_R_init,
+                        float resample_threshold,
+                        global float* param_res,
+                        global float* log_sum_weight_res)
     assert(status == CL_SUCCESS);
 
     float param_res[paramBufferLength];

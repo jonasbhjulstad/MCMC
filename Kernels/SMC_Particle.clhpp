@@ -12,7 +12,7 @@ struct SMC_Particle
     void operator=(const SMC_Particle& other)
     {
         log_weight = other.log_weight;
-        assign_vec(state, other.state, Nx);
+        copy_vec(state, other.state, Nx);
     }
 };
 }
