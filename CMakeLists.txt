@@ -4,7 +4,6 @@ include(FetchContent)
 
 
 
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_BUILD_TYPE Debug)
 
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY Executables)
@@ -13,6 +12,7 @@ find_package(OpenCL REQUIRED)
 find_package(OpenCLHeaders REQUIRED)
 if(UNIX)
 set(SPIRV_COMPILER "/usr/local/bin/clang-14")
+set(CLCPP_MCMC_LLVM_SPIRV "/usr/local/bin/llvm-spirv")
 find_package(OpenCLICDLoader REQUIRED)
 endif()
 if(WIN32)
@@ -29,6 +29,7 @@ endif()
 set(CLCPP_MCMC_KERNEL_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Kernels/")
 set(CLCPP_MCMC_KERNEL_DECOMPOSITIONS_SOURCE_DIR "${CLCPP_MCMC_KERNEL_SOURCE_DIR}/Decompositions/")
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/data)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/data/SIR_Stochastic)
 set(CLCPP_MCMC_DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/data")
 add_subdirectory(Utils)
 add_subdirectory(Kernels)

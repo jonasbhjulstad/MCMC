@@ -7,6 +7,8 @@
 #ifndef PRNG_GENERATOR
 #define PRNG_GENERATOR PRNG_ISAAC
 #endif
+#pragma OPENCL EXTENSION cl_intel_printf : enable
+
 
 
 
@@ -52,6 +54,8 @@ __kernel void SIR_compute(constant ulong* seed,
     // printf("First params %f, %f\n", param[0], param[1]);
     copy_vec(&param_res[(N_param*N_MCMC_ITERATIONS+1)*gID], param, N_param*(N_MCMC_ITERATIONS+1));
     copy_vec(&log_sum_weight_res[(N_MCMC_ITERATIONS+1)*gID], log_sum_weights, N_MCMC_ITERATIONS+1);
+
+    log_sum_weight_res[0] = 1000;
 }
 
 

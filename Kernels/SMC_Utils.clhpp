@@ -1,6 +1,6 @@
 #ifndef SMC_UTILS_CLHPP
 #define SMC_UTILS_CLHPP
-#include <stddef.h>
+#include <wchar.h>
 #ifndef FLOAT_MIN
 #define FLOAT_MIN 1e-37f
 #endif

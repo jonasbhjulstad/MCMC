@@ -6,7 +6,6 @@
 #include <sstream>
 #define N_OBSERVATIONS_MAX 1000
 
-const char dataDir[] = "/home/deb/Downloads/MCMC/Custom_MCMC/Data/";
 
 //ODE-parameters:
 const float N_pop = 1e4;
@@ -27,7 +26,7 @@ const float p_mu = p_alpha;
 //Storage for observations:
 float **data_ptr;
 float y[N_OBSERVATIONS_MAX];
-long N_observations;
+size_t N_observations;
 float dt;
 
 //Distribution parameters:
@@ -36,7 +35,7 @@ const float ll_std = 100;
 const float nu_E = 1e-5;
 const float nu_I = 1e-5;
 const float nu_R = 1e-5;
-const long N_nu = 5;
+const size_t N_nu = 5;
 
 //nu_I/nu_E/nu_E is swapped out with elements of
 //nu_list every iteration for SIR/SEIR/SEIAR
@@ -45,8 +44,9 @@ float nu_list[N_nu] = {0, 1, 2, 3, 4};
 //Initial Parameter proposal:
 const float initParam[] = {2.f * p_alpha, 2.f * p_beta, 2.f * p_gamma, 1.5f * p_p, 2.f * p_mu};
 
-long N_particles = 100;
-long N_MCMC = 500;
+size_t N_particles = 100;
+size_t N_workers = 8;
+size_t N_MCMC = 500;
 float resampleThreshold = .2*N_particles;
 
 #endif

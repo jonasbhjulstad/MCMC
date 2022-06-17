@@ -17,7 +17,7 @@ __kernel void test_compute(constant ulong* seed,
                         global float* log_sum_weight_res)
 
 {
-    printf("test_compute %f, %f\n", param_init[0], param_init[1]);
+    printf("test_compute %u, %u\n", seed[0], seed[1]);
 }
 
 #endif
