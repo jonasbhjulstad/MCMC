@@ -1,43 +1,37 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(CLCPP_MCMC)
+project(SYCL_MCMC)
+find_package(IntelDPCPP REQUIRED)
+find_package(MKL REQUIRED HINTS "/home/arch/intel/oneapi/mkl/2022.1.0/lib/cmake/")
+find_package(oneDPL REQUIRED HINTS "/home/arch/intel/oneapi/dpl/latest/lib/cmake/oneDPL")
 include(FetchContent)
-
-
-
-set(CMAKE_BUILD_TYPE Debug)
-
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY Executables)
-
-find_package(OpenCL REQUIRED)
-find_package(OpenCLHeaders REQUIRED)
-if(UNIX)
-set(SPIRV_COMPILER "/usr/local/bin/clang-14")
-set(CLCPP_MCMC_LLVM_SPIRV "/usr/local/bin/llvm-spirv")
-find_package(OpenCLICDLoader REQUIRED)
+enable_testing()
+FetchContent_Declare(
+    ranluxpp
+    GIT_REPOSITORY https://github.com/jirka-h/ranluxpp-portable.git
+    GIT_TAG origin/main
+)
+if (NOT ranluxpp_POPULATED)
+FetchContent_Populate(ranluxpp)
 endif()
-if(WIN32)
-endif()
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG release-1.12.1
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 
 set(CMAKE_CXX_STANDARD_REQUIRED 17)
 set(CMAKE_CXX_STANDARD 17)
-find_package(CLCPP_PRNG REQUIRED HINTS "/home/deb/Documents/CLCPP_PRNG/build/pkg/")
-message(WARNING ${CLCPP_PRNG_INCLUDE_DIR})
-if (UNIX)
-find_package(CLG_Utils REQUIRED HINTS "/home/deb/Documents/OpenCL-Graph/build/pkg/")
-endif()
 
-set(CLCPP_MCMC_KERNEL_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Kernels/")
-set(CLCPP_MCMC_KERNEL_DECOMPOSITIONS_SOURCE_DIR "${CLCPP_MCMC_KERNEL_SOURCE_DIR}/Decompositions/")
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/data)
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/data/SIR_Stochastic)
-set(CLCPP_MCMC_DATA_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/data")
-add_subdirectory(Utils)
 add_subdirectory(Kernels)
 add_subdirectory(include)
 add_subdirectory(Generate)
-add_subdirectory(Simulation_Scripts)
-include_directories(PUBLIC include)
-include_directories(PUBLIC Simulation_Scripts)
+add_subdirectory(test)
 
 
 

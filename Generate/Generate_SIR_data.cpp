@@ -14,9 +14,8 @@
 #include <fstream>
 #include <boost/numeric/odeint.hpp>
 #include <boost/range/iterator_range.hpp>
-#include <CLCPP_MCMC_FilePaths.hpp>
 
-
+std::string pwd = "/home/arch/Documents/SYCL_MCMC/";
 
 //[ rhs_function
 /* The type of container used to hold the state vector */
@@ -121,7 +120,7 @@ int main(int /* argc */ , char** /* argv */ )
     //]
 
     std::ofstream yFile;
-    yFile.open(std::string(CLCPP_MCMC_DATA_DIR) + "/SIR_I0_10.csv");
+    yFile.open(std::string(pwd) + "/SIR_I0_10.csv");
 
     yFile << N_observations << '\n' << DT << '\n';
     for (size_t i=0; i<=N_observations; i++)
