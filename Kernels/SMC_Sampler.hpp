@@ -2,10 +2,12 @@
 #define SMC_SAMPLER_hpp
 #include "MCMC_Distributions.hpp"
 #include "SMC_Model.hpp"
+#include "SMC_Resampling.hpp"
 #include "SMC_Particle.hpp"
 #include <algorithm>
 #include <limits>
 #include <oneapi/dpl/cmath>
+#include <oneapi/dpl/random>
 #include <vector>
 namespace SMC {
 
@@ -48,33 +50,6 @@ public:
   void resample() {
     using namespace oneapi::dpl;
 
-    std::vector<realtype> resampling_weights(N_particles);
-    std::vector<size_t> resampling_count(N_particles);
-
-    for (int i = 0; i < N_particles; ++i)
-      resampling_weights[i] = std::exp(particles[i].log_weight);
-    MCMC::multinomial_distribution resample_dist(N_particles, N_particles);
-    resampling_count = resample_dist(resampling_weights, engine);
-
-    size_t resample_indices[N_particles];
-    // Map count to indices to allow in-place resampling
-    for (size_t i = 0, j = 0; i < N_particles; ++i) {
-      if (resampling_count[i] > 0) {
-        resample_indices[i] = i;
-        while (resampling_count[i] > 1) {
-          while (resampling_count[j] > 0)
-            ++j;
-          resample_indices[j++] = i;
-          --resampling_count[i];
-        }
-      }
-    }
-
-    for (int i = 0; i < N_particles; ++i) {
-      if (resample_indices[i] != i)
-        particles[i] = particles[resample_indices[i]];
-      particles[i].log_weight = 0;
-    }
   }
 
   realtype advance(const std::vector<realtype> &param_prop) {

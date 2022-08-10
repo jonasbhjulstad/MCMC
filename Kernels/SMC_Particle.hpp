@@ -12,7 +12,12 @@ struct Particle
     void operator=(const Particle& other)
     {
         log_weight = other.log_weight;
-        state.insert(state.begin(), other.state.begin(), other.state.end());
+        state.resize(other.state.size());
+        for (int i = 0; i < other.state.size(); i++)
+        {
+            state[i] = other.state[i];
+        }
+        
     }
 };
 }

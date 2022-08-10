@@ -2,6 +2,8 @@
 #include <CL/sycl.hpp>
 #include <gtest/gtest.h>
 
+
+
 TEST(SMC_SamplerTest, ParticleReset) {
   TestModel model;
   double threshold = .9;
