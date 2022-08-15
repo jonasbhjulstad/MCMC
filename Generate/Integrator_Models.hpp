@@ -2,7 +2,6 @@
 
 #ifndef MCMC_GENERATE_SIR_HPP
 #define MCMC_GENERATE_SIR_HPP
-#include <Eigen/Dense>
 #include <MCMC_Distributions.hpp>
 #include <cvode/cvode.h>
 #include <cvode/cvode_spils.h>
@@ -16,12 +15,10 @@
 
 namespace MCMC::Integrators {
 
-template <size_t _Nx> struct Model_Integrator {
-  static constexpr size_t Nx = _Nx;
-  using Vec = Eigen::Vector<double, Nx>;
-  virtual Vec step(const Vec &) = 0;
+template <size_t Nx> struct Model_Integrator {
+  virtual std::array<realtype, Nx>step(const std::array<realtype, Nx>&) = 0;
 
-  void write(const std::string &fPath, const std::vector<Vec> &data) {
+  void write(const std::string &fPath, const std::vector<std::array<realtype, Nx>> &data) {
     std::ofstream file(fPath);
     for (const auto &d : data) {
       file << d.transpose() << std::endl;
@@ -29,8 +26,8 @@ template <size_t _Nx> struct Model_Integrator {
     file.close();
   }
 
-  std::vector<Vec> run_trajectory(const Vec &x, const size_t Nt) {
-    std::vector<Vec> data(Nt);
+  std::vector<std::array<realtype, Nx>> run_trajectory(const std::array<realtype, Nx>&x, const size_t Nt) {
+    std::vector<std::array<realtype, Nx>> data(Nt);
     data[0] = x;
     for (size_t i = 1; i < Nt; i++) {
       data[i] = step(data[i - 1]);
@@ -39,10 +36,8 @@ template <size_t _Nx> struct Model_Integrator {
   }
 };
 
-template <size_t _Nx, class Derived>
-struct CVODE_Integrator : public Model_Integrator<_Nx> {
-  using Vec = typename Model_Integrator<_Nx>::Vec;
-  static constexpr size_t Nx = _Nx;
+template <size_t Nx, class Derived>
+struct CVODE_Integrator : public Model_Integrator<Nx> {
   SUNContext ctx;
   void *cvode_mem;
   realtype t_current;
@@ -52,7 +47,7 @@ struct CVODE_Integrator : public Model_Integrator<_Nx> {
   SUNMatrix jac_mat;
   N_Vector x;
   SUNLinearSolver solver;
-  CVODE_Integrator(const Vec& x0, realtype dt, realtype abs_tol = 1e-5, realtype reltol = 1e-5,
+  CVODE_Integrator(const std::array<realtype, Nx>& x0, realtype dt, realtype abs_tol = 1e-5, realtype reltol = 1e-5,
                    realtype t0 = 0)
       : dt(dt), abs_tol(abs_tol), rel_tol(reltol), t_current(t0) {
 
@@ -69,14 +64,14 @@ struct CVODE_Integrator : public Model_Integrator<_Nx> {
     }
   }
 
-  Vec step(const Vec &x_current) {
+  std::array<realtype, Nx>step(const std::array<realtype, Nx>&x_current) {
     N_Vector x = N_VNew_Serial(Nx, ctx);
     for (int i = 0; i < Nx; i++) {
       NV_Ith_S(x, i) = x_current[i];
     }
     int flag = CVode(cvode_mem, t_current + dt, x, &t_current, CV_NORMAL);
     // copy x to Vec
-    Vec x_next(Nx);
+    std::array<realtype, Nx> x_next;
     for (int i = 0; i < Nx; i++) {
       x_next[i] = NV_Ith_S(x, i);
       if (check_flag(&flag, "CVode", 1))
@@ -91,17 +86,26 @@ struct CVODE_Integrator : public Model_Integrator<_Nx> {
     SUNLinSolFree(solver);
     SUNContext_Free(&ctx);
   }
-  int initialize_solver(CVRhsFn f, CVLsJacTimesVecFn jac) {
+  int initialize_solver(CVRhsFn f, CVLsJacTimesVecFn jac, void* user_data) {
     int flag;
+    solver = SUNLinSol_SPGMR(x, PREC_NONE, 0, ctx);
     flag = CVodeInit(cvode_mem, f, t_current, x);
+
+    flag = CVodeSetUserData(cvode_mem, user_data);
     if (check_flag(&flag, "CVodeSetUserData", 1))
       return EXIT_FAILURE;
+
+    if (check_flag(&flag, "CVodeSetUserData", 1))
+      return EXIT_FAILURE;
+
     flag = CVodeSStolerances(cvode_mem, rel_tol, abs_tol);
     if (check_flag(&flag, "CVodeSStolerances", 1))
       return EXIT_FAILURE;
 
+
+
     // Set linear solver as iterative
-    flag = CVodeSetLinearSolver(cvode_mem, solver, jac_mat); 
+    flag = CVodeSetLinearSolver(cvode_mem, solver, NULL); 
     if (check_flag(&flag, "CVodeSetLinearSolver", 1))
       return EXIT_FAILURE;
 

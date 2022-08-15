@@ -2,21 +2,22 @@
 #include <SMC_Resampling.hpp>
 #include <gtest/gtest.h>
 #include <numeric>
+#include <array>
 #include <oneapi/dpl/random>
 
 const size_t N_particles = 10;
 using _Engine = oneapi::dpl::default_engine;
-
+static constexpr size_t Nx = 2;
 static _Engine engine;
 TEST(SMC_ResamplingTest, MultinomialResample) {
-  std::vector<SMC::Particle<double>> particles(N_particles);
+  std::array<SMC::Particle<double, Nx>, N_particles> particles;
   std::for_each(particles.begin(), particles.end(), [&](auto &particle) {
     particle.log_weight = -std::numeric_limits<double>::infinity();
   });
   particles.back().log_weight = 10;
-  particles.back().state.push_back(1);
+  particles.back().state = {1, 2};
 
-  multinomial_resample<double, _Engine>(particles, engine);
+  multinomial_resample(particles, engine);
   std::for_each(particles.begin(), particles.end(),
-                [&](auto &particle) { EXPECT_EQ(particle.state.size(), 1); });
+                [&](auto &particle) { EXPECT_EQ(particle.state.size(), 2); });
 }

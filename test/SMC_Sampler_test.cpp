@@ -7,7 +7,7 @@
 TEST(SMC_SamplerTest, ParticleReset) {
   TestModel model;
   double threshold = .9;
-  SMC::Sampler<TestModel, _Engine> sampler(model, threshold, N_particles, Nt,
+  SMC::Sampler<TestModel, Nt, N_particles, _Engine> sampler(model, threshold,
                                            engine);
 
   auto particles = sampler.get_particles();
@@ -19,8 +19,7 @@ TEST(SMC_SamplerTest, ParticleReset) {
 TEST(SMC_SamplerTest, NormalizeAccumulate) {
   TestModel model;
   double threshold = .9;
-  SMC::Sampler<TestModel, _Engine> sampler(model, threshold,
-                                                        N_particles, Nt, engine);
+  SMC::Sampler<TestModel, Nt, N_particles, _Engine> sampler(model, threshold, engine);
 
   auto particles = sampler.get_particles();
   sampler.normalize_accumulate_weights();
@@ -39,9 +38,9 @@ TEST(SMC_SamplerTest, NormalizeAccumulate) {
 TEST(SMC_SamplerTest, Advance) {
   TestModel model;
   double threshold = .9;
-  SMC::Sampler<TestModel, _Engine> sampler(model, threshold, N_particles, Nt,
+  SMC::Sampler<TestModel, Nt, N_particles, _Engine> sampler(model, threshold,
                                                         engine);
-  std::vector<double> param = {.1, .1};
+  std::array<double, 2> param = {1., 1.};
   sampler.advance(param);
   auto particles = sampler.get_particles();
 

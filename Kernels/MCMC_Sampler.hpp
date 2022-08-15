@@ -6,26 +6,29 @@
 #include <numeric>
 #include <vector>
 namespace MCMC {
-template <class Derived_SMC_Model, typename realtype, class _RNG_Engine>
+template <class Derived_SMC_Model, size_t N_particles, size_t N_MCMC,
+          typename realtype, class _RNG_Engine>
 class Sampler {
-  public:
-  using SMC_Model = SMC::Model<Derived_SMC_Model, realtype>;
-  using SMC_Sampler = SMC::Sampler<Derived_SMC_Model, _RNG_Engine>;
-  std::vector<realtype> param_current;
-  std::vector<realtype> param_prop;
-  std::vector<realtype> param_prev;
-  std::vector<std::vector<realtype>> param_list;
-  std::vector<realtype> log_sum_weights;
+public:
+  static constexpr size_t Nx = Derived_SMC_Model::Nx;
+  static constexpr size_t Np = Derived_SMC_Model::Np;
+  static constexpr size_t Nt = Derived_SMC_Model::Nt;
+  using SMC_Model = SMC::Model<Derived_SMC_Model, Nx, Np, realtype>;
+  using SMC_Sampler =
+      SMC::Sampler<Derived_SMC_Model, Nt, N_particles, _RNG_Engine>;
+  std::array<realtype, Np> param_current;
+  std::array<realtype, Np> param_prop;
+  std::array<realtype, Np> param_prev;
+  std::array<std::array<realtype, Np>, N_MCMC> param_list;
+  std::array<realtype, N_MCMC> log_sum_weights;
   SMC_Model &model;
   SMC_Sampler &smc_sampler;
-  _RNG_Engine &engine = smc_sampler.engine;
   size_t MCMC_iter = 0;
+  sycl::queue& queue;
 
-  Sampler(const std::vector<realtype> &param_init, const size_t N_MCMC_iters, SMC_Sampler &smc_sampler)
-      : param_prop(param_init), engine(smc_sampler.engine),
-        smc_sampler(smc_sampler), model(smc_sampler.model) {
-    log_sum_weights.resize(N_MCMC_iters);
-    param_list.resize(N_MCMC_iters);
+  Sampler(const std::array<realtype, Np> &param_init, SMC_Sampler &smc_sampler, sycl::queue& queue)
+      : param_prop(param_init), smc_sampler(smc_sampler),
+        model(smc_sampler.model), queue(queue) {
     param_list[0] = param_init;
     log_sum_weights[0] = std::numeric_limits<realtype>::infinity();
     log_sum_weights[1] = std::numeric_limits<realtype>::infinity();
@@ -46,7 +49,7 @@ class Sampler {
     // Reject the proposal
     else {
       log_sum_weights[MCMC_iter] = log_sum_weight_prev;
-      param_list[MCMC_iter] = param_list[MCMC_iter-1];
+      param_list[MCMC_iter] = param_list[MCMC_iter - 1];
     }
     // Draw new proposal sample
     model.proposal_sample(param_list[MCMC_iter], param_prop);
@@ -57,27 +60,40 @@ class Sampler {
   }
 
   void advance() {
-    log_sum_weights[MCMC_iter] = smc_sampler.run_trajectory(param_prop);
+    log_sum_weights[MCMC_iter] = smc_sampler.run_trajectory(param_prop, queue);
     metropolis();
     smc_sampler.reset_particles();
     MCMC_iter++;
   }
 
-  std::vector<std::vector<realtype>> run_chain()
-  {
-    std::for_each(log_sum_weights.begin(), log_sum_weights.end(), 
-    [&](realtype& w) {w = smc_sampler.run_trajectory(param_prop);
+  std::array<std::array<realtype, Np>, N_MCMC> run_chain(bool verbose = false) {
+    size_t iter = 0;
+    for (auto &weight : log_sum_weights) {
+      weight = smc_sampler.run_trajectory(param_prop, queue);
+      if (verbose && iter % (log_sum_weights.size() / 10) == 0) {
+        std::cout << "Iter: " << iter << " log_sum_weights: " << weight << std::endl;
+      }
+    iter++;
     metropolis();
     MCMC_iter++;
     smc_sampler.reset_particles();
-    });
-    return param_list;
-  }
+    }
+    // size_t iter = 0;
+    // std::for_each(log_sum_weights.begin(), log_sum_weights.end(),
+    // [&](realtype& w) {
+    //   w = smc_sampler.run_trajectory(param_prop);
+    //   if (verbose && iter % (log_sum_weights.size()/10) == 0) {
+    //     std::cout << "Iter: " << iter << " log_sum_weights: " << w <<
+    //     std::endl;
+    //   }
+
+  return param_list;
+}
 
   void reset() {
-    MCMC_iter = 0;
-    smc_sampler.reset_particles();
-  }
+  MCMC_iter = 0;
+  smc_sampler.reset_particles();
+}
 };
 } // namespace MCMC
 

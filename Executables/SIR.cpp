@@ -1,94 +1,71 @@
-#include <iostream>
-#include <numeric>
-#include <vector>
-#include <numeric>
-
 #include <CL/sycl.hpp>
-#include <oneapi/mkl.hpp>
-#include "oneapi/mkl/rng/device.hpp"
-
-#include "Parameter_Configuration.hpp"
-#include <MCMC_Sampler.cpp>
+#include <MCMC_Sampler.hpp>
+#include <SIR_Integrators.hpp>
 #include <SIR_Stochastic.hpp>
-void SIR_compute(const ulong *seed, const realtype *x_init,
-                 const realtype *y_obs, const realtype *param_init, realtype dt,
-                 realtype N_pop, const realtype *prop_std, realtype ll_std,
-                 realtype nu_I_init, realtype nu_R_init,
-                 realtype resample_threshold, realtype *param_res,
-                 realtype *log_sum_weight_res) {
+using _Engine = oneapi::dpl::ranlux48;
+static _Engine engine;
+static constexpr size_t Nt = 10;
+static constexpr size_t N_particles = 1000;
+static constexpr size_t N_MCMC = 1000;
+using Model = MCMC::SIR_Stochastic<realtype, Nt, decltype(engine)>;
+using SMC_Sampler = SMC::Sampler<Model, Nt, N_particles, _Engine>;
+using MCMC_Sampler = MCMC::Sampler<Model, N_particles, N_MCMC, realtype, _Engine>;
+int main() {
+  // Deterministic SIR-ODE parameters:
+  realtype alpha = .1;
+  realtype R0 = 1.4;
+  realtype beta = alpha * R0;
+  realtype dt = 5.;
 
 
-  typedef SIR_Model<N_OBSERVATIONS> Model;
-  constexpr size_t N_param = 2;
-  constexpr size_t Nx = 2;
-  PRNG_GENERATOR rng(seed[gID]);
-  realtype param[N_param * (N_MCMC_ITERATIONS + 1)];
-  realtype param_prop[N_param];
-  realtype log_sum_weights[N_MCMC_ITERATIONS + 1];
-  copy_vec(param, param_init, N_param);
+  // Initial population sizes
+  realtype N_pop = 10000;
+  realtype I0 = 100;
+  std::array<realtype, 3> x0 = {N_pop - I0, I0, 0};
+  // Initial parameters (alpha, beta)
+  std::array<realtype, 2> param_init = {1.0,1.0};
+  // Standard deviation of proposal parameter distribution
+  std::array<realtype, 2*2> prop_std = {1.,0., 0.,1.};
+  // Standard deviation of likelihood parameter distribution
+  realtype ll_std = N_pop / 10;
 
-  Model model(N_MCMC_ITERATIONS, y_obs, x_init, dt, N_pop, prop_std, ll_std,
-              nu_I_init, nu_R_init);
+  // Stochastic-SIR overdispersion:
+  realtype nu_I = 0;
+  realtype nu_R = 0;
 
-  SMC::Particle<Nx> particles[N_PARTICLES];
 
-  for (size_t i = 0; i < N_MCMC_ITERATIONS; i++) {
-    realtype *param_prev = &param[i * N_param];
-    realtype *param_current = &param[(i + 1) * N_param];
-    realtype &log_sum_weight_prev = log_sum_weights[i];
-    realtype &log_sum_weight_current = log_sum_weights[i + 1];
-    MCMC::advance<PRNG_GENERATOR, Model, Nx, N_PARTICLES, N_param>(
-        rng, model, particles, param_prev, param_current, param_prop,
-        log_sum_weight_prev, log_sum_weight_current, N_OBSERVATIONS,
-        resample_threshold);
+  // Get deterministic trajectory
+  MCMC::Integrators::SIR_Deterministic integrator(x0, alpha, beta, N_pop, dt);
+
+  std::cout << "Computing deterministic trajectory.." << std::endl;
+  auto traj = integrator.run_trajectory(x0, Nt);
+  std::array<realtype, Nt> y;
+  std::ofstream y_file("trajectory.csv");
+  for (int t = 0; t < Nt; t++) {
+    y[t] = traj[t][1];
+    y_file << y[t] << "\n";
   }
-  // printf("First params %f, %f\n", param[0], param[1]);
-  copy_vec(&param_res[(N_param * N_MCMC_ITERATIONS + 1) * gID], param,
-           N_param * (N_MCMC_ITERATIONS + 1));
-  copy_vec(&log_sum_weight_res[(N_MCMC_ITERATIONS + 1) * gID], log_sum_weights,
-           N_MCMC_ITERATIONS + 1);
-
-}
-
-static const auto seed = 7777;
-using namespace oneapi;
-template <size_t Nt, size_t N_chains, typename realtype>
-void run_chain(sycl::queue& q, MCMC::Sampler<SIR_Model, Nt>& mcmc_sampler)
-{
-    mkl::rng::philox4x32_10_t rng(seed);
-    mkl::rng::uniform distr;
-
-    size_t wg_size = std::min(q.get_device().get_info<sycl::info::device::max_work_group_size>(), n_points);
-    size_t max_compute_units = q.get_device().get_info<sycl::info::device::max_compute_units>();
-    size_t wg_num = (N_chains > wg_size * max_compute_units) ? max_compute_units : 1;
-
-    size_t N_chain_threads = N_chains / (wg_size * wg_num);
-    std::vector<realtype> log_sum_weights(N_chains*Nt);
-
-    {
-        sycl::buffer<size_t, 1> seed_buffer(N_chains);
-        sycl::buffer<realtype, 1> llsum_buffer(log_sum_weights);
-        q.submit([&](sycl::handler& h) {
-            auto llsum_acc = llsum_buffer.template get_access<sycl::access::mode::write>(h);
-            auto seed_acc = seed_buffer.template get_access<sycl::access::mode::write>(h);
-            h.parallel_for(sycl::nd_range<1>(wg_size*wg_num, wg_size),
-            [=](sycl::nd_item<1> item)
-            {
-                realtype 
-            })
-        })
-    }
-
-}
+  y_file.close();
 
 
-int main()
-{
+  cl::sycl::queue queue;
 
-    SIR_Model model(y, x0, dt, N_pop, prop_std, ll_std, nu_I, nu_R);
-      Sampler(SMC::Model<Impl_Model> &model, const realtype threshold) {
 
-    SMC::Sampler smc_sampler(model, threshold);
-    MCMC::Sampler<SIR_Model, Nt> mcmc_sampler(model, smc_sampler);
+  Model model(y, x0, dt, N_pop, prop_std, ll_std, nu_I, nu_R, engine, queue);
 
+  realtype threshold = .9;
+  SMC_Sampler smc_sampler(model, threshold);
+  MCMC_Sampler mcmc_sampler(param_init, smc_sampler, queue);
+  std::cout << "Running MCMC-Chain.." << std::endl;
+  auto result = mcmc_sampler.run_chain(true);
+
+  // Write result to csv file
+  std::ofstream ofs("result.csv");
+  for (int i = 0; i < result.size(); i++) {
+    ofs << result[i][0] << "," << result[i][1] << "\n";
+  }
+  ofs.close();
+  return 0;
+
+  return EXIT_SUCCESS;
 }

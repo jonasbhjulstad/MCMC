@@ -1,7 +1,6 @@
 #ifndef SMC_RANDOM_WALK_MODEL_HPP
 #define SMC_RANDOM_WALK_MODEL_HPP
 #include <oneapi/dpl/random>
-#include <gsl/gsl_randist.h>
 #include "SMC_Model.hpp"
 template <typename _RNG_Engine> 
 struct RandomWalk : public SMC::Model<RandomWalk<_RNG_Engine>, double>  
@@ -30,7 +29,7 @@ struct RandomWalk : public SMC::Model<RandomWalk<_RNG_Engine>, double>
   }
 
   double log_likelihood(const std::vector<double> &state, const size_t &t) {
-    return gsl_ran_gaussian_pdf(state[0], ll_std);
+    return MCMC::normal_distribution_pdf(state[0], 0.0, ll_std);
   }
 
   size_t get_Nx() { return 1; }

@@ -6,13 +6,14 @@ namespace MCMC::Integrators {
 
 struct SIR_Stochastic : public Model_Integrator<3> {
 public:
+  static constexpr size_t Nx = 3;
   oneapi::dpl::default_engine engine;
   realtype alpha, beta, N_pop, dt;
 
   SIR_Stochastic(realtype alpha, realtype beta, realtype N_pop, realtype dt)
       : alpha(alpha), beta(beta), N_pop(N_pop), dt(dt) {}
 
-  Vec step(const Vec &x) {
+  std::array<realtype, 3>step(const std::array<realtype, 3>&x) {
     realtype p_I = 1 - std::exp(-beta * x[1] / N_pop * dt);
     realtype p_R = 1 - std::exp(-alpha * dt);
 
@@ -25,11 +26,11 @@ public:
     K_SI = SI_dist(engine);
     K_IR = IR_dist(engine);
 
-    Vec delta_x = {-K_SI, K_SI - K_IR, K_IR};
+    std::array<realtype, 3> delta_x = {-K_SI, K_SI - K_IR, K_IR};
 
-    Vec x_next;
+    std::array<realtype, 3> x_next;
     for (int i = 0; i < Nx; i++) {
-      x_next[i] = std::max({(x + delta_x)[i], 0.});
+      x_next[i] = std::max({x[i] + delta_x[i], 0.});
     }
     return x_next;
   }
@@ -53,7 +54,6 @@ static int SIR_eval_f(realtype t, N_Vector x, N_Vector x_dot, void *param) {
   return 0;
 }
 
-
 // Jacobian function vector routine.
 static int SIR_eval_jac(N_Vector v, N_Vector Jv, realtype t, N_Vector x,
                         N_Vector fx, void *param, N_Vector tmp) {
@@ -67,20 +67,23 @@ static int SIR_eval_jac(N_Vector v, N_Vector Jv, realtype t, N_Vector x,
   realtype beta = ((realtype *)param)[1];
   realtype N_pop = ((realtype *)param)[2];
 
-  Jv_data[0] = -beta * I / N_pop * v_data[0] - beta*S/N_pop * v_data[1];
-  Jv_data[1] = beta * I / N_pop * v_data[0] + beta*S/N_pop * v_data[1] - alpha*v_data[1];
-  Jv_data[2] = alpha*v_data[1];
+  Jv_data[0] = -beta * I / N_pop * v_data[0] - beta * S / N_pop * v_data[1];
+  Jv_data[1] = beta * I / N_pop * v_data[0] + beta * S / N_pop * v_data[1] -
+               alpha * v_data[1];
+  Jv_data[2] = alpha * v_data[1];
 
   return 0;
 }
 
 struct SIR_Deterministic : public CVODE_Integrator<3, SIR_Deterministic> {
-  realtype alpha, beta, N_pop;
-  SIR_Deterministic(const Vec &x0, realtype alpha, realtype beta,
+  realtype param[3];
+  SIR_Deterministic(const std::array<realtype, 3>&x0, realtype alpha, realtype beta,
                     realtype N_pop, realtype dt)
-      : alpha(alpha), beta(beta),
-        N_pop(N_pop), CVODE_Integrator<3, SIR_Deterministic>(x0, dt) {
-    assert(this->initialize_solver(SIR_eval_f, SIR_eval_jac) == EXIT_SUCCESS);
+      : CVODE_Integrator<3, SIR_Deterministic>(x0, dt) {
+    param[0] = alpha;
+    param[1] = beta;
+    param[2] = N_pop;
+    assert(this->initialize_solver(SIR_eval_f, SIR_eval_jac, (void*) param) == EXIT_SUCCESS);
   }
 };
 } // namespace MCMC::Integrators

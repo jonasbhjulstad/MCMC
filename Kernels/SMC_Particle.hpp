@@ -1,24 +1,14 @@
 #ifndef PARTICLE_hpp
 #define PARTICLE_hpp
-#include <vector>
+#include <stddef.h>
+#include <array>
 namespace SMC
 {
-template <typename realtype>
+template <typename realtype, size_t Nx>
 struct Particle
 {
     realtype log_weight;
-    std::vector<realtype> state;
-
-    void operator=(const Particle& other)
-    {
-        log_weight = other.log_weight;
-        state.resize(other.state.size());
-        for (int i = 0; i < other.state.size(); i++)
-        {
-            state[i] = other.state[i];
-        }
-        
-    }
+    std::array<realtype, Nx> state;
 };
 }
 #endif

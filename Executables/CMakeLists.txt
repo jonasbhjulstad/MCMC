@@ -1,0 +1,5 @@
+add_executable(MCMC_SIR SIR.cpp)
+target_include_directories(MCMC_SIR PRIVATE "../Generate" "../Kernels" ${MKL_ROOT}/include)
+target_link_libraries(MCMC_SIR PUBLIC MKL::mkl_sycl MKL::mkl_intel_ilp64 MKL::mkl_tbb_thread MKL::mkl_core GTest::gtest_main SUNDIALS::cvode SUNDIALS::nvecserial oneDPL)
+add_executable(this_exe this_kernel_resolve.cpp)
+target_link_libraries(this_exe PRIVATE oneDPL)

@@ -4,17 +4,17 @@
 #include <algorithm>
 #include <numeric>
 #include <oneapi/dpl/random>
-#include <vector>
+#include <oneapi/dpl/execution>
+#include <array>
 namespace SMC {
-template <typename realtype, typename _RNG_Engine>
-void multinomial_resample(std::vector<Particle<realtype>> &particles,
+template <typename realtype, size_t Nx, size_t N_particles, typename _RNG_Engine>
+void multinomial_resample(std::array<Particle<realtype, Nx>, N_particles> &particles,
                           _RNG_Engine &engine) {
-  size_t N_particles = particles.size();
-  std::vector<realtype> resampling_weights(N_particles);
-  std::vector<size_t> resampling_counts(N_particles);
-  std::vector<realtype> weight_cumsum(N_particles);
-  std::vector<realtype> urandom_vec(N_particles);
-  std::vector<Particle<realtype>> new_particles(N_particles);
+  std::array<realtype,N_particles> resampling_weights;
+  std::array<size_t,N_particles> resampling_counts;
+  std::array<realtype,N_particles> weight_cumsum;
+  std::array<realtype,N_particles> urandom_vec;
+  std::array<Particle<realtype, Nx>, N_particles> new_particles;
 
   // Compute cumulative weights
   for (int i = 0; i < N_particles; ++i)
@@ -29,7 +29,7 @@ void multinomial_resample(std::vector<Particle<realtype>> &particles,
 
   // Get sampling counts based on the cumulative sum of weights
   std::for_each(
-      urandom_vec.begin(), urandom_vec.end(), [&](const realtype &rnd_val) {
+      urandom_vec.begin(), urandom_vec.end(), [&](const auto& rnd_val) {
         auto upper_bound = std::upper_bound(weight_cumsum.begin(),
                                              weight_cumsum.end(), rnd_val);
         size_t resample_idx = std::distance(weight_cumsum.begin(), upper_bound);
@@ -52,6 +52,7 @@ void multinomial_resample(std::vector<Particle<realtype>> &particles,
   }
 
 }
+
 } // namespace SMC
 
 #endif // SMC_RESAMPLING_HPP
