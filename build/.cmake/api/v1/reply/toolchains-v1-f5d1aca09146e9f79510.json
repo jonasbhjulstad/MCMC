@@ -1,0 +1,111 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "IntelLLVM",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/opt/intel/oneapi/compiler/2023.0.0/linux/lib/clang/16.0.0/include",
+						"/usr/local/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/usr/lib64/gcc/x86_64-pc-linux-gnu/12.2.1",
+						"/usr/lib64",
+						"/lib64",
+						"/opt/intel/oneapi/compiler/2023.0.0/linux/lib",
+						"/lib",
+						"/usr/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"gcc",
+						"gcc_s",
+						"gcc",
+						"gcc_s",
+						"c",
+						"gcc",
+						"gcc_s"
+					]
+				},
+				"path" : "/opt/intel/oneapi/compiler/latest/linux/bin-llvm/clang",
+				"version" : "2023.0.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "IntelLLVM",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/usr/include/c++/12.2.1",
+						"/usr/include/c++/12.2.1/x86_64-pc-linux-gnu",
+						"/usr/include/c++/12.2.1/backward",
+						"/opt/intel/oneapi/compiler/2023.0.0/linux/lib/clang/16.0.0/include",
+						"/usr/local/include",
+						"/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/usr/lib64/gcc/x86_64-pc-linux-gnu/12.2.1",
+						"/usr/lib64",
+						"/lib64",
+						"/opt/intel/oneapi/compiler/2023.0.0/linux/lib",
+						"/lib",
+						"/usr/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/opt/intel/oneapi/compiler/latest/linux/bin-llvm/clang++",
+				"version" : "2023.0.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}
