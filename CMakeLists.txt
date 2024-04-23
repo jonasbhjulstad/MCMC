@@ -43,7 +43,7 @@ include_directories(PUBLIC Simulation_Scripts)
 # find_package(Boost REQUIRED COMPONENTS thread)
 # INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 find_package(GSL REQUIRED)    # See below (2)
-
+find_package(Boost REQUIRED)
 TARGET_LINK_LIBRARIES(SIR_EX LINK_PUBLIC GSL::gsl GSL::gslcblas)
 TARGET_LINK_LIBRARIES(SEIR_EX LINK_PUBLIC GSL::gsl GSL::gslcblas)
 TARGET_LINK_LIBRARIES(SEIAR_EX LINK_PUBLIC GSL::gsl GSL::gslcblas)
