@@ -12,3 +12,5 @@ Boost, libgsl, CMake
 mkdir build && cd build
 cmake ..
 ```
+## Executables
+Executables to generate the [documentation](https://arxiv.org/abs/2405.18279) is located under `./Simulation_Scripts`.
